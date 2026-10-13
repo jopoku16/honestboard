@@ -1,10 +1,22 @@
-\begin{tabular}{rrrrrrrrr}
+\begin{tabular}{lrrrrrrrrrr}
 \toprule
- & & \multicolumn{3}{c}{Global null (holder is a running maximum)} & \multicolumn{3}{c}{Selected-step null (holder not inflated)} & \\
-Tasks & Steps per board & selective & two-sided & one-sided & selective & two-sided & one-sided & Holm, any rejection (selective) \\
+ & & & \multicolumn{3}{c}{Global null (holder is the best so far)} & \multicolumn{3}{c}{Selected-step null (holder not inflated)} & & \\
+Fitted board & Tasks & Steps per board & selective & two-sided & one-sided & selective & two-sided & one-sided & Holm, any (selective) & Power at MDD \\
 \midrule
-300 & 2.8 & 0.3\% & 0.3\% & 1.4\% & 3.7\% & 3.8\% & 8.2\% & 0.7\% \\
-500 & 2.8 & 0.5\% & 0.5\% & 1.7\% & 3.7\% & 3.9\% & 8.0\% & 0.7\% \\
-2,000 & 3.0 & 0.8\% & 0.8\% & 2.0\% & 4.4\% & 4.5\% & 9.1\% & 0.7\% \\
+SWE-bench Verified & 300 & 2.8 & 0.3\% & 0.3\% & 1.4\% & 3.7\% & 3.8\% & 8.2\% & 0.7\% & 0.77 \\
+ & 500 & 2.8 & 0.5\% & 0.5\% & 1.7\% & 3.7\% & 3.9\% & 8.0\% & 0.7\% & 0.78 \\
+ & 2,000 & 3.0 & 0.8\% & 0.8\% & 2.0\% & 4.4\% & 4.5\% & 9.1\% & 0.7\% & 0.77 \\
+\addlinespace
+SWE-bench Lite & 300 & 2.9 & 0.5\% & 0.5\% & 1.3\% & 3.9\% & 4.0\% & 8.1\% & 0.5\% & 0.76 \\
+ & 500 & 3.0 & 0.8\% & 0.8\% & 2.1\% & 4.1\% & 4.3\% & 8.3\% & 1.3\% & 0.77 \\
+ & 2,000 & 3.2 & 0.9\% & 0.9\% & 1.8\% & 4.1\% & 4.2\% & 9.2\% & 1.0\% & 0.78 \\
+\addlinespace
+Terminal-Bench 2 & 300 & 2.6 & 0.9\% & 1.0\% & 1.8\% & 3.1\% & 3.4\% & 7.1\% & 1.8\% & 0.74 \\
+ & 500 & 2.8 & 0.4\% & 0.5\% & 1.7\% & 3.3\% & 3.3\% & 7.5\% & 0.8\% & 0.75 \\
+ & 2,000 & 3.0 & 0.7\% & 0.8\% & 1.9\% & 4.1\% & 4.2\% & 8.5\% & 1.7\% & 0.78 \\
+\addlinespace
+LiveBench & 300 & 2.8 & 1.0\% & 1.1\% & 2.2\% & 3.5\% & 3.7\% & 7.9\% & 2.0\% & 0.77 \\
+ & 500 & 2.9 & 0.7\% & 0.8\% & 2.2\% & 4.0\% & 4.3\% & 9.0\% & 0.8\% & 0.77 \\
+ & 2,000 & 3.1 & 0.9\% & 1.0\% & 1.6\% & 4.4\% & 4.5\% & 9.0\% & 1.5\% & 0.77 \\
 \bottomrule
 \end{tabular}

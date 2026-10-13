@@ -17,7 +17,7 @@
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Var}{\operatorname{Var}}
 
-\title{Statistical Inference for AI-Agent Leaderboards:\\Record Claims, Rank Uncertainty and the Winner's Curse}
+\title{Certifying AI-Agent Leaderboard Records:\\Selective Tests, Online Guarantees and the Winner's Curse}
 \author{Jeffery Opoku$^{1,*}$ \quad David Banahene$^{2}$}
 \date{\small
 $^1$School of Mathematical and Statistical Sciences, University of Texas Rio Grande Valley, Edinburg, TX 78539, USA\\
@@ -30,18 +30,16 @@ Draft of 13 October 2026}
 \maketitle
 
 \begin{abstract}
-A leaderboard for AI agents gives every system one score on a fixed list of tasks and announces a new record whenever a submission scores higher than everything before it.
-But a benchmark is only a sample of tasks, so some records are luck: a different draw of tasks would have given a different winner.
-We check every record on six public agent leaderboards that publish results task by task (SWE-bench Verified, Lite, Test, Multimodal and Multilingual, and Terminal-Bench~2).
-The check is a simple exact test on the tasks where the two systems disagree, run in a way that takes into account that we only look at a record because it scored higher; we prove the test stays honest even though the old record was itself the best of everything before it.
-\NumTotalSig{} of the \NumTotalSteps{} records (\NumTotalSigPct\%) are clearly better than the record they replaced; \NumTotalHolm{} remain after a correction for testing many records; and only \NumClusterSig{} of the \NumClusterSteps{} SWE-bench records remain when we count code repositories instead of tasks, the cautious count.
-When we split the real tasks into two random halves, records that pass the test on one half beat the old record on the other half \NumSplitSigRep{} of the time, against \NumSplitNullSigRep{} for pure luck.
-Records arrive one by one, so we also give rules for certifying them as they come, and we prove that three of these rules keep the chance of ever certifying a false record below 5\%, no matter how many records arrive or how they depend on each other; they certify \NumCertTotalSpend{} of the \NumTotalSteps{} records.
-The reason most records cannot be confirmed is resolution: SWE-bench Verified (500 tasks) can reliably see a true gap of about \NumVerifiedMDD{} points, a typical record there wins by \NumVerifiedMedianMargin{} points, and seeing a one-point gap would need about \NumVerifiedTasksOnePt{} tasks.
-On Verified, \NumVerifiedSet{} of \NumVerifiedK{} systems could be the true best.
-The top score is also inflated simply because it was picked for being the highest: by \NumVBunchNCNaiveBias{} points when the leaders are truly equal on 500 tasks; a bootstrap correction removes about \NumVBunchNCReduction\% of that ($\pm$\NumVTwoReductionSe{} points), and we compare it with two published corrections.
-Tuning a system on the public tasks is not covered.
-We release \texttt{honestboard}, a small Python package that computes all of this for any leaderboard with task-by-task results.
+Leaderboards for AI agents announce a record whenever a submission scores higher than every earlier one on a fixed set of tasks.
+A benchmark is only a sample of tasks, so some records are luck.
+We certify records as they arrive.
+The per-step test is exact on the tasks where the new system and the old record disagree, allows for the step being tested only because it is a record, and, as we prove, stays valid although the old record was itself the best so far.
+Three rules for the level at each step provably keep the chance of ever certifying a false record below 5\%, whatever the number of records and the dependence between them.
+On the \NumTotalSteps{} records of six public agent leaderboards, \NumTotalSig{} (\NumTotalSigPct\%) are clearly better than the record they replaced, \NumTotalHolm{} after a correction for many tests, and the rules certify \NumCertTotalSpend{}; split-half and run-split checks on the real data confirm that the test separates genuine records from lucky ones.
+The reason is resolution: SWE-bench Verified can reliably see gaps of about \NumVerifiedMDD{} points, its typical record wins by \NumVerifiedMedianMargin{}, one point would need about \NumVerifiedTasksOnePt{} tasks, and \NumVerifiedSet{} of its \NumVerifiedK{} systems could be the true best.
+The top score is inflated by being picked as the highest (\NumVBunchNCNaiveBias{} points with equal leaders); a bootstrap correction removes about \NumVBunchNCReduction\% of it.
+Tuning on public tasks is not modelled.
+We release \texttt{honestboard}, a Python package that computes all of this from task-by-task results.
 \end{abstract}
 
 \section{Introduction}
@@ -65,6 +63,7 @@ Across \NumTotalSteps{} record steps on \NumBoardsWithSteps{} leaderboards, \Num
 The pattern follows the size of the benchmark: SWE-bench Test, with \NumTestT{} tasks, confirms \NumTestSig{} of its \NumTestSteps{} records, while the \NumSmallBoards{} boards with at most 510 tasks confirm \NumSmallSig{} of \NumSmallSteps{}.
 Figure~\ref{fig:forest} shows every record on four boards and Figure~\ref{fig:resolution} shows why: on these boards a typical record wins by less than the smallest gap the board can reliably see.
 Among 135 submissions, pure luck would produce about \NumVerifiedNoiseRecords{} records; Verified has \NumVerifiedSteps{}, so the leaderboard does track real progress, but most single records are too small for the board to confirm.
+Of the \NumClaimsReport{} Verified records whose submission links a paper or technical report, only \NumClaimsReportSig{} can be told apart from the record it replaced (Table~\ref{tab:verifiedchain}).
 Rankings wobble in the same way: two systems tie for first on Verified, the one that ranks first most often does so in only \NumVerifiedPBest{} of redraws of the tasks, and \NumVerifiedSet{} of the \NumVerifiedK{} systems could be the true best.
 Terminal-Bench~2 has a clear leader (first in \NumTBPBest{} of redraws), so the tools do not always say ``noise''.
 They work the same way on a leaderboard of plain language models: on LiveBench (\NumLBT{} questions) \NumLBSig{} of \NumLBSteps{} records pass the basic test and \NumLBHolm{} passes the correction for many tests, too few records to compare with the agent boards (Section~\ref{sec:audit}).
@@ -80,20 +79,34 @@ None of this means the records are fake or that two systems are equal: a record 
 
 \paragraph{Relation to earlier work.}
 Careful statistics for AI evaluation is not new: error bars for language-model scores~\citep{miller2024errorbars,madaan2024variance,bowyer2025clt,heineman2025signal}, power calculations for benchmark comparisons~\citep{card2020power}, comparisons of agents that account for cost~\citep{kapoor2024agents}, run-to-run intervals for coding agents~\citep{huang2026deepswe}, the effect of the scaffolding around a model~\citep{zhang2026harness,vats2026scaffold,arjmandi2026harness}, and tests for whether a new model version got worse~\citep{kubler2026degradation}.
-Three recent papers are close to ours.
-\citet{liu2026converged} run exact McNemar tests on neighbouring pairs in four SWE-bench leaderboards, find that no neighbouring pair in the Verified top 30 can be told apart, and estimate how many tasks that would take; what we add is the audit of records in time order, the repository-level test, Terminal-Bench, the set of possible best systems, the winner's-curse correction and the tool.
-\citet{kotawala2026resolution} give the same kind of resolution numbers (smallest detectable gap, tasks needed) for paired evaluations of language models, which our resolution section applies to agent boards.
-\citet{jain2026lottery} argues, with simulations tuned to language-model leaderboards, that the top-ranked model is the true best only some of the time, and builds sets of plausible winners with a paired bootstrap and a Holm correction; it names models arriving over time as future work, which is exactly our setting.
-The rules we use for records that arrive one by one come from the literature on testing many hypotheses in sequence: alpha-investing~\citep{foster2008alphainvesting}, online false-discovery-rate rules~\citep{javanmard2018online,ramdas2017lord}, online family-wise error control~\citep{tian2021onlinefwer} and the Ladder mechanism for leaderboards~\citep{blum2015ladder}; what is new here is the $p$-value for a single record step and the proof that the rules keep their guarantee even though the record chain itself decides which hypotheses get tested.
+Table~\ref{tab:related} sets this paper beside the five lines of work closest to it; the rules for records that arrive one by one come from the sequential-testing literature, and what is new here is the $p$-value for a single record step and the proof that the rules keep their guarantee although the record chain itself decides which hypotheses get tested.
 Rank intervals for leaderboards are developed by \citet{neuhof2026rankintervals,neuhof2026ranking}, with roots in \citet{mogstad2024ranks} and \citet{hung2019rank}; sets of possible best models in \citet{hansen2011mcs} and \citet{kim2025confidence}; Chatbot Arena reports bootstrap intervals and rank sets~\citep{chiang2024arena,chatzi2024ppr}.
 On the winner's curse, \citet{andrews2024winners}, \citet{zrnic2025flexible}, \citet{petrouzeniou2024ranking} and \citet{hoff2025selective} give corrections for a winner that has already been picked, and \citet{bakshi2026winners} one that adds randomness; we use the conditional method of \citet{lee2016exact,fithian2014optimal} and an iterated bootstrap~\citep{efron2011tweedie,efron2014model}, and run the hybrid of \citet{andrews2024winners} and the zoom interval of \citet{zrnic2025flexible} as baselines.
-Inflation from teams quietly trying many versions before submitting~\citep{singh2025illusion,yang2026hidden} and from overfitting to a benchmark~\citep{roelofs2019meta} are the kinds of error this paper does not model.
-An informal bootstrap analysis of Terminal-Bench~2 that grouped tasks reached a similar conclusion about its top two entries~\citep{lesswrong2026tbench}.
+Inflation from teams privately trying many versions before submitting~\citep{singh2025illusion,yang2026hidden} and from overfitting to a benchmark~\citep{roelofs2019meta} are the kinds of error this paper does not model; an informal bootstrap analysis of Terminal-Bench~2 that grouped tasks reached a similar conclusion about its top two entries~\citep{lesswrong2026tbench}.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{p{2.8cm}p{3.0cm}p{4.7cm}p{4.1cm}}
+\toprule
+Work & Setting & What it gives & What it leaves open \\
+\midrule
+\citet{liu2026converged} & neighbouring pairs in the rankings of four SWE-bench boards & exact McNemar tests; the number of tasks a separation would need & records in time order; the selection that makes a step a record; chains of records; the winner's curse \\
+\citet{kotawala2026resolution} & paired evaluations of language models & minimum detectable effect and required sample size & agent boards; records \\
+\citet{jain2026lottery} & simulated language-model leaderboards & sets of plausible winners (paired bootstrap, Holm); how often the top model is truly best & models arriving over time, named there as future work \\
+\citet{blum2015ladder}, the Ladder & a holdout reused by adaptive submissions & a new best score is released only when it beats the previous best by more than a set step; a bound on the error of the released scores & per-task tests; a $p$-value for a record step \\
+\citet{foster2008alphainvesting}; \citet{ramdas2017lord}; \citet{tian2021onlinefwer} & a stream of $p$-values & online error-rate rules: alpha-investing, LORD, online family-wise error control & where the $p$-values come from; validity when the chain itself picks the hypotheses \\
+\addlinespace
+This paper & every record on six public agent boards & a selective record $p$-value, valid for a running-maximum or a certified holder (proved); three level rules with a whole-chain guarantee (proved); resolution, a set of possible best systems and a winner correction; a tool & tuning on public tasks; run noise on single-run boards \\
+\bottomrule
+\end{tabular}
+\caption{The lines of work closest to this paper, and what each covers.}
+\label{tab:related}
+\end{table}
 
 \paragraph{Contributions.}
-This is an audit paper with a tested tool, plus one piece of new statistics.
-(i) The audit: every record on six public agent leaderboards, checked with an exact test that allows for how records are selected and with a repository-level test, compared against what each benchmark can resolve; a split-half check on the real data; a language-model leaderboard run through the same pipeline; and a bound on how much reporting the best of several runs would inflate a score, from the one board that has repeated runs.
-(ii) The new statistics: a way to certify records as they arrive. We give a $p$-value for a record step that stays valid even though we only test a step because it is a record and even though the old record was itself the best of everything before it (Proposition~1), two rules for setting the bar at each step, alpha-spending and online fallback, that keep the chance of ever certifying a false record below 5\% no matter how records depend on each other (Corollaries~1 and 2), the same guarantee for the version in which the leader only changes when a record is certified (Corollary~3), and an online false-discovery-rate variant checked by simulation (Section~\ref{sec:methods}). As far as we know this is the first certification rule for leaderboard records with a guarantee of this kind.
+This paper has one piece of new statistics, an audit built on it, and a tool.
+(i) The new statistics: a way to certify records as they arrive. We give a $p$-value for a record step that stays valid even though we only test a step because it is a record and even though the old record was itself the best of everything before it (Proposition~1); two rules for setting the level at each step, alpha-spending and online fallback, that keep the chance of ever certifying a false record below 5\% no matter how records depend on each other (Corollaries~1 and 2); the same guarantee for the version in which the leader only changes when a record is certified (Corollary~3); and an online false-discovery-rate variant checked by simulation (Section~\ref{sec:methods}). As far as we know this is the first certification rule for leaderboard records with a guarantee of this kind, and Table~\ref{tab:verifiedchain} shows it running over the full history of SWE-bench Verified.
+(ii) The audit: every record on six public agent leaderboards, checked with that test and with a repository-level test, compared against what each benchmark can resolve; a split-half check across tasks and a run-split check across repeated runs on the real data; a language-model leaderboard run through the same pipeline; and a bound on how much reporting the best of several runs would inflate a score, from the one board that has repeated runs.
 (iii) Rank intervals and a set of possible best systems, with a check of how often they contain the truth, and a corrected score for the published winner, checked by simulation and on held-back tasks with error bars for the simulation itself, against the hybrid of \citet{andrews2024winners} and the zoom interval of \citet{zrnic2025flexible}.
 What is proved and what is only simulated: the per-step test is exact under its stated null, and the error over a whole chain is controlled for three rules; everything else, including LORD++, the winner correction and the set of possible best systems, rests on simulation and held-back data. Table~\ref{tab:guarantees} in Section~\ref{sec:methods} says which is which.
 (iv) \texttt{honestboard}, a small Python package with a command line and a check for new submissions,\footnote{Version 0.1.0, MIT licence: \url{https://github.com/jopoku16/honestboard}, with the built boards, every result file, the scripts behind each table and figure, and the manuscript source.} and a short list of things leaderboards should report.
@@ -174,7 +187,7 @@ A leaderboard has to decide about each record when it comes in, without knowing 
 We give a procedure for the live setting.
 For the $i$-th record step, with holder $a$ and challenger $b$, let $p_i=p_{\mathrm{sel}}$ be the selective $p$-value of the record test.
 With a fixed holder it is a valid $p$-value given that the step is a record, because the record event is exactly $\{X>n/2\}$.
-A holder that is the best so far got there partly by luck, so its results are tilted upward; this works in our favour, making $p_i$ if anything too cautious, and we can prove it rather than just simulate it.
+A holder that is the best so far got there partly by luck, so its results are tilted upward; this works in our favour, making $p_i$ if anything too cautious, and it is a theorem, not only a simulation.
 
 \begin{quote}
 \textbf{Proposition 1.}
@@ -333,11 +346,11 @@ Both are exact when the scores are normal with known covariance; the joint quant
 \citet{hoff2025selective} is not implemented.
 
 \emph{Iterated bootstrap.}
-The bootstrap builds a pretend world in which the observed scores are the truth, by redrawing the tasks with replacement.
-In that world we know every system's true score, so we can measure directly how much a winner's score is inflated by being the winner.
-Draw a task resample, let $w^*$ be its winner, and set $\Delta^*=\hat p^*_{w^*}-\hat p_{w^*}$, how far the pretend winner beat its own pretend truth.
+The bootstrap builds a stand-in world in which the observed scores are the truth, by redrawing the tasks with replacement.
+In that bootstrap world we know every system's true score, so we can measure directly how much a winner's score is inflated by being the winner.
+Draw a task resample, let $w^*$ be its winner, and set $\Delta^*=\hat p^*_{w^*}-\hat p_{w^*}$, how far the bootstrap winner beat its own bootstrap truth.
 The plug-in correction is $\hat p_w-\hat b_1$ with $\hat b_1=\E^*\Delta^*$, the average of that gap~\citep{efron1993bootstrap,efron2014model}.
-It does not remove all the bias, because the observed scores of the leaders are more spread out than their true scores, so being the winner is a smaller achievement in the pretend world than in reality.
+It does not remove all the bias, because the observed scores of the leaders are more spread out than their true scores, so being the winner is a smaller achievement in the bootstrap world than in reality.
 A second round of bootstrap, run inside each resample, estimates the bias that remains: $\hat\theta_w=\hat p_w-2\hat b_1+\E^*\hat b_1^*$, where $\hat b_1^*$ is the plug-in bias computed from each outer resample.
 The interval is $\hat\theta_w$ minus the quantiles of the centred $\Delta^*$.
 It works for ties and when repositories rather than tasks are resampled.
@@ -370,15 +383,15 @@ The data and code to rebuild every board are in the project repository.
 \section{Validation}\label{sec:valid}
 \subsection{Does the record test reject as often as it claims?}
 A test at the 5\% level should wrongly call a lucky record ``clearly better'' no more than 5\% of the time.
-We check this on fake boards built to look like SWE-bench Verified: each task gets a difficulty from the real pass rates of the 30 strongest systems (standard deviation \NumSimSdLogit{} on the logit scale), system $k$ passes task $t$ with probability $\mathrm{sigmoid}(a_k+L_t)$, and the outcomes of different systems on the same task are linked through a Gaussian copula with correlation $\rho=\NumSimRho$, tuned so that the task-by-task spread between two equally able systems (\NumSimSdSim) matches the real board (\NumSimSdReal); real systems share base models and scaffolding, so they agree on far more tasks than shared difficulty alone would give.
-Two kinds of ``nothing is really better'' world are simulated (Table~\ref{tab:recordtest}).
-In the \emph{global null}, \NumSimK{} equally able systems arrive one after another, so every record is luck and the holder is always the luckiest so far (\NumNullR{} boards per size).
+We check this on simulated boards built to look like SWE-bench Verified: each task gets a difficulty from the real pass rates of the 30 strongest systems (standard deviation \NumSimSdLogit{} on the logit scale), system $k$ passes task $t$ with probability $\mathrm{sigmoid}(a_k+L_t)$, and the outcomes of different systems on the same task are linked through a Gaussian copula with correlation $\rho=\NumSimRho$, tuned so that the task-by-task spread between two equally able systems (\NumSimSdSim) matches the real board (\NumSimSdReal); real systems share base models and scaffolding, so they agree on far more tasks than shared difficulty alone would give.
+Two null worlds, in which no system is really better than another, are simulated (Table~\ref{tab:recordtest}).
+In the \emph{global null}, \NumSimK{} equally able systems arrive one after another, so every record is luck and the holder is always the running maximum (\NumNullR{} boards per size).
 In the \emph{selected-step null}, holder and challenger are equally able and the holder is not inflated; we keep the pairs in which the challenger scored higher (\NumNullSelPairs{} pairs per size), which is the record condition.
 At 500 tasks the one-sided test at 5\% wrongly rejects \NumNullSelOneB\% of selected steps, close to the $2\alpha$ predicted above, the two-sided test \NumNullSelTwoB\% and the selective test \NumNullSelSelB\%.
-Under the global null the selective test's rate is \NumNullSelectiveB\% averaged over the chain, but the average hides where in the chain the step is: the first step, where the holder is simply the first submission and so only mildly lucky, rejects \NumNullPosFirstOneB\% one-sided and \NumNullPosFirstSelB\% selective, and later steps, against a holder that is the luckiest of many, almost never (Table~\ref{tab:position}).
-The selective test is at or below 5\% given the record event by construction, and the simulation agrees in every case, also with the model fitted to Lite, Terminal-Bench and LiveBench (Appendix~\ref{app:otherboards}); the two-sided test differs from it only through the even-$n$ effect, and the one-sided test rejects too often.
+Under the global null the selective test's rate is \NumNullSelectiveB\% averaged over the chain, but the average hides where in the chain the step is: the first step, where the holder is simply the first submission and so only mildly lucky, rejects \NumNullPosFirstOneB\% one-sided and \NumNullPosFirstSelB\% selective, and later steps, against a holder that is the best of many, almost never (Supplement, Table~S1).
+The selective test is at or below 5\% given the record event by construction, and the simulation agrees in every case, also with the model fitted to Lite, Terminal-Bench and LiveBench (Table~\ref{tab:recordtest}: with the model fitted to Lite the selective test wrongly rejects \NumRtestSelSelLite\% of selected null steps at 500 tasks, fitted to Terminal-Bench \NumRtestSelSelTB\% and fitted to LiveBench \NumRtestSelSelLB\%); the two-sided test differs from it only through the even-$n$ effect, and the one-sided test rejects too often.
 The chance that Holm wrongly passes at least one step on a global-null board is \NumNullHolmB\%.
-A second simulation checks the resolution formula: at the formula's minimum detectable difference, the selective test catches the gap \NumPowerAtMddSelB{} of the time at 500 tasks (Table~\ref{tab:power}), against a target of 0.80.
+A second simulation checks the resolution formula: at the formula's minimum detectable difference, the selective test catches the gap \NumPowerAtMddSelB{} of the time at 500 tasks (Supplement, Table~S2), against a target of 0.80.
 
 A split-half check on the real boards asks whether the test actually separates genuine records from lucky ones (Table~\ref{tab:split}).
 For every record step we split the tasks into two random halves \NumSplitR{} times, run the test on one half, and record whether the challenger still beats the holder on the other half.
@@ -386,6 +399,10 @@ Steps that pass on the first half (\NumSplitSigShare\% of splits, against \NumSp
 Those raw figures need a reference point: every step is a record on the full data, so a challenger that did well on one half must have done less well on the other, and even a pure-luck record beats the holder on the second half more often than not.
 We therefore simulate that pure-luck reference for each step with its own number of disputed tasks (fair-coin signs, conditioned on the record event on the full data, then the same split): it gives \NumSplitNullSigRep{} for first halves that pass and \NumSplitNullNonRep{} for those that do not.
 Steps that pass repeat far above that reference, and steps that do not pass repeat at about it, on every board, which is what a test that separates genuine records from lucky ones should produce; the pooled figures are dominated by SWE-bench Test, and Multimodal and Terminal-Bench contribute few passing splits.
+
+Terminal-Bench allows a second kind of replication, across runs rather than across tasks: most submissions ran every task five times, so for each of its \NumRunSplitSteps{} record steps we split each task's runs at random into two of five and the other three, \NumRunSplitR{} times, run the test on the first part and check the second; a pure-luck reference redistributes each task's runs between the two systems at random, keeps the draws that form a record on the full data, and applies the same split.
+Record steps that pass on the two-run part beat the old record on the three-run part \NumRunSplitSigRep{} of the time (reference \NumRunSplitNullSigRep{}), and the steps that do not pass \NumRunSplitNonRep{} of the time (reference \NumRunSplitNullNonRep{}).
+The second number is the informative one: on this board even the records the test cannot confirm beat the old record on fresh runs of the same tasks far more often than run noise alone would give, so what hides them is not the agent's run-to-run randomness but the draw of 89 tasks, which a run split cannot vary; the \NumRunSplitFullSigSteps{} record that passes on the full data replicates on every split (\NumRunSplitFullSigRep{}).
 
 \begin{table}[t]
 \centering\small
@@ -425,7 +442,7 @@ This is why our reporting checklist asks for the number of versions tried: witho
 \begin{table}[t]
 \centering\small
 \resizebox{\textwidth}{!}{\input{tab_recordtest.tex}}
-\caption{How often the record test wrongly rejects among record steps, simulated from the fitted Verified model. Global null: \NumSimK{} equally able systems in sequence, averaged over the chain. Selected-step null: equally able holder and challenger, challenger scored higher. A correct test rejects 5\% at the 5\% level.}
+\caption{How often the record test wrongly rejects among record steps, with the simulation model fitted to each of four boards (their own task difficulties, base score and copula correlation). Global null: \NumSimK{} equally able systems in sequence, averaged over the chain. Selected-step null: equally able holder and challenger, challenger scored higher. A correct test rejects 5\% at the 5\% level. Last column: how often the selective test catches a gap equal to the formula's minimum detectable difference, target 0.80.}
 \label{tab:recordtest}
 \end{table}
 
@@ -454,7 +471,7 @@ We test the corrections on SWE-bench Verified, with Lite and Terminal-Bench as f
 \textbf{Known truth.} We treat the real table of results as the whole population, draw a pretend ``benchmark'' of $n$ tasks from it with replacement, and compare each estimate with the winner's true score on the whole population. This favours a bootstrap method, because the true gaps between systems equal the observed gaps.
 \textbf{Equal leaders.} The hardest case: the top \NumBunchEqualTop{} systems are given exactly the same true ability, outcomes are simulated from the fitted task-difficulty model, and the truth is known.
 \textbf{Held-out tasks.} The real 500 tasks are split at random into two halves; the winner is picked on the first half and the estimate is compared with its score on the second half, which is a fair but noisy stand-in for the truth.
-\textbf{Held-out repositories.} The same, but the halves are made of different repositories, chosen among the \NumVThreeSplits{} repository subsets that put 40 to 60\% of the tasks in the selection half (\NumVThreeSelMin{} to \NumVThreeSelMax{} tasks). The selection board keeps its repository labels and the corrections resample repositories. The validation score is adjusted for the average difference in difficulty between the halves across all systems; the appendix reports the unadjusted target and the task-resampling corrections as well.
+\textbf{Held-out repositories.} The same, but the halves are made of different repositories, chosen among the \NumVThreeSplits{} repository subsets that put 40 to 60\% of the tasks in the selection half (\NumVThreeSelMin{} to \NumVThreeSelMax{} tasks). The selection board keeps its repository labels and the corrections resample repositories. The validation score is adjusted for the average difference in difficulty between the halves across all systems; the supplement (Table~S4) reports the unadjusted target and the task-resampling corrections as well.
 Alongside our two corrections we run the hybrid and zoom baselines of Section~\ref{sec:methods}.
 Table~\ref{tab:valid} gives the mean error with its simulation standard error, the median error, the root mean squared error, how often the 95\% interval contains the truth (its coverage) and its median length where the truth is known, how often each method is defined at all, and the mean and median error on the subset of repetitions in which all six methods are defined, since the conditional and hybrid methods break down exactly where selection matters most, at an exact tie for first.
 
@@ -480,12 +497,12 @@ When the held-out half is made of other repositories, the repository-resampling 
 The correction removes the inflation but does not make the winner's score more precise: on held-out tasks the root mean squared error of the iterated bootstrap (\NumVTwoIterRmse) is not below that of the plain bootstrap (\NumVTwoBootRmse), because most of the error in one system's score is ordinary sampling noise, not selection.
 On the common subset the conditional method, which is median-unbiased by construction, has a median error of \NumVBunchNCCondMedC{} with equal leaders against \NumVBunchNCIterMedC{} for the iterated bootstrap, but it is defined in only \NumVBunchNCCondFin\% of those runs.
 The hybrid interval fails only at an exact tie for first and never runs off to infinity: with equal leaders it contains the truth in \NumVBunchNCHybCov{} of runs with a median length of \NumVBunchNCHybLen{} points, against \NumVBunchNCCondCov{} and \NumVBunchNCCondLen{} for the conditional interval, \NumVBunchNCIterCov{} and \NumVBunchNCIterLen{} for the iterated bootstrap, and \NumVBunchNCZoomCov{} and \NumVBunchNCZoomLen{} for the zoom interval, which leaves the point estimate as reported; the hybrid estimate's median error on the common subset is \NumVBunchNCHybMedC{} points.
-The hybrid estimate came out identical to the conditional one in every setting we ran, because the wide first-stage interval seldom bites at these sample sizes; its gain over the conditional method is the shorter interval, and on held-out tasks it leaves \NumVTwoHybBias{} points of inflation against \NumVTwoIterBias{} for the iterated bootstrap.
+The hybrid estimate came out identical to the conditional one in every setting we ran, because the wide first-stage interval seldom binds at these sample sizes; its gain over the conditional method is the shorter interval, and on held-out tasks it leaves \NumVTwoHybBias{} points of inflation against \NumVTwoIterBias{} for the iterated bootstrap.
 The two baselines do not change the recommendation: the iterated bootstrap has the smallest bias among estimates that still work at a tie, and the hybrid interval is the one to report when a guarantee under normality is wanted.
 In the known-truth runs the 95\% iterated interval contains the truth more often than the interval around the reported score, \NumVOneNAIterCov{} against \NumVOneNANaiveCov{} at 100 tasks and \NumVOneNCIterCov{} against \NumVOneNCNaiveCov{} at 500; it stays below the promised 95\% when tasks are few.
 On Lite the iterated correction removes \NumLiteTwoReduction\% on held-out tasks but overshoots on held-out repositories (mean error \NumLiteThreeIterBias{} points against \NumLiteThreeNaiveBias{} for the reported score, with selection halves of only 120 to 180 tasks).
-On Terminal-Bench (Appendix Table~\ref{tab:valtb}) the known-truth and equal-leaders results point the same way, but on real held-out halves of 44 tasks the iterated correction overshoots (mean error \NumTBTwoIterBias{} points against \NumTBTwoNaiveBias{} for the reported score), so the correction is not guaranteed to help on very small benchmarks.
-On LiveBench (Appendix Table~\ref{tab:vallb}) equally able leaders are inflated by \NumLBBunchNaiveBias{} points, of which the iterated bootstrap leaves \NumLBBunchIterBias{} and the hybrid \NumLBBunchHybBias{}; on held-out halves of its questions there is no inflation to remove (\NumLBTwoNaiveBias{} for the reported score), because its leader is far ahead of the field, and the corrections leave it nearly untouched (\NumLBTwoIterBias{} and \NumLBTwoHybBias{}).
+On Terminal-Bench (Supplement, Table~S5) the known-truth and equal-leaders results point the same way, but on real held-out halves of 44 tasks the iterated correction overshoots (mean error \NumTBTwoIterBias{} points against \NumTBTwoNaiveBias{} for the reported score), so the correction is not guaranteed to help on very small benchmarks.
+On LiveBench (Supplement, Table~S5) equally able leaders are inflated by \NumLBBunchNaiveBias{} points, of which the iterated bootstrap leaves \NumLBBunchIterBias{} and the hybrid \NumLBBunchHybBias{}; on held-out halves of its questions there is no inflation to remove (\NumLBTwoNaiveBias{} for the reported score), because its leader is far ahead of the field, and the corrections leave it nearly untouched (\NumLBTwoIterBias{} and \NumLBTwoHybBias{}).
 
 \subsection{Do the rank intervals and the set of possible best systems contain the truth?}
 We use the known-truth setting again (\NumRankCovR{} repetitions; Table~\ref{tab:rankcov}).
@@ -493,7 +510,7 @@ The 95\% rank interval contains the true rank for \NumRankCovAllA{} (250 tasks) 
 When the top \NumBunchEqualTop{} systems are equally able, a leader's ``true rank'' is not well defined: if tied systems all count as rank 1 the interval contains it for only \NumRankBunchLeadA{} and \NumRankBunchLeadB{} of the leaders, if they count as the average of the tied ranks for \NumRankBunchLeadAvgA{} and \NumRankBunchLeadAvgB{}, and it overlaps the block of tied ranks in \NumRankBunchBlockA{} and \NumRankBunchBlockB{} of cases.
 The intervals show how much a rank moves when the tasks are redrawn and should not be read as confidence intervals for a true rank when leaders are close~\citep{neuhof2026rankintervals,mogstad2024ranks}.
 The set of possible best systems behaves differently: in the same runs it contained each of the equally able leaders in \NumSetBunchInA{} (250 tasks) and \NumSetBunchInB{} (500 tasks) of repetitions, with a median size of \NumSetBunchSizeA{} and \NumSetBunchSizeB{} against \NumBunchEqualTop{} tied systems, so it keeps each tied leader at the promised rate without being much larger than the tied block.
-Table~\ref{tab:lottery} shows how often the observed winner really is one of the best systems in the known-truth runs: \NumVFourNCWin{} at 500 tasks, \NumVFourNBWin{} at 250 and \NumVFourNAWin{} at 100.
+The supplement (Table~S3) shows how often the observed winner really is one of the best systems in the known-truth runs: \NumVFourNCWin{} at 500 tasks, \NumVFourNBWin{} at 250 and \NumVFourNAWin{} at 100.
 
 \begin{table}[t]
 \centering\scriptsize
@@ -525,6 +542,21 @@ On these chains no two records in a row are both genuine and large enough to see
 With 95\% confidence every record certified by either rule is genuine, so the six boards hold at least \NumCertTotalFall{} records that beat the one before them task by task.
 With the certified baseline (Corollary~3), every submission that beats the last certified record is tested: the tenure rule, which carries the whole-chain guarantee, certifies \NumCertTotalTenCert{} of \NumCertTestsTenCert{} tested submissions across the boards, test-counting alpha-spending \NumCertTotalSpendCert{} of \NumCertTestsSpendCert{}, and LORD++ \NumCertTotalLordCert{} of \NumCertTestsLordCert{}.
 Figure~\ref{fig:certified} shows the leaderboard record line and the certified record line under the tenure rule on Verified and Lite: on Verified the certified leader changes \NumVerifiedCertTenCert{} times in \NumVerifiedK{} submissions, against \NumVerifiedSteps{} leaderboard records.
+
+\paragraph{The rule at work, and the records that came with a write-up.}
+Table~\ref{tab:verifiedchain} lists all \NumClaimsSteps{} Verified records in date order: the system's name as the leaderboard shows it, its score, its margin, the per-date factor $g$, the selective $p$-value, the level the online fallback rule uses at that step and its verdict, and whether the submission links a paper or technical report (``report'') or only a code or product page (``site'').
+Run live, the rule starts at a level of \NumClaimsFirstLevel\% (the first record's share of the 5\% budget), certifies the first record at once ($p<0.001$), and hands its unused level on, so the second record is tested at a higher level than spending alone would give; that record fails, the level falls back to the spending share, the third record ($p=0.001$) is certified, and after that every $p$-value sits above the shrinking level.
+It certifies \NumClaimsFallbackCert{} of the \NumClaimsSteps{} records; the other \NumClaimsSigNotCert{} that pass the per-step test at 5\% have $p$-values between 0.02 and 0.05, which is not enough once the budget has been spent on earlier records.
+\NumClaimsReport{} of the \NumClaimsSteps{} records come with a paper or technical report, and only \NumClaimsReportSig{} of them is clearly better than the record it replaced; \NumClaimsChecked{} records carry the maintainers' ``checked'' tag, and \NumClaimsCheckedSig{} of those is.
+None of this says those write-ups are wrong: a report usually documents a system, not a claim about this one gap, and a record the board cannot confirm may still be real.
+It says that on this board the published record and the certified record are different things, and that a maintainer running the rule would have announced \NumClaimsFallbackCert{} new states of the art in two years rather than \NumClaimsSteps{}.
+
+\begin{table}[t]
+\centering\scriptsize
+\resizebox{\textwidth}{!}{\input{tab_verified_chain.tex}}
+\caption{Every record on SWE-bench Verified, in date order, with the online fallback rule run live. Score: the challenger's reported score (\%). Margin: its gain over the record it replaced (points). $g$: submissions sharing the challenger's date (the per-date factor). $p_{\mathrm{sel}}$: the selective $p$-value after that factor. Level: the level the fallback rule uses at that step; certified when $p_{\mathrm{sel}}$ is at or below it. Write-up: whether the submission's leaderboard entry links a paper or technical report, or only a code or product page.}
+\label{tab:verifiedchain}
+\end{table}
 
 \begin{table}[t]
 \centering\small
@@ -571,7 +603,7 @@ Table~\ref{tab:lags} gives how far back a record has to be compared before it is
 Figure~\ref{fig:ranks} shows the leaders.
 On Verified the two tied leaders rank first in \NumVerifiedPBest{} and \NumVerifiedPBestOther{} of redraws of the tasks, and \NumVerifiedSet{} systems could be the true best (\NumVerifiedSetSim{} with the all-pairs bound; \NumVerifiedSetCluster{} when repositories are redrawn).
 Terminal-Bench~2 shows the opposite case: the leader is first in \NumTBPBest{} of redraws, yet with 89 tasks \NumTBSet{} systems still cannot be ruled out, because systems well below the leader cannot be excluded with so few tasks.
-A clear leader and a long list of possible best systems can both be true: the set keeps each truly best system at about the promised rate but cannot exclude systems well below the leader with so few tasks, so its size overstates how many systems really have a shot.
+A clear leader and a long list of possible best systems can both be true: the set keeps each truly best system at about the promised rate but cannot exclude systems well below the leader with so few tasks, so its size overstates how many systems could really be best.
 
 \begin{figure}[t]
 \centering
@@ -593,9 +625,9 @@ For the 20 strongest systems, run-to-run randomness is a median \NumTBRunShareSi
 So a single-run coding-agent score carries run noise of about the same size as task-sampling noise, something the SWE-bench boards, with one run per submission, cannot show.
 
 \paragraph{Development selection, seen through repeated runs.}
-How much teams gain by quietly trying several versions before submitting cannot be measured from one run per system, but the Terminal-Bench submissions that ran the whole benchmark several times show the scale of its simplest form.
+How much teams gain by privately trying several versions before submitting cannot be measured from one run per system, but the Terminal-Bench submissions that ran the whole benchmark several times show the scale of its simplest form.
 \NumTBJobSubs{} kept submissions have at least two complete jobs (median \NumTBJobMedianJobs); the spread (standard deviation) of a submission's score across its jobs has median \NumTBJobSd{} points (middle half of submissions \NumTBJobSdLo{} to \NumTBJobSdHi), and a team that had reported its best job instead of the average of its jobs would have gained a median \NumTBJobInflMedian{} points (mean \NumTBJobInflMean, at most \NumTBJobInflMax).
-As a rough guide to scale, picture a team that tries $V$ versions whose scores scatter like repeated runs and submits the best: the expected gain is $\E[\max_{v\le V} Z_v]$ times that spread, \NumTBJobInflVTwo{} points for two versions, \NumTBJobInflVFive{} for five and \NumTBJobInflVTen{} for ten, about the same size as the winner's-curse inflation from task sampling and as this board's typical record margin (\NumTBJobInflVFive{} against \NumTBMedianMargin{} points).
+As a rough guide to scale, consider a team that tries $V$ versions whose scores scatter like repeated runs and submits the best: the expected gain is $\E[\max_{v\le V} Z_v]$ times that spread, \NumTBJobInflVTwo{} points for two versions, \NumTBJobInflVFive{} for five and \NumTBJobInflVTen{} for ten, about the same size as the winner's-curse inflation from task sampling and as this board's typical record margin (\NumTBJobInflVFive{} against \NumTBMedianMargin{} points).
 The leaderboard reports the average over jobs, so this is a bound on what reporting the best run would add, not a finding that anyone did it, and picking among versions that differ by more than run noise can add more.
 
 \paragraph{A non-agent comparison.}
@@ -644,7 +676,7 @@ For readers: treat a margin below the board's critical margin (about \NumVerifie
 Appendix~\ref{app:checklist} lists ten things a leaderboard can adopt.
 
 \section{Conclusion}
-Leaderboards squeeze a big table of task-by-task results into one ranking.
+Leaderboards compress a large table of task-by-task results into one ranking.
 On the four agent boards with at most 510 tasks and at least one record, most records cannot be told apart from the record before them by a test that allows for how records are selected; on the 2{,}294-task SWE-bench Test most can.
 This is a statement about what the benchmarks can see, not a finding that the records are equal, and tuning on public tasks, which we do not model, is a separate source of inflation.
 The procedures work unchanged on a language-model leaderboard, LiveBench, whose four records are too few to compare with the agent boards.
@@ -656,6 +688,9 @@ Three outside automated reviews were used to find errors before submission; thei
 
 \paragraph{Reproducibility.}
 The script \texttt{make\_numbers.py} generates every number in this paper from the result files, so the text cannot disagree with the analysis. Data provenance, the command behind every table and figure, the pinned environment and the hashes of every data and result file are in the repository (\url{https://github.com/jopoku16/honestboard}, file \texttt{REPRODUCE.md}).
+
+\paragraph{Supplementary material.}
+Tables~S1 to S5 and Figure~S1 (the record test by position in the chain, its power, the ranking lottery, the full winner's-curse validation tables for Verified, Terminal-Bench and LiveBench, and the record ladders of five boards) are in the supplement that accompanies the paper (\texttt{supplement.pdf} in the repository), generated by the same script as the main text.
 
 \bibliographystyle{plainnat}
 \bibliography{refs}
@@ -677,21 +712,9 @@ The script \texttt{make\_numbers.py} generates every number in this paper from t
 
 \section{What a maintainer sees}\label{app:prcheck}
 The package answers the questions of this paper for one submission in one call.
-Below is its output, unedited, for the current SWE-bench Verified leader and for the board as a whole; the \texttt{pr-check} command prints the same facts as a Markdown comment for a pull request.
-The leader ties the previous leader exactly (difference 0.0 points, so it set no record), and the board's latest record beat the record it replaced by just two tasks, for which the selective $p$-value is exactly one: the smallest possible record carries no evidence at all.
+Below is its output, unedited, for the current SWE-bench Verified leader; the \texttt{report} command prints the same facts for the whole board, and \texttt{pr-check} prints them as a Markdown comment for a pull request.
+The leader ties the previous leader exactly (difference 0.0 points, so it set no record), and the board's latest record (the last row of Table~\ref{tab:verifiedchain}) beat the record it replaced by just two tasks, for which the selective $p$-value is exactly one: the smallest possible record carries no evidence at all.
 {\footnotesize\verbatiminput{prcheck_example.txt}}
-
-\section{The record-test calibration fitted to other boards}\label{app:otherboards}
-The simulations of Section~\ref{sec:valid} are fitted to SWE-bench Verified.
-Table~\ref{tab:rtestboards} repeats the false-rejection and power study with the model fitted to SWE-bench Lite, Terminal-Bench~2 and LiveBench (their own task difficulties, base score and copula correlation $\rho$, the last tuned to each board's task-by-task spread), at 300, 500 and 2,000 tasks.
-With the model fitted to Lite the selective test wrongly rejects \NumRtestSelSelLite\% of selected null steps at 500 tasks (one-sided \NumRtestSelOneLite\%), fitted to Terminal-Bench \NumRtestSelSelTB\% (\NumRtestSelOneTB\%) and fitted to LiveBench \NumRtestSelSelLB\% (\NumRtestSelOneLB\%).
-
-\begin{table}[H]
-\centering\small
-\resizebox{\textwidth}{!}{\input{tab_recordtest_boards.tex}}
-\caption{The record test with the simulation model fitted to each of four boards. Selected-step null and global null: how often the selective test wrongly rejects at the 5\% level among record steps (global null: averaged over the chain, and at the first step). Power at the MDD: how often the selective test catches a gap equal to the formula's minimum detectable difference, target 0.80.}
-\label{tab:rtestboards}
-\end{table}
 
 \section{Proof of Lemma 1}\label{app:lemma}
 Write $T_n(k)=\sum_{j\ge k}\binom nj$, so that $p_{\mathrm{sel}}(k,n)=T_n(k)/T_n(\lfloor n/2\rfloor+1)$ for a challenger with $k>n/2$ wins among $n$ discordant tasks.
@@ -713,54 +736,4 @@ Without a correction that puts the statistic right on the edge of the cut-off re
 Relaxing each constraint by half a grid step and taking the tail from half a step below the observed statistic (a continuity correction) brings the rate to 1 to 3\%.
 We have no finite-sample guarantee for the corrected version and report it only as a comparison (Tables~\ref{tab:chainsim} and \ref{tab:chainaudit}).
 
-\section{Record ladders}
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{../figures/fig5_ladders.pdf}
-\caption{The record ladders of five leaderboards. A filled point is clearly better than the previous record (selective exact paired test at the 5\% level); a hollow point is not.}
-\label{fig:ladders}
-\end{figure}
-
-\section{Full validation tables}
-\begin{table}[H]
-\centering\small
-\resizebox{\textwidth}{!}{\input{tab_position.tex}}
-\caption{Global null: how often the test wrongly rejects, by the step's position in the record chain. The first step compares against the first submission, which is only mildly lucky; later steps compare against the luckiest system so far.}
-\label{tab:position}
-\end{table}
-
-\begin{table}[H]
-\centering\small
-\resizebox{\textwidth}{!}{\input{tab_power.tex}}
-\caption{How often the selective paired test catches a true gap of 1, 2, 3 and 5 points, and a gap equal to the minimum detectable difference given by the formula in Section~\ref{sec:methods}. Fitted Verified model, baseline score \NumSimBase\%.}
-\label{tab:power}
-\end{table}
-
-\begin{table}[H]
-\centering\small
-\resizebox{0.9\textwidth}{!}{\input{tab_lottery.tex}}
-\caption{Known-truth simulation of ranking on SWE-bench Verified: how often the observed winner really is one of the best systems, and whether the set of possible best systems contains a truly best system when the winner is not one.}
-\label{tab:lottery}
-\end{table}
-
-\begin{table}[H]
-\centering\scriptsize
-\resizebox{\textwidth}{!}{\input{tab_validation_full.tex}}
-\caption{All validation settings on SWE-bench Verified. Columns as in Table~\ref{tab:valid}. The held-out-repository rows show the cluster-resampling corrections against the shift-adjusted and the unadjusted target, and the task-resampling (iid) corrections against the shift-adjusted target.}
-\label{tab:valfull}
-\end{table}
-
-\begin{table}[H]
-\centering\scriptsize
-\resizebox{\textwidth}{!}{\input{tab_validation_tb.tex}}
-\caption{Validation on Terminal-Bench~2 (89 tasks, per-task rates from repeated trials; equal-leaders outcomes simulated with five trials).}
-\label{tab:valtb}
-\end{table}
-
-\begin{table}[H]
-\centering\scriptsize
-\resizebox{\textwidth}{!}{\input{tab_validation_lb.tex}}
-\caption{Validation on LiveBench (\NumLBT{} questions, per-question credit in $[0,1]$; equal-leaders outcomes simulated as pass or fail), \NumLBValR{} repetitions.}
-\label{tab:vallb}
-\end{table}
 \end{document}

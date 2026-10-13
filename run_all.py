@@ -56,6 +56,10 @@ run("validate_cluster_effects.py", "2000" if QUICK else "20000")
 run("validate_private_tries.py", "2000" if QUICK else "20000")
 if os.path.exists(os.path.join(ROOT, "data", "raw_verified.json")):
     run("missing_data_check.py")              # needs the raw download
+    run("record_claims.py")                   # joins each Verified record to its write-up link (needs the raw download)
+if os.path.exists(os.path.join(ROOT, "data", "raw_terminalbench.json")):
+    run("tb_run_split.py", "40" if QUICK else "200", "100" if QUICK else "500")   # replication across runs (needs the raw download)
+run("make_prcheck_example.py")
 run("make_figures.py")
 run("make_numbers.py")
 run("build_site.py")

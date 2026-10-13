@@ -25,6 +25,12 @@ support = ("numbers.tex", "refs.bib", "main.bbl") + tuple(f for f in os.listdir(
 for name in support:
     shutil.copy(os.path.join(PAP, name), os.path.join(OUT, name))
 include = sorted(["main.tex", *figs, *support])          # only source files, never build artefacts
+# the supplement travels as an ancillary file (arXiv's anc/ folder), so that arXiv compiles main.tex alone
+sup = os.path.join(PAP, "supplement.pdf")
+if os.path.exists(sup):
+    os.makedirs(os.path.join(OUT, "anc"), exist_ok=True)
+    shutil.copy(sup, os.path.join(OUT, "anc", "supplement.pdf"))
+    include.append("anc/supplement.pdf")
 zpath = os.path.join(ROOT, "release", "arxiv_source.zip")
 with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
     for f in include:

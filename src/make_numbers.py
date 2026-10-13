@@ -311,20 +311,7 @@ if rtest:
 others = [(tag, lab, load(f"validation_recordtest_{tag}.json")) for tag, lab in
           (("lite", "SWE-bench Lite"), ("terminalbench", "Terminal-Bench 2"), ("livebench", "LiveBench"))]
 others = [(t, l, d) for t, l, d in others if d]
-if rtest and others:
-    rows = [("verified", "SWE-bench Verified", rtest)] + others
-    with open(os.path.join(PAP, "tab_recordtest_boards.tex"), "w") as f:
-        f.write("\\begin{tabular}{llrrrrr}\n\\toprule\nFitted board & $\\rho$ & Tasks & Selected-step null & Global null, per step & Global null, first step & Power at the MDD \\\\\n\\midrule\n")
-        for tag, lab, d in rows:
-            sel = {blk["T"]: blk for blk in d["null_selected"]}
-            pw = {blk["T"]: blk for blk in d["power"]}
-            for blk in d["null_global"]:
-                s, p = sel[blk["T"]], pw[blk["T"]]
-                first = blk.get("by_position", {}).get("1", {})
-                fs = f"{100 * first['sel'] / first['steps']:.1f}\\%" if first.get("steps") and "sel" in first else "--"
-                f.write(f"{lab if blk['T'] == 300 else ''} & {d['design']['rho']:.2f} & {blk['T']:,} & {100 * s.get('rejection_selective', float('nan')):.1f}\\% & "
-                        f"{100 * blk.get('per_step_rejection_selective', float('nan')):.1f}\\% & {fs} & {p.get('power_at_formula_mdd_selective', p['power_at_formula_mdd']):.2f} \\\\\n")
-        f.write("\\bottomrule\n\\end{tabular}\n")
+if rtest and others:                 # the other boards' rows go into the merged record-test table below
     for tag, lab, d in others:
         key = {"lite": "Lite", "terminalbench": "TB", "livebench": "LB"}[tag]
         s = {blk["T"]: blk for blk in d["null_selected"]}
@@ -504,14 +491,17 @@ if val:
     full += [(lab, val[k]) for k, lab in (("V2", "Held-out tasks"), ("V3", "Held-out repositories (cluster, shift-adjusted)"),
                                           ("V3_raw", "Held-out repositories (cluster, unadjusted)"), ("V3_iid", "Held-out repositories (iid, shift-adjusted)")) if k in val]
     val_table(os.path.join(PAP, "tab_validation_full.tex"), full)
+    small_rows = []                  # Terminal-Bench and LiveBench share one table in the supplement
     if val_tb:
         n = str(val_tb["T"])
-        val_table(os.path.join(PAP, "tab_validation_tb.tex"),
-                  [(f"Known truth, {n} tasks", val_tb["V1"][n]), (f"Equal leaders, {n} tasks", val_tb["V1b"][n]), ("Held-out tasks", val_tb["V2"])])
+        small_rows += [(f"Terminal-Bench 2: known truth, {n} tasks", val_tb["V1"][n]), (f"Terminal-Bench 2: equal leaders, {n} tasks", val_tb["V1b"][n]),
+                       ("Terminal-Bench 2: held-out tasks", val_tb["V2"])]
     if val_lb:
         n = str(val_lb["T"])
-        val_table(os.path.join(PAP, "tab_validation_lb.tex"),
-                  [(f"Known truth, {n} questions", val_lb["V1"][n]), (f"Equal leaders, {n} questions", val_lb["V1b"][n]), ("Held-out questions", val_lb["V2"])])
+        small_rows += [(f"LiveBench: known truth, {n} questions", val_lb["V1"][n]), (f"LiveBench: equal leaders, {n} questions", val_lb["V1b"][n]),
+                       ("LiveBench: held-out questions", val_lb["V2"])]
+    if small_rows:
+        val_table(os.path.join(PAP, "tab_validation_small.tex"), small_rows)
     with open(os.path.join(PAP, "tab_lottery.tex"), "w") as f:
         f.write("\\begin{tabular}{rrrr}\n\\toprule\nTasks per benchmark & Winner is a truly best system (share of runs) & Set covers a truly best system when the winner is not & Median set size \\\\\n\\midrule\n")
         for n in ("100", "250", "500"):
@@ -595,25 +585,72 @@ if chain_audit:
         f.write("\\midrule\nAll boards & " + f"{tot['lord_exact_leader']['tests']} & " + " & ".join(
             f"{tot[c]['certified']}" + (f"/{tot[c]['tests']}" if c.endswith("certified") else "") for c in cols) + " \\\\\n")
         f.write("\\bottomrule\n\\end{tabular}\n")
-if rtest:
-    has_sel = all("per_step_rejection_selective" in blk for blk in rtest["null_global"]) and all("rejection_selective" in blk for blk in rtest["null_selected"])
-    pc = lambda x: f"{100 * x:.1f}\\%"
-    with open(os.path.join(PAP, "tab_recordtest.tex"), "w") as f:
-        if has_sel:
-            f.write("\\begin{tabular}{rrrrrrrrr}\n\\toprule\n & & \\multicolumn{3}{c}{Global null (holder is a running maximum)} & \\multicolumn{3}{c}{Selected-step null (holder not inflated)} & \\\\\n"
-                    "Tasks & Steps per board & selective & two-sided & one-sided & selective & two-sided & one-sided & Holm, any rejection (selective) \\\\\n\\midrule\n")
-        else:
-            f.write("\\begin{tabular}{rrrrrrr}\n\\toprule\n & & \\multicolumn{2}{c}{Global null (holder is a running maximum)} & \\multicolumn{2}{c}{Selected-step null (holder not inflated)} & \\\\\n"
-                    "Tasks & Steps per board & one-sided & two-sided & one-sided & two-sided & Holm, any rejection (two-sided) \\\\\n\\midrule\n")
-        sel = {blk["T"]: blk for blk in rtest["null_selected"]}
-        for blk in rtest["null_global"]:
-            s = sel[blk["T"]]
-            if has_sel:
-                f.write(f"{blk['T']:,} & {blk['mean_steps_per_board']:.1f} & {pc(blk['per_step_rejection_selective'])} & {pc(blk['per_step_rejection_two_sided'])} & {pc(blk['per_step_rejection_one_sided'])} & "
-                        f"{pc(s['rejection_selective'])} & {pc(s['rejection_two_sided'])} & {pc(s['rejection_one_sided'])} & {pc(blk['holm_any_rejection_per_board'])} \\\\\n")
+# ---- the worked certification of SWE-bench Verified: every record step with its write-up, p-value, fallback level and verdict ----
+claims = load("record_claims_verified.json")
+if chain_audit and claims:
+    ver = next((x for x in chain_audit["boards"] if x["board"] == "SWE-bench Verified"), None)
+    fb = {st["new"]: st for st in ver["procedures"]["fallback_exact_leader"]["steps"]} if ver and "fallback_exact_leader" in ver["procedures"] else {}
+    put("ClaimsSteps", claims["n_steps"]); put("ClaimsReport", claims["n_with_report"]); put("ClaimsReportSig", claims["n_with_report_significant"])
+    put("ClaimsChecked", claims["n_checked"]); put("ClaimsCheckedSig", claims["n_checked_significant"]); put("ClaimsSig", claims["n_significant"])
+    put("ClaimsFallbackCert", sum(1 for st in fb.values() if st["certified"]))
+    put("ClaimsReportNotSig", claims["n_with_report"] - claims["n_with_report_significant"])
+    put("ClaimsSigNotCert", claims["n_significant"] - sum(1 for st in fb.values() if st["certified"]))
+    put("ClaimsFirstLevel", f"{100 * min((st['level'] for st in fb.values()), default=float('nan')):.1f}" if fb else "--")
+
+    def short(name, n=44):
+        name = (name or "").replace("&", "\\&").replace("_", "\\_").replace("%", "\\%").replace("#", "\\#")
+        return name if len(name) <= n else name[: n - 1].rstrip() + "\\ldots"
+
+    def pfmt(p):
+        return "$<$0.001" if p < 0.001 else (f"{p:.3f}" if p < 0.9995 else "1.000")
+
+    with open(os.path.join(PAP, "tab_verified_chain.tex"), "w") as f:
+        f.write("\\begin{tabular}{rllrrrrrll}\n\\toprule\n\\# & Date & System, as named on the leaderboard & Score & Margin & $g$ & $p_{\\mathrm{sel}}$ & Level & Certified & Write-up \\\\\n\\midrule\n")
+        for i, e in enumerate(claims["steps"], 1):
+            st = fb.get(e["new"], {})
+            if "level" in st:
+                lvl = f"{st['level']:.4f}" if st["level"] >= 0.001 else ("$%s\\times10^{%d}$" % (f"{st['level']:.1e}".split("e")[0], int(f"{st['level']:.1e}".split("e")[1])))
             else:
-                f.write(f"{blk['T']:,} & {blk['mean_steps_per_board']:.1f} & {pc(blk['per_step_rejection_one_sided'])} & {pc(blk['per_step_rejection_two_sided'])} & "
-                        f"{pc(s['rejection_one_sided'])} & {pc(s['rejection_two_sided'])} & {pc(blk['holm_any_rejection_per_board'])} \\\\\n")
+                lvl = "--"
+            cert = "yes" if st.get("certified") else "no"
+            wu = "report" if e["report"] else ("site" if e["site"] else "--")
+            d = e["date"]
+            f.write(f"{i} & {d[:4]}-{d[4:6]}-{d[6:]} & {short(e['name'] or e['new'])} & {100 * e['score']:.1f} & {100 * e['margin']:+.1f} & {e['date_group']} & "
+                    f"{pfmt(e['p'])} & {lvl} & {cert} & {wu} \\\\\n")
+        f.write("\\bottomrule\n\\end{tabular}\n")
+
+# ---- run-split replication of the record test on Terminal-Bench (trials split into two parts) ----
+runsplit = load("tb_run_split.json")
+if runsplit:
+    p = runsplit["pooled"]
+    fmt2 = lambda x: "--" if x is None else f"{x:.2f}"
+    put("RunSplitR", runsplit["R"]); put("RunSplitSteps", runsplit["n_steps_used"]); put("RunSplitStepsAll", runsplit["n_steps"])
+    put("RunSplitNullDraws", runsplit["null_draws"])
+    put("RunSplitSigShare", pct(p["real"]["sig1"]["n"] / (p["real"]["sig1"]["n"] + p["real"]["nonsig1"]["n"])))
+    put("RunSplitNullSigShare", pct(p["null"]["sig1"]["n"] / (p["null"]["sig1"]["n"] + p["null"]["nonsig1"]["n"])))
+    put("RunSplitSigRep", fmt2(p["real"]["sig1"]["rep"])); put("RunSplitSigRepSig", fmt2(p["real"]["sig1"]["repsig"]))
+    put("RunSplitNonRep", fmt2(p["real"]["nonsig1"]["rep"])); put("RunSplitNonRepSig", fmt2(p["real"]["nonsig1"]["repsig"]))
+    put("RunSplitNullSigRep", fmt2(p["null"]["sig1"]["rep"])); put("RunSplitNullNonRep", fmt2(p["null"]["nonsig1"]["rep"]))
+    put("RunSplitFullSigRep", fmt2(p["full_sig"]["rep_any_half"])); put("RunSplitFullNonRep", fmt2(p["full_nonsig"]["rep_any_half"]))
+    put("RunSplitFullSigSteps", p["full_sig"]["steps"]); put("RunSplitFullNonSteps", p["full_nonsig"]["steps"])
+
+if rtest:
+    # one table for the record-test calibration: the model fitted to Verified (all three tests) and to the other boards
+    pc = lambda x: f"{100 * x:.1f}\\%" if x is not None else "--"
+    fitted = [("SWE-bench Verified", rtest)] + [(lab, d) for _, lab, d in others]
+    with open(os.path.join(PAP, "tab_recordtest.tex"), "w") as f:
+        f.write("\\begin{tabular}{lrrrrrrrrrr}\n\\toprule\n & & & \\multicolumn{3}{c}{Global null (holder is the best so far)} & \\multicolumn{3}{c}{Selected-step null (holder not inflated)} & & \\\\\n"
+                "Fitted board & Tasks & Steps per board & selective & two-sided & one-sided & selective & two-sided & one-sided & Holm, any (selective) & Power at MDD \\\\\n\\midrule\n")
+        for bi, (lab, d) in enumerate(fitted):
+            sel = {blk["T"]: blk for blk in d["null_selected"]}
+            pw = {blk["T"]: blk for blk in d["power"]}
+            for k, blk in enumerate(d["null_global"]):
+                s, pw_ = sel[blk["T"]], pw[blk["T"]]
+                f.write(f"{lab if k == 0 else ''} & {blk['T']:,} & {blk['mean_steps_per_board']:.1f} & {pc(blk.get('per_step_rejection_selective'))} & {pc(blk['per_step_rejection_two_sided'])} & "
+                        f"{pc(blk['per_step_rejection_one_sided'])} & {pc(s.get('rejection_selective'))} & {pc(s['rejection_two_sided'])} & {pc(s['rejection_one_sided'])} & "
+                        f"{pc(blk['holm_any_rejection_per_board'])} & {pw_.get('power_at_formula_mdd_selective', pw_['power_at_formula_mdd']):.2f} \\\\\n")
+            if bi < len(fitted) - 1:
+                f.write("\\addlinespace\n")
         f.write("\\bottomrule\n\\end{tabular}\n")
     with open(os.path.join(PAP, "tab_position.tex"), "w") as f:
         f.write("\\begin{tabular}{rlrrrr}\n\\toprule\nTasks & Step in the chain & Steps & selective & two-sided & one-sided \\\\\n\\midrule\n")

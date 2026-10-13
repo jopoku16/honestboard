@@ -1,0 +1,352 @@
+{
+  "board": "Terminal-Bench 2",
+  "T": 89,
+  "R": 200,
+  "null_draws": 500,
+  "flips": 4000,
+  "n_steps": 9,
+  "n_steps_used": 9,
+  "skipped": [],
+  "steps": [
+    {
+      "new": "Ante__Gemini-3-Pro-Preview",
+      "previous": "MAYA__Claude-4.5-sonnet",
+      "date": "20251231",
+      "margin": 0.22022471910112357,
+      "margin_from_trials": 0.22022471910112357,
+      "p_full": 0.0005202372281760483,
+      "sig_full": true,
+      "date_group": 1,
+      "min_trials": 5,
+      "n_sig1": 200,
+      "rep_sig1": 200,
+      "repsig_sig1": 200,
+      "n_nonsig1": 0,
+      "rep_nonsig1": 0,
+      "repsig_nonsig1": 0,
+      "null": {
+        "p_sig1": 0.036,
+        "rep_given_sig1": 0.6111111111111112,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.7883817427385892,
+        "repsig_given_nonsig1": 0.04564315352697095,
+        "draws": 500,
+        "record_event_rate": 0.4655493482309125
+      },
+      "null_counts": {
+        "n_sig1": 7.199999999999999,
+        "rep_sig1": 4.4,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 192.79999999999998,
+        "rep_nonsig1": 151.99999999999997,
+        "repsig_nonsig1": 8.799999999999999
+      }
+    },
+    {
+      "new": "OpenSage__Gemini-3-Pro-Preview",
+      "previous": "Ante__Gemini-3-Pro-Preview",
+      "date": "20260123",
+      "margin": 0.004494382022471988,
+      "margin_from_trials": 0.004494382022471988,
+      "p_full": 1.0,
+      "sig_full": false,
+      "date_group": 1,
+      "min_trials": 5,
+      "n_sig1": 0,
+      "rep_sig1": 0,
+      "repsig_sig1": 0,
+      "n_nonsig1": 200,
+      "rep_nonsig1": 112,
+      "repsig_nonsig1": 0,
+      "null": {
+        "p_sig1": 0.038,
+        "rep_given_sig1": 0.6842105263157895,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.7879417879417879,
+        "repsig_given_nonsig1": 0.02286902286902287,
+        "draws": 500,
+        "record_event_rate": 0.45578851412944393
+      },
+      "null_counts": {
+        "n_sig1": 7.6,
+        "rep_sig1": 5.2,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 192.4,
+        "rep_nonsig1": 151.6,
+        "repsig_nonsig1": 4.4
+      }
+    },
+    {
+      "new": "Droid__Claude-Opus-4.6",
+      "previous": "OpenSage__Gemini-3-Pro-Preview",
+      "date": "20260129",
+      "margin": 0.04719101123595504,
+      "margin_from_trials": 0.04719101123595504,
+      "p_full": 0.30133572567783096,
+      "sig_full": false,
+      "date_group": 1,
+      "min_trials": 5,
+      "n_sig1": 0,
+      "rep_sig1": 0,
+      "repsig_sig1": 0,
+      "n_nonsig1": 200,
+      "rep_nonsig1": 200,
+      "repsig_nonsig1": 0,
+      "null": {
+        "p_sig1": 0.036,
+        "rep_given_sig1": 0.7777777777777778,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.7863070539419087,
+        "repsig_given_nonsig1": 0.03112033195020747,
+        "draws": 500,
+        "record_event_rate": 0.4780114722753346
+      },
+      "null_counts": {
+        "n_sig1": 7.199999999999999,
+        "rep_sig1": 5.6,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 192.79999999999998,
+        "rep_nonsig1": 151.6,
+        "repsig_nonsig1": 6.0
+      }
+    },
+    {
+      "new": "Simple-Codex__GPT-5.3-Codex",
+      "previous": "Droid__Claude-Opus-4.6",
+      "date": "20260205",
+      "margin": 0.04719101123595493,
+      "margin_from_trials": 0.04719101123595493,
+      "p_full": 0.36212361331220283,
+      "sig_full": false,
+      "date_group": 2,
+      "min_trials": 5,
+      "n_sig1": 4,
+      "rep_sig1": 4,
+      "repsig_sig1": 0,
+      "n_nonsig1": 196,
+      "rep_nonsig1": 196,
+      "repsig_nonsig1": 1,
+      "null": {
+        "p_sig1": 0.018,
+        "rep_given_sig1": 0.4444444444444444,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.7718940936863544,
+        "repsig_given_nonsig1": 0.018329938900203666,
+        "draws": 500,
+        "record_event_rate": 0.5102040816326531
+      },
+      "null_counts": {
+        "n_sig1": 3.5999999999999996,
+        "rep_sig1": 1.5999999999999996,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 196.4,
+        "rep_nonsig1": 151.60000000000002,
+        "repsig_nonsig1": 3.6
+      }
+    },
+    {
+      "new": "Droid__GPT-5.3-Codex",
+      "previous": "Simple-Codex__GPT-5.3-Codex",
+      "date": "20260216",
+      "margin": 0.026966292134831593,
+      "margin_from_trials": 0.026966292134831593,
+      "p_full": 0.4213709677419355,
+      "sig_full": false,
+      "date_group": 1,
+      "min_trials": 5,
+      "n_sig1": 0,
+      "rep_sig1": 0,
+      "repsig_sig1": 0,
+      "n_nonsig1": 200,
+      "rep_nonsig1": 194,
+      "repsig_nonsig1": 0,
+      "null": {
+        "p_sig1": 0.028,
+        "rep_given_sig1": 0.5,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.808641975308642,
+        "repsig_given_nonsig1": 0.047325102880658436,
+        "draws": 500,
+        "record_event_rate": 0.45998160073597055
+      },
+      "null_counts": {
+        "n_sig1": 5.6000000000000005,
+        "rep_sig1": 2.8000000000000003,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 194.4,
+        "rep_nonsig1": 157.20000000000002,
+        "repsig_nonsig1": 9.200000000000001
+      }
+    },
+    {
+      "new": "Forge__Gemini-3.1-Pro-Preview",
+      "previous": "Droid__GPT-5.3-Codex",
+      "date": "20260226",
+      "margin": 0.011235955056179914,
+      "margin_from_trials": 0.011235955056179914,
+      "p_full": 0.8184993015366194,
+      "sig_full": false,
+      "date_group": 1,
+      "min_trials": 5,
+      "n_sig1": 0,
+      "rep_sig1": 0,
+      "repsig_sig1": 0,
+      "n_nonsig1": 200,
+      "rep_nonsig1": 161,
+      "repsig_nonsig1": 0,
+      "null": {
+        "p_sig1": 0.034,
+        "rep_given_sig1": 0.5882352941176471,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.7577639751552795,
+        "repsig_given_nonsig1": 0.033126293995859216,
+        "draws": 500,
+        "record_event_rate": 0.4807692307692308
+      },
+      "null_counts": {
+        "n_sig1": 6.800000000000001,
+        "rep_sig1": 4.000000000000001,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 193.2,
+        "rep_nonsig1": 146.39999999999998,
+        "repsig_nonsig1": 6.4
+      }
+    },
+    {
+      "new": "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+      "previous": "Forge__Gemini-3.1-Pro-Preview",
+      "date": "20260306",
+      "margin": 0.04044943820224711,
+      "margin_from_trials": 0.04044943820224711,
+      "p_full": 0.5706946376966713,
+      "sig_full": false,
+      "date_group": 2,
+      "min_trials": 5,
+      "n_sig1": 0,
+      "rep_sig1": 0,
+      "repsig_sig1": 0,
+      "n_nonsig1": 200,
+      "rep_nonsig1": 200,
+      "repsig_nonsig1": 0,
+      "null": {
+        "p_sig1": 0.014,
+        "rep_given_sig1": 0.7142857142857143,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.7991886409736308,
+        "repsig_given_nonsig1": 0.014198782961460446,
+        "draws": 500,
+        "record_event_rate": 0.43591979075850046
+      },
+      "null_counts": {
+        "n_sig1": 2.8000000000000003,
+        "rep_sig1": 2.0000000000000004,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 197.2,
+        "rep_nonsig1": 157.6,
+        "repsig_nonsig1": 2.8
+      }
+    },
+    {
+      "new": "LemonHarness_GPT-5.3-CodeX",
+      "previous": "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+      "date": "20260425",
+      "margin": 0.020224719101123556,
+      "margin_from_trials": 0.020224719101123556,
+      "p_full": 0.5867997233474953,
+      "sig_full": false,
+      "date_group": 1,
+      "min_trials": 5,
+      "n_sig1": 0,
+      "rep_sig1": 0,
+      "repsig_sig1": 0,
+      "n_nonsig1": 200,
+      "rep_nonsig1": 192,
+      "repsig_nonsig1": 0,
+      "null": {
+        "p_sig1": 0.024,
+        "rep_given_sig1": 0.3333333333333333,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.7581967213114754,
+        "repsig_given_nonsig1": 0.020491803278688523,
+        "draws": 500,
+        "record_event_rate": 0.509683995922528
+      },
+      "null_counts": {
+        "n_sig1": 4.8,
+        "rep_sig1": 1.5999999999999999,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 195.2,
+        "rep_nonsig1": 148.0,
+        "repsig_nonsig1": 3.9999999999999996
+      }
+    },
+    {
+      "new": "vix__claude-opus-4-7",
+      "previous": "LemonHarness_GPT-5.3-CodeX",
+      "date": "20260430",
+      "margin": 0.05393258426966285,
+      "margin_from_trials": 0.05393258426966285,
+      "p_full": 0.11259338313767342,
+      "sig_full": false,
+      "date_group": 1,
+      "min_trials": 5,
+      "n_sig1": 16,
+      "rep_sig1": 16,
+      "repsig_sig1": 0,
+      "n_nonsig1": 184,
+      "rep_nonsig1": 184,
+      "repsig_nonsig1": 11,
+      "null": {
+        "p_sig1": 0.04,
+        "rep_given_sig1": 0.5,
+        "repsig_given_sig1": 0.0,
+        "rep_given_nonsig1": 0.7854166666666667,
+        "repsig_given_nonsig1": 0.035416666666666666,
+        "draws": 500,
+        "record_event_rate": 0.45871559633027525
+      },
+      "null_counts": {
+        "n_sig1": 8.0,
+        "rep_sig1": 4.0,
+        "repsig_sig1": 0.0,
+        "n_nonsig1": 192.0,
+        "rep_nonsig1": 150.8,
+        "repsig_nonsig1": 6.8
+      }
+    }
+  ],
+  "pooled": {
+    "real": {
+      "sig1": {
+        "n": 220,
+        "rep": 1.0,
+        "repsig": 0.9090909090909091
+      },
+      "nonsig1": {
+        "n": 1580,
+        "rep": 0.910759493670886,
+        "repsig": 0.007594936708860759
+      }
+    },
+    "null": {
+      "sig1": {
+        "n": 54,
+        "rep": 0.582089552238806,
+        "repsig": 0.0
+      },
+      "nonsig1": {
+        "n": 1746,
+        "rep": 0.782638570774164,
+        "repsig": 0.029775538250114524
+      }
+    },
+    "full_sig": {
+      "steps": 1,
+      "rep_any_half": 1.0
+    },
+    "full_nonsig": {
+      "steps": 8,
+      "rep_any_half": 0.911875
+    }
+  }
+}

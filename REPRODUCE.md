@@ -27,8 +27,11 @@ Everything in `paper/main.pdf` is generated: `src/make_numbers.py` writes `paper
 | `python src/audit_all_boards.py` | `results/audit_summary.json` | Tables: audit, sensitivity, lags, non-agent (with chain audit); Figures 2 and 4 (with make_figures); board macros, resolution intervals, adjusted winners |
 | `python src/chain_audit.py` | `results/chain_audit.json` | Table: chain audit; Figure 6; certified counts |
 | `python src/validate_record_test.py 600` | `results/validation_recordtest.json` | Tables: record-test size, by position, power; simulation design macros |
-| `python src/validate_record_test.py 600 data/boards/swebench_lite.json lite` (also `terminalbench.json terminalbench`, `livebench.json livebench`) | `results/validation_recordtest_<tag>.json` | Appendix table: the calibration fitted to other boards |
+| `python src/validate_record_test.py 600 data/boards/swebench_lite.json lite` (also `terminalbench.json terminalbench`, `livebench.json livebench`) | `results/validation_recordtest_<tag>.json` | the other boards' rows of the record-test table |
 | `python src/split_half_replication.py 200 4000` | `results/split_half.json` | Table: split-half replication |
+| `python src/tb_run_split.py 200 500` (needs `data/raw_terminalbench.json`) | `results/tb_run_split.json` | run-split replication macros (Section 5.1) |
+| `python src/record_claims.py` (needs `data/raw_verified.json`) | `results/record_claims_verified.json` | Table: every Verified record with its write-up link and the fallback rule run live (with chain_audit) |
+| `python src/make_prcheck_example.py` | `paper/prcheck_example.txt` | Appendix B, the package's output for the Verified leader |
 | `python src/validate_cluster_effects.py 20000` | `results/validation_cluster.json` | Table: repository dependence |
 | `python src/validate_private_tries.py 20000` | `results/validation_tries.json` | Table: private tries |
 | `python src/validate_chain_test.py 300 500` | `results/validation_chain.json` | Table: sequential certification simulation (null, staircase, late, variant) |
@@ -40,7 +43,7 @@ Everything in `paper/main.pdf` is generated: `src/make_numbers.py` writes `paper
 | `python src/missing_data_check.py` (needs `data/raw_verified.json`) | `results/missing_data_verified.json` | missing-submission macros |
 | `python src/make_figures.py` | `figures/fig1..fig6.{pdf,png}` | all figures |
 | `python src/make_numbers.py` | `paper/numbers.tex`, `paper/tab_*.tex` | every macro and table |
-| `cd paper && latexmk -pdf main.tex` | `paper/main.pdf` | the manuscript |
+| `cd paper && latexmk -pdf main.tex && latexmk -pdf supplement.tex` | `paper/main.pdf`, `paper/supplement.pdf` | the manuscript and its supplement (Tables S1 to S5, Figure S1) |
 | `python src/render_abstract.py` | stdout | the abstract as plain text with the numbers filled in |
 | `python src/build_arxiv_bundle.py`, `python src/build_review_packet.py` | `release/*.zip` | arXiv source and review packet |
 

@@ -1,5 +1,5 @@
 """Write the honestboard `check` report for the current SWE-bench Verified leader to paper/prcheck_example.txt, which the
-appendix "What a maintainer sees" includes verbatim. Also writes the `report` summary for the board."""
+appendix "What a maintainer sees" includes verbatim (the board-wide `report` output is printed to the console only)."""
 import os
 import subprocess
 import sys
@@ -15,7 +15,8 @@ leader = max(rs, key=lambda r: r["p_best"])["name"]
 env = dict(os.environ, PYTHONPATH=os.path.join(ROOT, "honestboard", "src"), OPENBLAS_NUM_THREADS="1")
 out = subprocess.run([sys.executable, "-m", "honestboard", "check", board, leader], capture_output=True, text=True, env=env).stdout
 rep = subprocess.run([sys.executable, "-m", "honestboard", "report", board], capture_output=True, text=True, env=env).stdout
-text = f"$ python -m honestboard check swebench_verified.json {leader}\n{out.strip()}\n\n$ python -m honestboard report swebench_verified.json\n{rep.strip()}\n"
+text = f"$ python -m honestboard check swebench_verified.json {leader}\n{out.strip()}\n"
+print(f"$ python -m honestboard report swebench_verified.json\n{rep.strip()}\n")
 # wrap long lines so the verbatim block fits the page
 wrapped = []
 for line in text.splitlines():

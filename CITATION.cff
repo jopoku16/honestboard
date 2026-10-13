@@ -13,7 +13,7 @@ authors:
     affiliation: "Department of Biostatistics, Robert Stempel College of Public Health and Social Work, Florida International University"
 preferred-citation:
   type: unpublished
-  title: "Statistical Inference for AI-Agent Leaderboards: Record Claims, Rank Uncertainty and the Winner's Curse"
+  title: "Certifying AI-Agent Leaderboard Records: Selective Tests, Online Guarantees and the Winner's Curse"
   authors:
     - family-names: Opoku
       given-names: Jeffery
