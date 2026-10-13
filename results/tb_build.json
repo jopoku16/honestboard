@@ -1,0 +1,27 @@
+{
+  "n_submissions_found": 75,
+  "dropped_no_results": [
+    "Crux__Claude-Opus-4.6",
+    "WozCode__Claude-Opus-4.6"
+  ],
+  "dropped_version_21": [
+    "0error-Ledger__Claude-Opus-4.7"
+  ],
+  "dropped_missing_tasks": [
+    "Dirac__Gemini-3-Flash-Preview",
+    "Wecode__GPT-5.5",
+    "logos-latest__claude-opus-4.7",
+    "logos-ts__claude-opus-4.7",
+    "logos__claude-opus-4.6"
+  ],
+  "kept": 67,
+  "n_tasks": 89,
+  "trials_per_task_min": 1,
+  "trials_per_task_max": 10,
+  "n_exactly_five_everywhere": 60,
+  "n_multi_job": 26,
+  "version_labels": {
+    "unlabelled": 60,
+    "2.0": 12
+  }
+}

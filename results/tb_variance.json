@@ -1,0 +1,14 @@
+{
+  "n_systems_single": 20,
+  "n_pairs": 9,
+  "n_systems_with_repeats": 64,
+  "run_share_single_median": 0.3618778044803065,
+  "run_share_single_min": 0.1385099685204617,
+  "run_share_single_max": 0.6406484539177425,
+  "run_share_five_median": 0.10398252212319076,
+  "paired_run_share_single_median": 0.6229978081267914,
+  "paired_run_share_five_median": 0.20497777777777776,
+  "mean_within_task_var_top20": 0.05762283752452292,
+  "mean_between_task_var_top20": 0.09667770863878408,
+  "mean_trials_per_task_top20": 5.236516853932584
+}

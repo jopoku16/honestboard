@@ -1,0 +1,279 @@
+{
+  "design": {
+    "K": 40,
+    "T": 500,
+    "R": 300,
+    "rho": 0.29158468186855313,
+    "base": 0.6,
+    "step_points": 3,
+    "period": 5,
+    "variant_share": 0.5,
+    "variant_flip_pass_to_fail": 0.1
+  },
+  "scenarios": {
+    "null": {
+      "unadjusted_exact_leader": {
+        "fwer": 0.04666666666666667,
+        "fdr": 0.04666666666666667,
+        "power": null,
+        "mean_tests": 3.013333333333333,
+        "mean_certified": 0.04666666666666667,
+        "undefined_pvalues": 0
+      },
+      "holm_exact_leader": {
+        "fwer": 0.03,
+        "fdr": 0.03,
+        "power": null,
+        "mean_tests": 3.013333333333333,
+        "mean_certified": 0.03,
+        "undefined_pvalues": 0
+      },
+      "spending_exact_leader": {
+        "fwer": 0.02666666666666667,
+        "fdr": 0.02666666666666667,
+        "power": null,
+        "mean_tests": 3.013333333333333,
+        "mean_certified": 0.02666666666666667,
+        "undefined_pvalues": 0
+      },
+      "fallback_exact_leader": {
+        "fwer": 0.02666666666666667,
+        "fdr": 0.02666666666666667,
+        "power": null,
+        "mean_tests": 3.013333333333333,
+        "mean_certified": 0.02666666666666667,
+        "undefined_pvalues": 0
+      },
+      "lord_exact_leader": {
+        "fwer": 0.016666666666666666,
+        "fdr": 0.016666666666666666,
+        "power": null,
+        "mean_tests": 3.013333333333333,
+        "mean_certified": 0.016666666666666666,
+        "undefined_pvalues": 0
+      },
+      "spending_polyhedral_leader": {
+        "fwer": 0.03333333333333333,
+        "fdr": 0.03333333333333333,
+        "power": null,
+        "mean_tests": 3.013333333333333,
+        "mean_certified": 0.03333333333333333,
+        "undefined_pvalues": 0
+      },
+      "lord_polyhedral_leader": {
+        "fwer": 0.02,
+        "fdr": 0.02,
+        "power": null,
+        "mean_tests": 3.013333333333333,
+        "mean_certified": 0.02,
+        "undefined_pvalues": 0
+      },
+      "lord_exact_certified": {
+        "fwer": 0.023333333333333334,
+        "fdr": 0.023333333333333334,
+        "power": null,
+        "mean_tests": 19.346666666666668,
+        "mean_certified": 0.023333333333333334,
+        "undefined_pvalues": 0
+      }
+    },
+    "staircase": {
+      "unadjusted_exact_leader": {
+        "fwer": 0.07,
+        "fdr": 0.054444444444444455,
+        "power": 0.09526089037817137,
+        "mean_tests": 15.41,
+        "mean_certified": 0.7333333333333333,
+        "undefined_pvalues": 0
+      },
+      "holm_exact_leader": {
+        "fwer": 0.0,
+        "fdr": 0.0,
+        "power": 0.008137865007180469,
+        "mean_tests": 15.41,
+        "mean_certified": 0.056666666666666664,
+        "undefined_pvalues": 0
+      },
+      "spending_exact_leader": {
+        "fwer": 0.0033333333333333335,
+        "fdr": 0.0033333333333333335,
+        "power": 0.0009573958831977022,
+        "mean_tests": 15.41,
+        "mean_certified": 0.01,
+        "undefined_pvalues": 0
+      },
+      "fallback_exact_leader": {
+        "fwer": 0.0033333333333333335,
+        "fdr": 0.0033333333333333335,
+        "power": 0.0009573958831977022,
+        "mean_tests": 15.41,
+        "mean_certified": 0.01,
+        "undefined_pvalues": 0
+      },
+      "lord_exact_leader": {
+        "fwer": 0.0,
+        "fdr": 0.0,
+        "power": 0.0004786979415988511,
+        "mean_tests": 15.41,
+        "mean_certified": 0.0033333333333333335,
+        "undefined_pvalues": 0
+      },
+      "spending_polyhedral_leader": {
+        "fwer": 0.0033333333333333335,
+        "fdr": 0.0033333333333333335,
+        "power": 0.005265677357587362,
+        "mean_tests": 15.41,
+        "mean_certified": 0.04,
+        "undefined_pvalues": 0
+      },
+      "lord_polyhedral_leader": {
+        "fwer": 0.0,
+        "fdr": 0.0,
+        "power": 0.0014360938247965534,
+        "mean_tests": 15.41,
+        "mean_certified": 0.01,
+        "undefined_pvalues": 0
+      },
+      "lord_exact_certified": {
+        "fwer": 0.0033333333333333335,
+        "fdr": 0.0008333333333333334,
+        "power": 0.10779325120514194,
+        "mean_tests": 28.756666666666668,
+        "mean_certified": 2.6866666666666665,
+        "undefined_pvalues": 0
+      }
+    },
+    "late": {
+      "unadjusted_exact_leader": {
+        "fwer": 0.056666666666666664,
+        "fdr": 0.056666666666666664,
+        "power": 0.36,
+        "mean_tests": 5.78,
+        "mean_certified": 0.4166666666666667,
+        "undefined_pvalues": 0
+      },
+      "holm_exact_leader": {
+        "fwer": 0.0033333333333333335,
+        "fdr": 0.0033333333333333335,
+        "power": 0.14,
+        "mean_tests": 5.78,
+        "mean_certified": 0.14333333333333334,
+        "undefined_pvalues": 0
+      },
+      "spending_exact_leader": {
+        "fwer": 0.013333333333333334,
+        "fdr": 0.013333333333333334,
+        "power": 0.08666666666666667,
+        "mean_tests": 5.78,
+        "mean_certified": 0.1,
+        "undefined_pvalues": 0
+      },
+      "fallback_exact_leader": {
+        "fwer": 0.013333333333333334,
+        "fdr": 0.013333333333333334,
+        "power": 0.08666666666666667,
+        "mean_tests": 5.78,
+        "mean_certified": 0.1,
+        "undefined_pvalues": 0
+      },
+      "lord_exact_leader": {
+        "fwer": 0.01,
+        "fdr": 0.01,
+        "power": 0.05333333333333334,
+        "mean_tests": 5.78,
+        "mean_certified": 0.06333333333333334,
+        "undefined_pvalues": 0
+      },
+      "spending_polyhedral_leader": {
+        "fwer": 0.02,
+        "fdr": 0.02,
+        "power": 0.12,
+        "mean_tests": 5.78,
+        "mean_certified": 0.14,
+        "undefined_pvalues": 0
+      },
+      "lord_polyhedral_leader": {
+        "fwer": 0.01,
+        "fdr": 0.01,
+        "power": 0.08333333333333333,
+        "mean_tests": 5.78,
+        "mean_certified": 0.09333333333333334,
+        "undefined_pvalues": 0
+      },
+      "lord_exact_certified": {
+        "fwer": 0.01,
+        "fdr": 0.01,
+        "power": 0.07720588235294118,
+        "mean_tests": 19.14666666666667,
+        "mean_certified": 0.71,
+        "undefined_pvalues": 0
+      }
+    },
+    "variant": {
+      "unadjusted_exact_leader": {
+        "fwer": 0.04,
+        "fdr": 0.04,
+        "power": null,
+        "mean_tests": 3.3066666666666666,
+        "mean_certified": 0.04,
+        "undefined_pvalues": 0
+      },
+      "holm_exact_leader": {
+        "fwer": 0.01,
+        "fdr": 0.01,
+        "power": null,
+        "mean_tests": 3.3066666666666666,
+        "mean_certified": 0.01,
+        "undefined_pvalues": 0
+      },
+      "spending_exact_leader": {
+        "fwer": 0.013333333333333334,
+        "fdr": 0.013333333333333334,
+        "power": null,
+        "mean_tests": 3.3066666666666666,
+        "mean_certified": 0.013333333333333334,
+        "undefined_pvalues": 0
+      },
+      "fallback_exact_leader": {
+        "fwer": 0.013333333333333334,
+        "fdr": 0.013333333333333334,
+        "power": null,
+        "mean_tests": 3.3066666666666666,
+        "mean_certified": 0.013333333333333334,
+        "undefined_pvalues": 0
+      },
+      "lord_exact_leader": {
+        "fwer": 0.0,
+        "fdr": 0.0,
+        "power": null,
+        "mean_tests": 3.3066666666666666,
+        "mean_certified": 0.0,
+        "undefined_pvalues": 0
+      },
+      "spending_polyhedral_leader": {
+        "fwer": 0.03333333333333333,
+        "fdr": 0.03333333333333333,
+        "power": null,
+        "mean_tests": 3.3066666666666666,
+        "mean_certified": 0.03333333333333333,
+        "undefined_pvalues": 0
+      },
+      "lord_polyhedral_leader": {
+        "fwer": 0.0,
+        "fdr": 0.0,
+        "power": null,
+        "mean_tests": 3.3066666666666666,
+        "mean_certified": 0.0,
+        "undefined_pvalues": 0
+      },
+      "lord_exact_certified": {
+        "fwer": 0.006666666666666667,
+        "fdr": 0.006666666666666667,
+        "power": null,
+        "mean_tests": 17.64,
+        "mean_certified": 0.006666666666666667,
+        "undefined_pvalues": 0
+      }
+    }
+  }
+}

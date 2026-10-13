@@ -1,0 +1,2137 @@
+{
+  "boards": [
+    {
+      "board": "SWE-bench Verified",
+      "systems": 135,
+      "tasks": 500,
+      "leader": "20251215_livesweagent_claude-opus-4-5",
+      "leader_score": 0.792,
+      "leader_p_best": 0.3481666666666666,
+      "leader_rank_interval": [
+        1.0,
+        6.0
+      ],
+      "leader_tied": 2,
+      "top3": [
+        {
+          "name": "20251205_sonar-foundation-agent_claude-opus-4-5",
+          "score": 0.792,
+          "rank_lo": 1.0,
+          "rank_hi": 5.0,
+          "p_best": 0.3227083333333333
+        },
+        {
+          "name": "20251215_livesweagent_claude-opus-4-5",
+          "score": 0.792,
+          "rank_lo": 1.0,
+          "rank_hi": 6.0,
+          "p_best": 0.3481666666666666
+        },
+        {
+          "name": "20250928_trae_doubao_seed_code",
+          "score": 0.788,
+          "rank_lo": 1.0,
+          "rank_hi": 7.0,
+          "p_best": 0.276
+        }
+      ],
+      "confidence_set_size_95": 14,
+      "confidence_set_members": [
+        "20251205_sonar-foundation-agent_claude-opus-4-5",
+        "20251215_livesweagent_claude-opus-4-5",
+        "20250928_trae_doubao_seed_code",
+        "20251127_openhands_claude-opus-4-5",
+        "20251120_livesweagent_gemini-3-pro-preview",
+        "20250804_epam-ai-run-claude-4-sonnet",
+        "20250902_atlassian-rovo-dev",
+        "20250819_ACoder",
+        "20250901_warp",
+        "20250612_trae",
+        "20250731_harness_ai",
+        "20250915_JoyCode",
+        "20250603_Refact_Agent_claude-4-sonnet",
+        "20251015_Prometheus_v1.2.1_gpt5"
+      ],
+      "confidence_set_critical": 3.1715620132863287,
+      "confidence_set_size_95_simultaneous": 20,
+      "confidence_set_size_95_cluster": 21,
+      "leader_p_best_cluster": 0.365625,
+      "resolution_cluster": {
+        "paired_sd": 0.3794733192202052,
+        "mdd": 0.04754447773919211,
+        "tasks_for_1pt": 11302.386817462673,
+        "tasks_for_2pt": 2825.5967043656683
+      },
+      "records": {
+        "steps": 30,
+        "significant": 6,
+        "holm": 2,
+        "details": [
+          {
+            "previous": "20231010_rag_claude2",
+            "new": "20240402_sweagent_gpt4",
+            "date": "20240402",
+            "margin": 0.18,
+            "p_one_sided": 4.039979409916725e-21,
+            "p_two_sided": 8.07995881983345e-21,
+            "p_selective": 8.757005287400747e-21,
+            "p": 8.757005287400747e-21,
+            "b_only": 98,
+            "a_only": 8,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.22
+          },
+          {
+            "previous": "20240402_sweagent_gpt4",
+            "new": "20240509_amazon-q-developer-agent-20240430-dev",
+            "date": "20240509",
+            "margin": 0.032,
+            "p_one_sided": 0.07239116966502536,
+            "p_two_sided": 0.14478233933005072,
+            "p_selective": 0.156914130295238,
+            "p": 0.156914130295238,
+            "b_only": 61,
+            "a_only": 45,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.07205000000000021
+          },
+          {
+            "previous": "20240509_amazon-q-developer-agent-20240430-dev",
+            "new": "20240612_MASAI_gpt4o",
+            "date": "20240612",
+            "margin": 0.07,
+            "p_one_sided": 0.00046157899790167745,
+            "p_two_sided": 0.0009231579958033549,
+            "p_selective": 0.0009231579958033559,
+            "p": 0.0009231579958033559,
+            "b_only": 71,
+            "a_only": 36,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.10999999999999996
+          },
+          {
+            "previous": "20240612_MASAI_gpt4o",
+            "new": "20240617_factory_code_droid",
+            "date": "20240617",
+            "margin": 0.043999999999999984,
+            "p_one_sided": 0.02140361039961279,
+            "p_two_sided": 0.04280722079922558,
+            "p_selective": 0.04635821171561141,
+            "p": 0.04635821171561141,
+            "b_only": 65,
+            "a_only": 43,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.08400000000000002
+          },
+          {
+            "previous": "20240617_factory_code_droid",
+            "new": "20240628_autocoderover-v20240620",
+            "date": "20240628",
+            "margin": 0.014000000000000012,
+            "p_one_sided": 0.27919714558279546,
+            "p_two_sided": 0.5583942911655909,
+            "p_selective": 0.5583942911655916,
+            "p": 0.5583942911655916,
+            "b_only": 56,
+            "a_only": 49,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.055999999999999994
+          },
+          {
+            "previous": "20240628_autocoderover-v20240620",
+            "new": "20240721_amazon-q-developer-agent-20240719-dev",
+            "date": "20240721",
+            "margin": 0.0040000000000000036,
+            "p_one_sided": 0.46170051879729856,
+            "p_two_sided": 0.9234010375945971,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 55,
+            "a_only": 53,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.04400000000000004
+          },
+          {
+            "previous": "20240721_amazon-q-developer-agent-20240719-dev",
+            "new": "20240820_honeycomb",
+            "date": "20240820",
+            "margin": 0.018000000000000016,
+            "p_one_sided": 0.21755724744615096,
+            "p_two_sided": 0.4351144948923019,
+            "p_selective": 0.4351144948923024,
+            "p": 0.4351144948923024,
+            "b_only": 57,
+            "a_only": 48,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.062
+          },
+          {
+            "previous": "20240820_honeycomb",
+            "new": "20240824_gru",
+            "date": "20240824",
+            "margin": 0.045999999999999985,
+            "p_one_sided": 0.021634131287304414,
+            "p_two_sided": 0.04326826257460883,
+            "p_selective": 0.04326826257460881,
+            "p": 0.04326826257460881,
+            "b_only": 71,
+            "a_only": 48,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.08999999999999997
+          },
+          {
+            "previous": "20240824_gru",
+            "new": "20240924_solver",
+            "date": "20240924",
+            "margin": 0.0020000000000000018,
+            "p_one_sided": 0.5000000000000006,
+            "p_two_sided": 1.0,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 46,
+            "a_only": 45,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.03999999999999998
+          },
+          {
+            "previous": "20240924_solver",
+            "new": "20241022_tools_claude-3-5-sonnet-updated",
+            "date": "20241022",
+            "margin": 0.035999999999999976,
+            "p_one_sided": 0.0427052945564023,
+            "p_two_sided": 0.0854105891128046,
+            "p_selective": 0.092877288685609,
+            "p": 0.092877288685609,
+            "b_only": 58,
+            "a_only": 40,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.07600000000000001
+          },
+          {
+            "previous": "20241022_tools_claude-3-5-sonnet-updated",
+            "new": "20241028_solver",
+            "date": "20241028",
+            "margin": 0.010000000000000009,
+            "p_one_sided": 0.35090559103234126,
+            "p_two_sided": 0.7018111820646825,
+            "p_selective": 0.7018111820646821,
+            "p": 0.7018111820646821,
+            "b_only": 57,
+            "a_only": 52,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.05199999999999999
+          },
+          {
+            "previous": "20241028_solver",
+            "new": "20241029_OpenHands-CodeAct-2.1-sonnet-20241022",
+            "date": "20241029",
+            "margin": 0.030000000000000027,
+            "p_one_sided": 0.0752590319451147,
+            "p_two_sided": 0.1505180638902294,
+            "p_selective": 0.1505180638902294,
+            "p": 0.1505180638902294,
+            "b_only": 55,
+            "a_only": 40,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.06799999999999995
+          },
+          {
+            "previous": "20241029_OpenHands-CodeAct-2.1-sonnet-20241022",
+            "new": "20241108_devlo",
+            "date": "20241108",
+            "margin": 0.01200000000000001,
+            "p_one_sided": 0.29282339736061286,
+            "p_two_sided": 0.5856467947212257,
+            "p_selective": 0.6413110816912114,
+            "p": 0.6413110816912114,
+            "b_only": 45,
+            "a_only": 39,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.050000000000000044
+          },
+          {
+            "previous": "20241108_devlo",
+            "new": "20241202_amazon-q-developer-agent-20241202-dev",
+            "date": "20241202",
+            "margin": 0.008000000000000007,
+            "p_one_sided": 0.37182209305260217,
+            "p_two_sided": 0.7436441861052043,
+            "p_selective": 0.8143257364048619,
+            "p": 0.8143257364048619,
+            "b_only": 44,
+            "a_only": 40,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.04399999999999993
+          },
+          {
+            "previous": "20241202_amazon-q-developer-agent-20241202-dev",
+            "new": "20241208_gru",
+            "date": "20241208",
+            "margin": 0.019999999999999907,
+            "p_one_sided": 0.18167709383202657,
+            "p_two_sided": 0.36335418766405314,
+            "p_selective": 0.39511906115327183,
+            "p": 0.39511906115327183,
+            "b_only": 54,
+            "a_only": 44,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.05799999999999994
+          },
+          {
+            "previous": "20241208_gru",
+            "new": "20241213_devlo",
+            "date": "20241213",
+            "margin": 0.01200000000000001,
+            "p_one_sided": 0.29282339736061286,
+            "p_two_sided": 0.5856467947212257,
+            "p_selective": 0.6413110816912114,
+            "p": 0.6413110816912114,
+            "b_only": 45,
+            "a_only": 39,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.04800000000000004
+          },
+          {
+            "previous": "20241213_devlo",
+            "new": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+            "date": "20241221",
+            "margin": 0.040000000000000036,
+            "p_one_sided": 0.02229876231395796,
+            "p_two_sided": 0.04459752462791592,
+            "p_selective": 0.04868040485025161,
+            "p": 0.04868040485025161,
+            "b_only": 55,
+            "a_only": 35,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.07600000000000007
+          },
+          {
+            "previous": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+            "new": "20250110_blackboxai_agent_v1.1",
+            "date": "20250110",
+            "margin": 0.006000000000000005,
+            "p_one_sided": 0.4187780353645368,
+            "p_two_sided": 0.8375560707290736,
+            "p_selective": 0.8375560707290736,
+            "p": 0.8375560707290736,
+            "b_only": 49,
+            "a_only": 46,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.04400000000000004
+          },
+          {
+            "previous": "20250110_blackboxai_agent_v1.1",
+            "new": "20250117_wandb_programmer_o1_crosscheck5",
+            "date": "20250117",
+            "margin": 0.018000000000000016,
+            "p_one_sided": 0.2107616718078853,
+            "p_two_sided": 0.4215233436157706,
+            "p_selective": 0.4215233436157702,
+            "p": 0.4215233436157702,
+            "b_only": 54,
+            "a_only": 45,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.05800000000000005
+          },
+          {
+            "previous": "20250117_wandb_programmer_o1_crosscheck5",
+            "new": "20250316_augment_agent_v0",
+            "date": "20250316",
+            "margin": 0.008000000000000007,
+            "p_one_sided": 0.37466450160114023,
+            "p_two_sided": 0.7493290032022805,
+            "p_selective": 0.8187719106838544,
+            "p": 0.8187719106838544,
+            "b_only": 46,
+            "a_only": 42,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.04400000000000004
+          },
+          {
+            "previous": "20250316_augment_agent_v0",
+            "new": "20250415_openhands",
+            "date": "20250415",
+            "margin": 0.0040000000000000036,
+            "p_one_sided": 0.45438846263774635,
+            "p_two_sided": 0.9087769252754927,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 39,
+            "a_only": 37,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.03600000000000003
+          },
+          {
+            "previous": "20250415_openhands",
+            "new": "20250430_zencoder_ai",
+            "date": "20250430",
+            "margin": 0.041999999999999926,
+            "p_one_sided": 0.01190989642900064,
+            "p_two_sided": 0.02381979285800128,
+            "p_selective": 0.02381979285800132,
+            "p": 0.02381979285800132,
+            "b_only": 50,
+            "a_only": 29,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.07605000000000024
+          },
+          {
+            "previous": "20250430_zencoder_ai",
+            "new": "20250515_Refact_Agent",
+            "date": "20250515",
+            "margin": 0.0040000000000000036,
+            "p_one_sided": 0.44871091349571535,
+            "p_two_sided": 0.8974218269914307,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 31,
+            "a_only": 29,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.03599999999999992
+          },
+          {
+            "previous": "20250515_Refact_Agent",
+            "new": "20250519_trae",
+            "date": "20250519",
+            "margin": 0.0020000000000000018,
+            "p_one_sided": 0.4999999999999999,
+            "p_two_sided": 1.0,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 31,
+            "a_only": 30,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.03200000000000003
+          },
+          {
+            "previous": "20250519_trae",
+            "new": "20250522_tools_claude-4-opus",
+            "date": "20250522",
+            "margin": 0.026000000000000023,
+            "p_one_sided": 0.08271397086212831,
+            "p_two_sided": 0.16542794172425662,
+            "p_selective": 0.1654279417242567,
+            "p": 0.1654279417242567,
+            "b_only": 44,
+            "a_only": 31,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.05999999999999994
+          },
+          {
+            "previous": "20250522_tools_claude-4-opus",
+            "new": "20250603_Refact_Agent_claude-4-sonnet",
+            "date": "20250603",
+            "margin": 0.01200000000000001,
+            "p_one_sided": 0.2752062559112356,
+            "p_two_sided": 0.5504125118224712,
+            "p_selective": 0.6082077403613267,
+            "p": 0.6082077403613267,
+            "b_only": 38,
+            "a_only": 32,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.04400000000000004
+          },
+          {
+            "previous": "20250603_Refact_Agent_claude-4-sonnet",
+            "new": "20250612_trae",
+            "date": "20250612",
+            "margin": 0.008000000000000007,
+            "p_one_sided": 0.3444398803616697,
+            "p_two_sided": 0.6888797607233395,
+            "p_selective": 0.7706856581958649,
+            "p": 0.7706856581958649,
+            "b_only": 30,
+            "a_only": 26,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.038000000000000034
+          },
+          {
+            "previous": "20250612_trae",
+            "new": "20250804_epam-ai-run-claude-4-sonnet",
+            "date": "20250804",
+            "margin": 0.016000000000000014,
+            "p_one_sided": 0.16111816017877345,
+            "p_two_sided": 0.3222363203575469,
+            "p_selective": 0.36299122254225935,
+            "p": 0.36299122254225935,
+            "b_only": 29,
+            "a_only": 21,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.04400000000000004
+          },
+          {
+            "previous": "20250804_epam-ai-run-claude-4-sonnet",
+            "new": "20250928_trae_doubao_seed_code",
+            "date": "20250928",
+            "margin": 0.020000000000000018,
+            "p_one_sided": 0.13021773828832678,
+            "p_two_sided": 0.26043547657665356,
+            "p_selective": 0.28916286890701426,
+            "p": 0.28916286890701426,
+            "b_only": 37,
+            "a_only": 27,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.050000000000000044
+          },
+          {
+            "previous": "20250928_trae_doubao_seed_code",
+            "new": "20251205_sonar-foundation-agent_claude-opus-4-5",
+            "date": "20251205",
+            "margin": 0.0040000000000000036,
+            "p_one_sided": 0.4503266231260167,
+            "p_two_sided": 0.9006532462520334,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 33,
+            "a_only": 31,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.03399999999999992
+          }
+        ],
+        "two_sided": {
+          "steps": 30,
+          "significant": 6,
+          "holm": 2
+        },
+        "one_sided": {
+          "steps": 30,
+          "significant": 7,
+          "holm": 2
+        },
+        "worst_first": {
+          "steps": 36,
+          "significant": 9,
+          "holm": 3
+        },
+        "cluster_robust": {
+          "steps": 30,
+          "significant": 1,
+          "holm": 0
+        },
+        "small_margin_steps(<2pts)": 19,
+        "small_margin_significant": 0,
+        "median_margin": 0.015000000000000013,
+        "median_lag": 2.5,
+        "share_adjacent": 0.2,
+        "share_never": 0.0,
+        "lags": [
+          1,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          4,
+          3,
+          1,
+          2,
+          3,
+          4,
+          5,
+          1,
+          2,
+          3,
+          4,
+          2,
+          3,
+          3,
+          2,
+          3
+        ],
+        "median_upper975_nonsig": 0.04600000000000004
+      },
+      "resolution": {
+        "paired_sd": 0.34380285164844493,
+        "mdd": 0.043075299893178653,
+        "tasks_for_1pt": 9277.407304436385,
+        "tasks_for_2pt": 2319.3518261090962,
+        "mdd_ci95": [
+          0.037624017522508525,
+          0.04657342925890107
+        ],
+        "tasks_for_1pt_ci95": [
+          7077.833472670144,
+          10845.421578901007
+        ]
+      },
+      "winner": {
+        "name": "20251215_livesweagent_claude-opus-4-5",
+        "observed": 0.792,
+        "adjusted_iterated": 0.7809536666666667,
+        "ci_iterated": [
+          0.7486021666666667,
+          0.8146021666666666
+        ],
+        "naive_ci": [
+          0.7563883516308094,
+          0.8276116483691907
+        ],
+        "conditional_estimate": NaN,
+        "co_leaders": [
+          "20251205_sonar-foundation-agent_claude-opus-4-5",
+          "20251215_livesweagent_claude-opus-4-5"
+        ],
+        "adjusted_plain": 0.7823515000000001
+      },
+      "agent": true
+    },
+    {
+      "board": "SWE-bench Lite",
+      "systems": 84,
+      "tasks": 300,
+      "leader": "20250625_ExpeRepair-v1_claude-4-sonnet-20250514",
+      "leader_score": 0.6033333333333334,
+      "leader_p_best": 0.468875,
+      "leader_rank_interval": [
+        1.0,
+        3.0
+      ],
+      "leader_tied": 1,
+      "top3": [
+        {
+          "name": "20250625_ExpeRepair-v1_claude-4-sonnet-20250514",
+          "score": 0.6033333333333334,
+          "rank_lo": 1.0,
+          "rank_hi": 3.0,
+          "p_best": 0.468875
+        },
+        {
+          "name": "20250425_Refact_Agent",
+          "score": 0.6,
+          "rank_lo": 1.0,
+          "rank_hi": 4.0,
+          "p_best": 0.3755
+        },
+        {
+          "name": "20250906_KGCompass_claude-4-sonnet-20250514",
+          "score": 0.5833333333333334,
+          "rank_lo": 1.0,
+          "rank_hi": 5.0,
+          "p_best": 0.1355
+        }
+      ],
+      "confidence_set_size_95": 5,
+      "confidence_set_members": [
+        "20250625_ExpeRepair-v1_claude-4-sonnet-20250514",
+        "20250425_Refact_Agent",
+        "20250906_KGCompass_claude-4-sonnet-20250514",
+        "20250526_sweagent_claude-4-sonnet-20250514",
+        "20250114_Isoform"
+      ],
+      "confidence_set_critical": 3.1261368090083645,
+      "confidence_set_size_95_simultaneous": 6,
+      "confidence_set_size_95_cluster": 9,
+      "leader_p_best_cluster": 0.476125,
+      "resolution_cluster": {
+        "paired_sd": 0.3974914267546331,
+        "mdd": 0.06429407847945763,
+        "tasks_for_1pt": 12401.185582567974,
+        "tasks_for_2pt": 3100.2963956419935
+      },
+      "records": {
+        "steps": 15,
+        "significant": 3,
+        "holm": 1,
+        "details": [
+          {
+            "previous": "20231010_rag_claude2",
+            "new": "20240402_sweagent_gpt4",
+            "date": "20240402",
+            "margin": 0.15,
+            "p_one_sided": 9.837464176598587e-12,
+            "p_two_sided": 1.9674928353197174e-11,
+            "p_selective": 1.9674928353197174e-11,
+            "p": 1.9674928353197174e-11,
+            "b_only": 48,
+            "a_only": 3,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.19333333333333333
+          },
+          {
+            "previous": "20240402_sweagent_gpt4",
+            "new": "20240509_amazon-q-developer-agent-20240430-dev",
+            "date": "20240509",
+            "margin": 0.023333333333333345,
+            "p_one_sided": 0.21749640256107672,
+            "p_two_sided": 0.43499280512215344,
+            "p_selective": 0.43499280512215344,
+            "p": 0.43499280512215344,
+            "b_only": 33,
+            "a_only": 26,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.07333333333333333
+          },
+          {
+            "previous": "20240509_amazon-q-developer-agent-20240430-dev",
+            "new": "20240523_aider",
+            "date": "20240523",
+            "margin": 0.05999999999999997,
+            "p_one_sided": 0.02069571433695773,
+            "p_two_sided": 0.04139142867391546,
+            "p_selective": 0.04573767267886691,
+            "p": 0.04573767267886691,
+            "b_only": 44,
+            "a_only": 26,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.11333333333333334
+          },
+          {
+            "previous": "20240523_aider",
+            "new": "20240604_CodeR",
+            "date": "20240604",
+            "margin": 0.020000000000000018,
+            "p_one_sided": 0.262886680087825,
+            "p_two_sided": 0.52577336017565,
+            "p_selective": 0.5847928058959583,
+            "p": 0.5847928058959583,
+            "b_only": 34,
+            "a_only": 28,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.07008333333333366
+          },
+          {
+            "previous": "20240604_CodeR",
+            "new": "20240617_factory_code_droid",
+            "date": "20240617",
+            "margin": 0.030000000000000027,
+            "p_one_sided": 0.1677788091170076,
+            "p_two_sided": 0.3355576182340152,
+            "p_selective": 0.33555761823401514,
+            "p": 0.33555761823401514,
+            "b_only": 39,
+            "a_only": 30,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.08333333333333334
+          },
+          {
+            "previous": "20240617_factory_code_droid",
+            "new": "20240622_Lingma_Agent",
+            "date": "20240622",
+            "margin": 0.016666666666666663,
+            "p_one_sided": 0.31007238254065145,
+            "p_two_sided": 0.6201447650813029,
+            "p_selective": 0.620144765081303,
+            "p": 0.620144765081303,
+            "b_only": 35,
+            "a_only": 30,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.07
+          },
+          {
+            "previous": "20240622_Lingma_Agent",
+            "new": "20240627_abanteai_mentatbot_gpt4o",
+            "date": "20240627",
+            "margin": 0.04999999999999999,
+            "p_one_sided": 0.03372230595039449,
+            "p_two_sided": 0.06744461190078899,
+            "p_selective": 0.06744461190078899,
+            "p": 0.06744461190078899,
+            "b_only": 37,
+            "a_only": 22,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.10333333333333333
+          },
+          {
+            "previous": "20240627_abanteai_mentatbot_gpt4o",
+            "new": "20240702_codestory_aide_mixed",
+            "date": "20240702",
+            "margin": 0.04999999999999999,
+            "p_one_sided": 0.03372230595039449,
+            "p_two_sided": 0.06744461190078899,
+            "p_selective": 0.06744461190078899,
+            "p": 0.06744461190078899,
+            "b_only": 37,
+            "a_only": 22,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.09999999999999998
+          },
+          {
+            "previous": "20240702_codestory_aide_mixed",
+            "new": "20241122_devlo",
+            "date": "20241122",
+            "margin": 0.043333333333333335,
+            "p_one_sided": 0.06495896151127627,
+            "p_two_sided": 0.12991792302255253,
+            "p_selective": 0.12991792302255253,
+            "p": 0.12991792302255253,
+            "b_only": 38,
+            "a_only": 25,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.09333333333333332
+          },
+          {
+            "previous": "20241122_devlo",
+            "new": "20241127_globant_codefixer_agent",
+            "date": "20241127",
+            "margin": 0.010000000000000009,
+            "p_one_sided": 0.4021585000966992,
+            "p_two_sided": 0.8043170001933984,
+            "p_selective": 0.8043170001933986,
+            "p": 0.8043170001933986,
+            "b_only": 34,
+            "a_only": 31,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.0633333333333333
+          },
+          {
+            "previous": "20241127_globant_codefixer_agent",
+            "new": "20241208_gru",
+            "date": "20241208",
+            "margin": 0.003333333333333355,
+            "p_one_sided": 0.5,
+            "p_two_sided": 1.0,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 29,
+            "a_only": 28,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.05333333333333329
+          },
+          {
+            "previous": "20241208_gru",
+            "new": "20241220_blackboxai_agent_v1",
+            "date": "20241220",
+            "margin": 0.0033333333333332993,
+            "p_one_sided": 0.5,
+            "p_two_sided": 1.0,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 29,
+            "a_only": 28,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.05333333333333329
+          },
+          {
+            "previous": "20241220_blackboxai_agent_v1",
+            "new": "20250114_Isoform",
+            "date": "20250114",
+            "margin": 0.06000000000000005,
+            "p_one_sided": 0.008766617649542452,
+            "p_two_sided": 0.017533235299084904,
+            "p_selective": 0.019702833159417968,
+            "p": 0.019702833159417968,
+            "b_only": 35,
+            "a_only": 17,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.10666666666666669
+          },
+          {
+            "previous": "20250114_Isoform",
+            "new": "20250425_Refact_Agent",
+            "date": "20250425",
+            "margin": 0.04999999999999993,
+            "p_one_sided": 0.029032073396204526,
+            "p_two_sided": 0.05806414679240905,
+            "p_selective": 0.05806414679240908,
+            "p": 0.05806414679240908,
+            "b_only": 35,
+            "a_only": 20,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.09999999999999998
+          },
+          {
+            "previous": "20250425_Refact_Agent",
+            "new": "20250625_ExpeRepair-v1_claude-4-sonnet-20250514",
+            "date": "20250625",
+            "margin": 0.0033333333333334103,
+            "p_one_sided": 0.4999999999999999,
+            "p_two_sided": 1.0,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 24,
+            "a_only": 23,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.04999999999999993
+          }
+        ],
+        "two_sided": {
+          "steps": 15,
+          "significant": 3,
+          "holm": 1
+        },
+        "one_sided": {
+          "steps": 15,
+          "significant": 6,
+          "holm": 1
+        },
+        "worst_first": {
+          "steps": 20,
+          "significant": 4,
+          "holm": 1
+        },
+        "cluster_robust": {
+          "steps": 15,
+          "significant": 1,
+          "holm": 1
+        },
+        "small_margin_steps(<2pts)": 5,
+        "small_margin_significant": 0,
+        "median_margin": 0.030000000000000027,
+        "median_lag": 2.0,
+        "share_adjacent": 0.2,
+        "share_never": 0.0,
+        "lags": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          3,
+          2,
+          2,
+          2,
+          3,
+          3,
+          4,
+          1,
+          2,
+          2
+        ],
+        "median_upper975_nonsig": 0.0717083333333335
+      },
+      "resolution": {
+        "paired_sd": 0.4170288281141474,
+        "mdd": 0.06745424529500174,
+        "tasks_for_1pt": 13650.225624954795,
+        "tasks_for_2pt": 3412.556406238699,
+        "mdd_ci95": [
+          0.061337350122142385,
+          0.07542178008833719
+        ],
+        "tasks_for_1pt_ci95": [
+          11286.811560018845,
+          17065.34144849839
+        ]
+      },
+      "winner": {
+        "name": "20250625_ExpeRepair-v1_claude-4-sonnet-20250514",
+        "observed": 0.6033333333333334,
+        "adjusted_iterated": 0.5865757407407408,
+        "ci_iterated": [
+          0.5337149074074075,
+          0.6370482407407408
+        ],
+        "naive_ci": [
+          0.5478830192713056,
+          0.6587836473953612
+        ],
+        "conditional_estimate": 0.5565146000898135,
+        "co_leaders": [
+          "20250625_ExpeRepair-v1_claude-4-sonnet-20250514"
+        ],
+        "adjusted_plain": 0.5895275000000001
+      },
+      "agent": true
+    },
+    {
+      "board": "SWE-bench Test",
+      "systems": 24,
+      "tasks": 2294,
+      "leader": "20251219_sonar-foundation-agent_claude-opus-4-5",
+      "leader_score": 0.52615518744551,
+      "leader_p_best": 1.0,
+      "leader_rank_interval": [
+        1.0,
+        1.0
+      ],
+      "leader_tied": 1,
+      "top3": [
+        {
+          "name": "20251219_sonar-foundation-agent_claude-opus-4-5",
+          "score": 0.52615518744551,
+          "rank_lo": 1.0,
+          "rank_hi": 1.0,
+          "p_best": 1.0
+        },
+        {
+          "name": "20251027_salesforce_SAGE",
+          "score": 0.44245858761987794,
+          "rank_lo": 2.0,
+          "rank_hi": 2.0,
+          "p_best": 0.0
+        },
+        {
+          "name": "20250605_atlassian-rovo-dev",
+          "score": 0.4197907585004359,
+          "rank_lo": 3.0,
+          "rank_hi": 3.0,
+          "p_best": 0.0
+        }
+      ],
+      "confidence_set_size_95": 1,
+      "confidence_set_members": [
+        "20251219_sonar-foundation-agent_claude-opus-4-5"
+      ],
+      "confidence_set_critical": 2.769757504599649,
+      "confidence_set_size_95_simultaneous": 1,
+      "confidence_set_size_95_cluster": 1,
+      "leader_p_best_cluster": 1.0,
+      "resolution_cluster": {
+        "paired_sd": 0.3780926279491445,
+        "mdd": 0.022115936794103206,
+        "tasks_for_1pt": 11220.290306840818,
+        "tasks_for_2pt": 2805.0725767102044
+      },
+      "records": {
+        "steps": 13,
+        "significant": 9,
+        "holm": 9,
+        "details": [
+          {
+            "previous": "20231010_rag_claude2",
+            "new": "20240402_sweagent_gpt4",
+            "date": "20240402",
+            "margin": 0.1050566695727986,
+            "p_one_sided": 5.397740435635093e-55,
+            "p_two_sided": 1.0795480871270186e-54,
+            "p_selective": 1.0795480871270195e-54,
+            "p": 1.0795480871270195e-54,
+            "b_only": 261,
+            "a_only": 20,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.11857018308631212
+          },
+          {
+            "previous": "20240402_sweagent_gpt4",
+            "new": "20240509_amazon-q-developer-agent-20240430-dev",
+            "date": "20240509",
+            "margin": 0.013513513513513528,
+            "p_one_sided": 0.039744949992160314,
+            "p_two_sided": 0.07948989998432063,
+            "p_selective": 0.07948989998432063,
+            "p": 0.07948989998432063,
+            "b_only": 162,
+            "a_only": 131,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.028334786399302536
+          },
+          {
+            "previous": "20240509_amazon-q-developer-agent-20240430-dev",
+            "new": "20240615_appmap-navie_gpt4o",
+            "date": "20240615",
+            "margin": 0.00784655623365299,
+            "p_one_sided": 0.16398096545795648,
+            "p_two_sided": 0.32796193091591297,
+            "p_selective": 0.3437306088360928,
+            "p": 0.3437306088360928,
+            "b_only": 160,
+            "a_only": 142,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.023103748910200533
+          },
+          {
+            "previous": "20240615_appmap-navie_gpt4o",
+            "new": "20240617_factory_code_droid",
+            "date": "20240617",
+            "margin": 0.04664341761115956,
+            "p_one_sided": 7.738817313171916e-11,
+            "p_two_sided": 1.5477634626343831e-10,
+            "p_selective": 1.5477634626343844e-10,
+            "p": 1.5477634626343844e-10,
+            "b_only": 194,
+            "a_only": 87,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.06059285091543157
+          },
+          {
+            "previous": "20240617_factory_code_droid",
+            "new": "20240721_amazon-q-developer-agent-20240719-dev",
+            "date": "20240721",
+            "margin": 0.0047951176983435095,
+            "p_one_sided": 0.28285589237755976,
+            "p_two_sided": 0.5657117847551195,
+            "p_selective": 0.5657117847551193,
+            "p": 0.5657117847551193,
+            "b_only": 157,
+            "a_only": 146,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.020488230165649518
+          },
+          {
+            "previous": "20240721_amazon-q-developer-agent-20240719-dev",
+            "new": "20240820_honeycomb",
+            "date": "20240820",
+            "margin": 0.023103748910200506,
+            "p_one_sided": 0.0014690004596561235,
+            "p_two_sided": 0.002938000919312247,
+            "p_selective": 0.0029380009193122436,
+            "p": 0.0029380009193122436,
+            "b_only": 180,
+            "a_only": 127,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.03879686137750654
+          },
+          {
+            "previous": "20240820_honeycomb",
+            "new": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+            "date": "20241103",
+            "margin": 0.0732345248474281,
+            "p_one_sided": 9.497921351082735e-19,
+            "p_two_sided": 1.899584270216547e-18,
+            "p_selective": 1.981045669788434e-18,
+            "p": 1.981045669788434e-18,
+            "b_only": 272,
+            "a_only": 104,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.0893635571054926
+          },
+          {
+            "previous": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+            "new": "20250131_amazon-q-developer-agent-20241202-dev",
+            "date": "20250131",
+            "margin": 0.006102877070618962,
+            "p_one_sided": 0.22420065618069504,
+            "p_two_sided": 0.4484013123613901,
+            "p_selective": 0.47026586283716126,
+            "p": 0.47026586283716126,
+            "b_only": 154,
+            "a_only": 140,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.020052310374891025
+          },
+          {
+            "previous": "20250131_amazon-q-developer-agent-20241202-dev",
+            "new": "20250227_sweagent-claude-3-7-20250219",
+            "date": "20250227",
+            "margin": 0.038360941586748076,
+            "p_one_sided": 9.110551706446555e-07,
+            "p_two_sided": 1.822110341289311e-06,
+            "p_selective": 1.904968461722796e-06,
+            "p": 1.904968461722796e-06,
+            "b_only": 212,
+            "a_only": 124,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.053618134263295536
+          },
+          {
+            "previous": "20250227_sweagent-claude-3-7-20250219",
+            "new": "20250522_amazon-q-developer-agent-20250405-dev",
+            "date": "20250522",
+            "margin": 0.032693984306887525,
+            "p_one_sided": 2.59325302801374e-06,
+            "p_two_sided": 5.18650605602748e-06,
+            "p_selective": 5.186506056027475e-06,
+            "p": 5.186506056027475e-06,
+            "b_only": 171,
+            "a_only": 96,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.04707933740191805
+          },
+          {
+            "previous": "20250522_amazon-q-developer-agent-20250405-dev",
+            "new": "20250605_atlassian-rovo-dev",
+            "date": "20250605",
+            "margin": 0.048823016564952026,
+            "p_one_sided": 2.408976637420528e-11,
+            "p_two_sided": 4.817953274841056e-11,
+            "p_selective": 5.053723117237463e-11,
+            "p": 5.053723117237463e-11,
+            "b_only": 202,
+            "a_only": 90,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.06364428945074108
+          },
+          {
+            "previous": "20250605_atlassian-rovo-dev",
+            "new": "20251027_salesforce_SAGE",
+            "date": "20251027",
+            "margin": 0.02266782911944204,
+            "p_one_sided": 0.0031641215228931903,
+            "p_two_sided": 0.006328243045786381,
+            "p_selective": 0.006609947585040146,
+            "p": 0.006609947585040146,
+            "b_only": 201,
+            "a_only": 149,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.038796861377506486
+          },
+          {
+            "previous": "20251027_salesforce_SAGE",
+            "new": "20251219_sonar-foundation-agent_claude-opus-4-5",
+            "date": "20251219",
+            "margin": 0.0836965998256321,
+            "p_one_sided": 6.0008558705000255e-24,
+            "p_two_sided": 1.2001711741000051e-23,
+            "p_selective": 1.2513562695273648e-23,
+            "p": 1.2513562695273648e-23,
+            "b_only": 286,
+            "a_only": 94,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.10027244986922412
+          }
+        ],
+        "two_sided": {
+          "steps": 13,
+          "significant": 9,
+          "holm": 9
+        },
+        "one_sided": {
+          "steps": 13,
+          "significant": 10,
+          "holm": 9
+        },
+        "worst_first": {
+          "steps": 17,
+          "significant": 13,
+          "holm": 13
+        },
+        "cluster_robust": {
+          "steps": 13,
+          "significant": 7,
+          "holm": 4
+        },
+        "small_margin_steps(<2pts)": 4,
+        "small_margin_significant": 0,
+        "median_margin": 0.032693984306887525,
+        "median_lag": 1.0,
+        "share_adjacent": 0.6923076923076923,
+        "share_never": 0.0,
+        "lags": [
+          1,
+          2,
+          2,
+          1,
+          2,
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "median_upper975_nonsig": 0.021795989537925026
+      },
+      "resolution": {
+        "paired_sd": 0.38086837975253085,
+        "mdd": 0.022278300053531968,
+        "tasks_for_1pt": 11385.641666133144,
+        "tasks_for_2pt": 2846.410416533286,
+        "mdd_ci95": [
+          0.021297577443911815,
+          0.0228471766442477
+        ],
+        "tasks_for_1pt_ci95": [
+          10405.281500783633,
+          11974.53049764357
+        ]
+      },
+      "winner": {
+        "name": "20251219_sonar-foundation-agent_claude-opus-4-5",
+        "observed": 0.52615518744551,
+        "adjusted_iterated": 0.5260136103845782,
+        "ci_iterated": [
+          0.5059902886757727,
+          0.5456698876295651
+        ],
+        "naive_ci": [
+          0.5057180033423444,
+          0.5465923715486757
+        ],
+        "conditional_estimate": 0.52615518744551,
+        "co_leaders": [
+          "20251219_sonar-foundation-agent_claude-opus-4-5"
+        ],
+        "adjusted_plain": 0.5261261987794246
+      },
+      "agent": true
+    },
+    {
+      "board": "SWE-bench Multimodal",
+      "systems": 12,
+      "tasks": 510,
+      "leader": "20251117_codefuse_pycfuse_svr",
+      "leader_score": 0.36470588235294116,
+      "leader_p_best": 0.376625,
+      "leader_rank_interval": [
+        1.0,
+        4.0
+      ],
+      "leader_tied": 2,
+      "top3": [
+        {
+          "name": "20250701_GUIRepair_o3",
+          "score": 0.36470588235294116,
+          "rank_lo": 1.0,
+          "rank_hi": 4.0,
+          "p_best": 0.3612916666666666
+        },
+        {
+          "name": "20251117_codefuse_pycfuse_svr",
+          "score": 0.36470588235294116,
+          "rank_lo": 1.0,
+          "rank_hi": 4.0,
+          "p_best": 0.376625
+        },
+        {
+          "name": "20250611_Refact_Agent_claude-4-sonnet",
+          "score": 0.3607843137254902,
+          "rank_lo": 1.0,
+          "rank_hi": 5.0,
+          "p_best": 0.217625
+        }
+      ],
+      "confidence_set_size_95": 5,
+      "confidence_set_members": [
+        "20250701_GUIRepair_o3",
+        "20251117_codefuse_pycfuse_svr",
+        "20250611_Refact_Agent_claude-4-sonnet",
+        "20250528_OpenHands-Versa-claude4",
+        "20250531_GUIRepair_o4mini"
+      ],
+      "confidence_set_critical": 2.5166226228858197,
+      "confidence_set_size_95_simultaneous": 5,
+      "confidence_set_size_95_cluster": 5,
+      "leader_p_best_cluster": 0.4090208333333334,
+      "resolution_cluster": {
+        "paired_sd": 0.305534925008974,
+        "mdd": 0.03790352578306718,
+        "tasks_for_1pt": 7327.054060616955,
+        "tasks_for_2pt": 1831.7635151542388
+      },
+      "records": {
+        "steps": 7,
+        "significant": 1,
+        "holm": 0,
+        "details": [
+          {
+            "previous": "20250226_agentless_lite_claude3.5",
+            "new": "20250311_zencoder",
+            "date": "20250311",
+            "margin": 0.01764705882352946,
+            "p_one_sided": 0.14879760414221435,
+            "p_two_sided": 0.2975952082844287,
+            "p_selective": 0.2975952082844287,
+            "p": 0.2975952082844287,
+            "b_only": 34,
+            "a_only": 25,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.047058823529411764
+          },
+          {
+            "previous": "20250311_zencoder",
+            "new": "20250325_globant_codefixer_agent",
+            "date": "20250325",
+            "margin": 0.025490196078431338,
+            "p_one_sided": 0.05239474121330166,
+            "p_two_sided": 0.10478948242660333,
+            "p_selective": 0.10478948242660337,
+            "p": 0.10478948242660337,
+            "b_only": 34,
+            "a_only": 21,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.054901960784313725
+          },
+          {
+            "previous": "20250325_globant_codefixer_agent",
+            "new": "20250401_zencoder",
+            "date": "20250401",
+            "margin": 0.009803921568627472,
+            "p_one_sided": 0.2611986902484206,
+            "p_two_sided": 0.5223973804968411,
+            "p_selective": 0.5223973804968409,
+            "p": 0.5223973804968409,
+            "b_only": 22,
+            "a_only": 17,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.03529411764705881
+          },
+          {
+            "previous": "20250401_zencoder",
+            "new": "20250509_OpenHands-Versa_claude3.7",
+            "date": "20250509",
+            "margin": 0.007843137254901933,
+            "p_one_sided": 0.3327329060383094,
+            "p_two_sided": 0.6654658120766188,
+            "p_selective": 0.7515706307881908,
+            "p": 0.7515706307881908,
+            "b_only": 26,
+            "a_only": 22,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.033333333333333326
+          },
+          {
+            "previous": "20250509_OpenHands-Versa_claude3.7",
+            "new": "20250528_OpenHands-Versa-claude4",
+            "date": "20250528",
+            "margin": 0.03137254901960784,
+            "p_one_sided": 0.009760236391230137,
+            "p_two_sided": 0.019520472782460274,
+            "p_selective": 0.022242655051236564,
+            "p": 0.022242655051236564,
+            "b_only": 29,
+            "a_only": 13,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.05490196078431375
+          },
+          {
+            "previous": "20250528_OpenHands-Versa-claude4",
+            "new": "20250611_Refact_Agent_claude-4-sonnet",
+            "date": "20250611",
+            "margin": 0.011764705882352955,
+            "p_one_sided": 0.23069559106838256,
+            "p_two_sided": 0.4613911821367651,
+            "p_selective": 0.5225292391532719,
+            "p": 0.5225292391532719,
+            "b_only": 26,
+            "a_only": 20,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.03921568627450983
+          },
+          {
+            "previous": "20250611_Refact_Agent_claude-4-sonnet",
+            "new": "20250701_GUIRepair_o3",
+            "date": "20250701",
+            "margin": 0.0039215686274509665,
+            "p_one_sided": 0.4427167486432568,
+            "p_two_sided": 0.8854334972865135,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 25,
+            "a_only": 23,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.02941176470588236
+          }
+        ],
+        "two_sided": {
+          "steps": 7,
+          "significant": 1,
+          "holm": 0
+        },
+        "one_sided": {
+          "steps": 7,
+          "significant": 1,
+          "holm": 0
+        },
+        "worst_first": {
+          "steps": 7,
+          "significant": 1,
+          "holm": 0
+        },
+        "cluster_robust": {
+          "steps": 7,
+          "significant": 1,
+          "holm": 0
+        },
+        "small_margin_steps(<2pts)": 5,
+        "small_margin_significant": 0,
+        "median_margin": 0.011764705882352955,
+        "median_lag": 2.0,
+        "share_adjacent": 0.14285714285714285,
+        "share_never": 0.14285714285714285,
+        "lags": [
+          null,
+          2,
+          2,
+          3,
+          1,
+          2,
+          3
+        ],
+        "median_upper975_nonsig": 0.03725490196078432
+      },
+      "resolution": {
+        "paired_sd": 0.3038652090265531,
+        "mdd": 0.03769638703194657,
+        "tasks_for_1pt": 7247.189735837777,
+        "tasks_for_2pt": 1811.7974339594443,
+        "mdd_ci95": [
+          0.03389625017685173,
+          0.04151402639093796
+        ],
+        "tasks_for_1pt_ci95": [
+          5859.674457863775,
+          8789.413420841129
+        ]
+      },
+      "winner": {
+        "name": "20251117_codefuse_pycfuse_svr",
+        "observed": 0.36470588235294116,
+        "adjusted_iterated": 0.35336605664488013,
+        "ci_iterated": [
+          0.3132846840958605,
+          0.3917160566448802
+        ],
+        "naive_ci": [
+          0.3228893514465437,
+          0.40652241325933863
+        ],
+        "conditional_estimate": NaN,
+        "co_leaders": [
+          "20250701_GUIRepair_o3",
+          "20251117_codefuse_pycfuse_svr"
+        ],
+        "adjusted_plain": 0.3557676470588235
+      },
+      "agent": true
+    },
+    {
+      "board": "SWE-bench Multilingual",
+      "systems": 14,
+      "tasks": 300,
+      "leader": "20260213_mini-v2.0.0a0_gemini-3-flash",
+      "leader_score": 0.7266666666666667,
+      "leader_p_best": 0.5391041666666667,
+      "leader_rank_interval": [
+        1.0,
+        4.0
+      ],
+      "leader_tied": 1,
+      "top3": [
+        {
+          "name": "20260213_mini-v2.0.0a0_gemini-3-flash",
+          "score": 0.7266666666666667,
+          "rank_lo": 1.0,
+          "rank_hi": 4.0,
+          "p_best": 0.5391041666666667
+        },
+        {
+          "name": "20260213_mini-v2.0.0a0_claude-4-6-opus",
+          "score": 0.72,
+          "rank_lo": 1.0,
+          "rank_hi": 6.0,
+          "p_best": 0.3378541666666666
+        },
+        {
+          "name": "20260213_mini-v2.0.0a0_claude-4-5-opus",
+          "score": 0.7066666666666667,
+          "rank_lo": 1.0,
+          "rank_hi": 7.0,
+          "p_best": 0.0661875
+        }
+      ],
+      "confidence_set_size_95": 9,
+      "confidence_set_members": [
+        "20260213_mini-v2.0.0a0_gemini-3-flash",
+        "20260213_mini-v2.0.0a0_claude-4-6-opus",
+        "20260213_mini-v2.0.0a0_claude-4-5-opus",
+        "20260213_mini-v2.0.0a0_glm-5",
+        "20260213_mini-v2.0.0a0_gemini-3-pro",
+        "20260216_mini-v2.0.0a0_minimax-2-5",
+        "20260213_mini-v2.0.0a0_kimi-k2-5",
+        "20260213_mini-v2.0.0a0_claude-4-5-sonnet",
+        "20260902_mini-v2.4.6_gemini-3-5-flash"
+      ],
+      "confidence_set_critical": 2.5512927409855863,
+      "confidence_set_size_95_simultaneous": 12,
+      "confidence_set_size_95_cluster": 11,
+      "leader_p_best_cluster": 0.4895208333333333,
+      "resolution_cluster": {
+        "paired_sd": 0.5457884612598954,
+        "mdd": 0.08828106419283199,
+        "tasks_for_1pt": 23380.63888505678,
+        "tasks_for_2pt": 5845.159721264195
+      },
+      "records": {
+        "steps": 0,
+        "significant": 0,
+        "holm": 0,
+        "details": [],
+        "two_sided": {
+          "steps": 0,
+          "significant": 0,
+          "holm": 0
+        },
+        "one_sided": {
+          "steps": 0,
+          "significant": 0,
+          "holm": 0
+        },
+        "worst_first": {
+          "steps": 10,
+          "significant": 1,
+          "holm": 1
+        },
+        "cluster_robust": {
+          "steps": 0,
+          "significant": 0,
+          "holm": 0
+        },
+        "small_margin_steps(<2pts)": 0,
+        "small_margin_significant": 0,
+        "median_margin": null,
+        "median_lag": null,
+        "share_adjacent": null,
+        "share_never": null,
+        "lags": [],
+        "median_upper975_nonsig": null
+      },
+      "resolution": {
+        "paired_sd": 0.4441995795176989,
+        "mdd": 0.07184910341143635,
+        "tasks_for_1pt": 15486.88098308183,
+        "tasks_for_2pt": 3871.7202457704575,
+        "mdd_ci95": [
+          0.06344341203336609,
+          0.07710719223541952
+        ],
+        "tasks_for_1pt_ci95": [
+          12075.199591306387,
+          17836.557320946773
+        ]
+      },
+      "winner": {
+        "name": "20260213_mini-v2.0.0a0_gemini-3-flash",
+        "observed": 0.7266666666666667,
+        "adjusted_iterated": 0.7118589259259259,
+        "ci_iterated": [
+          0.6652530925925927,
+          0.758586425925926
+        ],
+        "naive_ci": [
+          0.6761509620473898,
+          0.7771823712859436
+        ],
+        "conditional_estimate": 0.704528250654333,
+        "co_leaders": [
+          "20260213_mini-v2.0.0a0_gemini-3-flash"
+        ],
+        "adjusted_plain": 0.7132725
+      },
+      "agent": true
+    },
+    {
+      "board": "Terminal-Bench 2",
+      "systems": 67,
+      "tasks": 89,
+      "leader": "vix__claude-opus-4-7",
+      "leader_score": 0.898876404494382,
+      "leader_p_best": 0.7958333333333333,
+      "leader_rank_interval": [
+        1.0,
+        4.0
+      ],
+      "leader_tied": 1,
+      "top3": [
+        {
+          "name": "vix__claude-opus-4-7",
+          "score": 0.898876404494382,
+          "rank_lo": 1.0,
+          "rank_hi": 4.0,
+          "p_best": 0.7958333333333333
+        },
+        {
+          "name": "JJAgent__Multiple",
+          "score": 0.8707865168539326,
+          "rank_lo": 1.0,
+          "rank_hi": 5.0,
+          "p_best": 0.13820833333333335
+        },
+        {
+          "name": "LemonHarness_GPT-5.3-CodeX",
+          "score": 0.8449438202247191,
+          "rank_lo": 2.0,
+          "rank_hi": 12.0,
+          "p_best": 0.016666666666666663
+        }
+      ],
+      "confidence_set_size_95": 10,
+      "confidence_set_members": [
+        "vix__claude-opus-4-7",
+        "JJAgent__Multiple",
+        "LemonHarness_GPT-5.3-CodeX",
+        "NexAU-AHE__gpt-5.5",
+        "Capy__GPT-5.5",
+        "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+        "Polaris__Claude-Opus-4.7-GPT-5.5-Gemini-3.1-Pro",
+        "pilot-real__claude-opus-4-6",
+        "Forge__GPT-5.4",
+        "Forge__Opus-4.6"
+      ],
+      "confidence_set_critical": 3.014679501014422,
+      "confidence_set_size_95_simultaneous": 17,
+      "records": {
+        "steps": 9,
+        "significant": 1,
+        "holm": 1,
+        "details": [
+          {
+            "previous": "MAYA__Claude-4.5-sonnet",
+            "new": "Ante__Gemini-3-Pro-Preview",
+            "date": "20251231",
+            "margin": 0.22022471910112357,
+            "p_one_sided": 0.00024998750062496874,
+            "p_two_sided": 0.0005499725013749313,
+            "p_selective": 0.0005202372281760483,
+            "p": 0.0005202372281760483,
+            "b_only": 41,
+            "a_only": 16,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.34831460674157294
+          },
+          {
+            "previous": "Ante__Gemini-3-Pro-Preview",
+            "new": "OpenSage__Gemini-3-Pro-Preview",
+            "date": "20260123",
+            "margin": 0.004494382022471988,
+            "p_one_sided": 0.4704264786760662,
+            "p_two_sided": 0.9423528823558822,
+            "p_selective": 1.0,
+            "p": 1.0,
+            "b_only": 23,
+            "a_only": 21,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.06741573033707848
+          },
+          {
+            "previous": "OpenSage__Gemini-3-Pro-Preview",
+            "new": "Droid__Claude-Opus-4.6",
+            "date": "20260129",
+            "margin": 0.04719101123595504,
+            "p_one_sided": 0.1511424428778561,
+            "p_two_sided": 0.3020348982550872,
+            "p_selective": 0.30133572567783096,
+            "p": 0.30133572567783096,
+            "b_only": 23,
+            "a_only": 15,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.1303370786516853
+          },
+          {
+            "previous": "Droid__Claude-Opus-4.6",
+            "new": "Simple-Codex__GPT-5.3-Codex",
+            "date": "20260205",
+            "margin": 0.04719101123595493,
+            "p_one_sided": 0.09139543022848858,
+            "p_two_sided": 0.18604069796510175,
+            "p_selective": 0.18106180665610142,
+            "p": 0.18106180665610142,
+            "b_only": 22,
+            "a_only": 14,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.1123595505617978
+          },
+          {
+            "previous": "Simple-Codex__GPT-5.3-Codex",
+            "new": "Droid__GPT-5.3-Codex",
+            "date": "20260216",
+            "margin": 0.026966292134831593,
+            "p_one_sided": 0.19854007299635018,
+            "p_two_sided": 0.3951302434878256,
+            "p_selective": 0.4213709677419355,
+            "p": 0.4213709677419355,
+            "b_only": 21,
+            "a_only": 11,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.08089887640449456
+          },
+          {
+            "previous": "Droid__GPT-5.3-Codex",
+            "new": "Forge__Gemini-3.1-Pro-Preview",
+            "date": "20260226",
+            "margin": 0.011235955056179914,
+            "p_one_sided": 0.41012949352532374,
+            "p_two_sided": 0.8132593370331483,
+            "p_selective": 0.8184993015366194,
+            "p": 0.8184993015366194,
+            "b_only": 18,
+            "a_only": 17,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.0898876404494382
+          },
+          {
+            "previous": "Forge__Gemini-3.1-Pro-Preview",
+            "new": "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+            "date": "20260306",
+            "margin": 0.04044943820224711,
+            "p_one_sided": 0.13329333533323334,
+            "p_two_sided": 0.2697365131743413,
+            "p_selective": 0.28534731884833564,
+            "p": 0.28534731884833564,
+            "b_only": 14,
+            "a_only": 11,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.1078651685393257
+          },
+          {
+            "previous": "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+            "new": "LemonHarness_GPT-5.3-CodeX",
+            "date": "20260425",
+            "margin": 0.020224719101123556,
+            "p_one_sided": 0.2969351532423379,
+            "p_two_sided": 0.5860706964651767,
+            "p_selective": 0.5867997233474953,
+            "p": 0.5867997233474953,
+            "b_only": 13,
+            "a_only": 22,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.08539325842696655
+          },
+          {
+            "previous": "LemonHarness_GPT-5.3-CodeX",
+            "new": "vix__claude-opus-4-7",
+            "date": "20260430",
+            "margin": 0.05393258426966285,
+            "p_one_sided": 0.052747362631868404,
+            "p_two_sided": 0.10504474776261187,
+            "p_selective": 0.11259338313767342,
+            "p": 0.11259338313767342,
+            "b_only": 29,
+            "a_only": 12,
+            "significant_raw": false,
+            "significant_holm": false,
+            "upper975": 0.11460674157303374
+          }
+        ],
+        "two_sided": {
+          "steps": 9,
+          "significant": 1,
+          "holm": 1
+        },
+        "one_sided": {
+          "steps": 9,
+          "significant": 1,
+          "holm": 1
+        },
+        "worst_first": {
+          "steps": 9,
+          "significant": 1,
+          "holm": 1
+        },
+        "cluster_robust": null,
+        "small_margin_steps(<2pts)": 2,
+        "small_margin_significant": 0,
+        "median_margin": 0.04044943820224711,
+        "median_lag": 3.0,
+        "share_adjacent": 0.1111111111111111,
+        "share_never": 0.0,
+        "lags": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          4,
+          3,
+          4,
+          2
+        ],
+        "median_upper975_nonsig": 0.09887640449438195
+      },
+      "resolution": {
+        "paired_sd": 0.26499947000159,
+        "mdd": 0.07869621399193732,
+        "tasks_for_1pt": 5511.853746031665,
+        "tasks_for_2pt": 1377.9634365079162,
+        "mdd_ci95": [
+          0.06806012961840913,
+          0.10765625022528315
+        ],
+        "tasks_for_1pt_ci95": [
+          4122.646127881842,
+          10314.983315846317
+        ]
+      },
+      "winner": {
+        "name": "vix__claude-opus-4-7",
+        "observed": 0.898876404494382,
+        "adjusted_iterated": 0.8898266292134831,
+        "ci_iterated": [
+          0.8357847752808988,
+          0.936964550561798
+        ],
+        "naive_ci": [
+          0.8523686347410349,
+          0.9453841742477291
+        ],
+        "conditional_estimate": 0.8987808260390008,
+        "co_leaders": [
+          "vix__claude-opus-4-7"
+        ],
+        "adjusted_plain": 0.8877497191011235
+      },
+      "agent": true
+    },
+    {
+      "board": "LiveBench",
+      "systems": 94,
+      "tasks": 318,
+      "leader": "gemini-2.5-pro-exp-03-25",
+      "leader_score": 0.7756040209384274,
+      "leader_p_best": 0.999,
+      "leader_rank_interval": [
+        1.0,
+        1.0
+      ],
+      "leader_tied": 1,
+      "top3": [
+        {
+          "name": "gemini-2.5-pro-exp-03-25",
+          "score": 0.7756040209384274,
+          "rank_lo": 1.0,
+          "rank_hi": 1.0,
+          "p_best": 0.999
+        },
+        {
+          "name": "o1-2024-12-17-high",
+          "score": 0.6987876164430886,
+          "rank_lo": 2.0,
+          "rank_hi": 7.0,
+          "p_best": 0.0
+        },
+        {
+          "name": "claude-3-7-sonnet-20250219-thinking-64k",
+          "score": 0.6983978725405036,
+          "rank_lo": 2.0,
+          "rank_hi": 7.0,
+          "p_best": 0.00075
+        }
+      ],
+      "confidence_set_size_95": 1,
+      "confidence_set_members": [
+        "gemini-2.5-pro-exp-03-25"
+      ],
+      "confidence_set_critical": 3.139280237497878,
+      "confidence_set_size_95_simultaneous": 6,
+      "confidence_set_size_95_cluster": 21,
+      "leader_p_best_cluster": 0.781,
+      "resolution_cluster": {
+        "paired_sd": 1.0258998069254326,
+        "mdd": 0.16117408946243625,
+        "tasks_for_1pt": 82607.13702266438,
+        "tasks_for_2pt": 20651.784255666094
+      },
+      "records": {
+        "steps": 4,
+        "significant": 4,
+        "holm": 1,
+        "details": [
+          {
+            "previous": "gpt-4o-2024-05-13",
+            "new": "claude-3-5-sonnet-20240620",
+            "date": "20240620",
+            "margin": 0.05613751052825222,
+            "p_one_sided": 0.00919954002299885,
+            "p_two_sided": 0.017699115044247787,
+            "p_selective": 0.018284805723939184,
+            "p": 0.018284805723939184,
+            "b_only": 76,
+            "a_only": 36,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.09981439179615807
+          },
+          {
+            "previous": "claude-3-5-sonnet-20240620",
+            "new": "o1-preview-2024-09-12",
+            "date": "20240915",
+            "margin": 0.059731606506879587,
+            "p_one_sided": 0.010299485025748713,
+            "p_two_sided": 0.021798910054497276,
+            "p_selective": 0.020709761737207198,
+            "p": 0.020709761737207198,
+            "b_only": 73,
+            "a_only": 49,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.10989839753417592
+          },
+          {
+            "previous": "o1-preview-2024-09-12",
+            "new": "o1-2024-12-17-high",
+            "date": "20241218",
+            "margin": 0.05643267395812834,
+            "p_one_sided": 0.01134943252837358,
+            "p_two_sided": 0.022648867556622168,
+            "p_selective": 0.022515373933743307,
+            "p": 0.022515373933743307,
+            "b_only": 60,
+            "a_only": 43,
+            "significant_raw": true,
+            "significant_holm": false,
+            "upper975": 0.10203795987567688
+          },
+          {
+            "previous": "o1-2024-12-17-high",
+            "new": "gemini-2.5-pro-exp-03-25",
+            "date": "20250325",
+            "margin": 0.07681640449533877,
+            "p_one_sided": 0.0005499725013749313,
+            "p_two_sided": 0.0007499625018749063,
+            "p_selective": 0.0011089827603589072,
+            "p": 0.0011089827603589072,
+            "b_only": 70,
+            "a_only": 27,
+            "significant_raw": true,
+            "significant_holm": true,
+            "upper975": 0.12082210531445602
+          }
+        ],
+        "two_sided": {
+          "steps": 4,
+          "significant": 4,
+          "holm": 1
+        },
+        "one_sided": {
+          "steps": 4,
+          "significant": 4,
+          "holm": 4
+        },
+        "worst_first": {
+          "steps": 11,
+          "significant": 6,
+          "holm": 2
+        },
+        "cluster_robust": {
+          "steps": 4,
+          "significant": 0,
+          "holm": 0
+        },
+        "small_margin_steps(<2pts)": 0,
+        "small_margin_significant": 0,
+        "median_margin": 0.058082140232503965,
+        "median_lag": 1.0,
+        "share_adjacent": 1.0,
+        "share_never": 0.0,
+        "lags": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "median_upper975_nonsig": null
+      },
+      "resolution": {
+        "paired_sd": 0.41220595720986175,
+        "mdd": 0.06475965720609633,
+        "tasks_for_1pt": 13336.325980614509,
+        "tasks_for_2pt": 3334.081495153627,
+        "mdd_ci95": [
+          0.06139404406282814,
+          0.0731469298957036
+        ],
+        "tasks_for_1pt_ci95": [
+          11986.150752358353,
+          17014.512656763854
+        ]
+      },
+      "winner": {
+        "name": "gemini-2.5-pro-exp-03-25",
+        "observed": 0.7756040209384274,
+        "adjusted_iterated": 0.777226855987049,
+        "ci_iterated": [
+          0.7375510885159898,
+          0.8192188648824669
+        ],
+        "naive_ci": [
+          0.7351966987760685,
+          0.8160113431007863
+        ],
+        "conditional_estimate": 0.7756040209384274,
+        "co_leaders": [
+          "gemini-2.5-pro-exp-03-25"
+        ],
+        "adjusted_plain": 0.7760228623346174
+      },
+      "agent": false
+    }
+  ],
+  "totals": {
+    "steps": 74,
+    "significant": 20,
+    "holm": 13
+  },
+  "totals_one_sided": {
+    "steps": 74,
+    "significant": 25,
+    "holm": 13
+  },
+  "totals_two_sided": {
+    "steps": 74,
+    "significant": 20,
+    "holm": 13
+  },
+  "total_two_sided_significant": 20,
+  "totals_worst_first": {
+    "steps": 99,
+    "significant": 29,
+    "holm": 19
+  },
+  "cluster_robust_total": {
+    "significant": 10,
+    "steps": 65
+  },
+  "totals_note": "totals cover the agent leaderboards only; LiveBench is reported separately"
+}

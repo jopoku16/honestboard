@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Honest Leaderboards</title>
+<meta name="description" content="Agent benchmark leaderboards with rank intervals, confidence sets for the best system, and an audit of every record claim.">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --blue: #2a78d6; --orange: #eb6834; --good: #006300; --ring: rgba(11,11,11,.10);
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --blue: #3987e5; --orange: #d95926; --good: #0ca30c; --ring: rgba(255,255,255,.10);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --blue: #3987e5; --orange: #d95926; --good: #0ca30c; --ring: rgba(255,255,255,.10);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 28px 16px 64px; }
+h1 { font-size: 28px; line-height: 1.2; margin: 0 0 6px; font-weight: 650; }
+.lede { color: var(--ink2); margin: 0 0 22px; max-width: 70ch; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
+.tab { border: 1px solid var(--ring); background: var(--surface); color: var(--ink2); padding: 7px 12px; border-radius: 8px; cursor: pointer; font: inherit; }
+.tab[aria-selected="true"] { color: var(--ink); border-color: var(--blue); box-shadow: inset 0 0 0 1px var(--blue); }
+.tab:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 0 0 18px; }
+.card { background: var(--surface); border: 1px solid var(--ring); border-radius: 10px; padding: 12px 14px; }
+.card .k { color: var(--muted); font-size: 12.5px; }
+.card .v { font-size: 26px; font-weight: 650; line-height: 1.15; margin-top: 2px; }
+.card .s { color: var(--ink2); font-size: 12.5px; margin-top: 2px; }
+section { background: var(--surface); border: 1px solid var(--ring); border-radius: 12px; padding: 16px 16px 12px; margin: 0 0 14px; }
+h2 { font-size: 16px; margin: 0 0 2px; font-weight: 650; }
+.sub { color: var(--ink2); font-size: 13.5px; margin: 0 0 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th { text-align: left; color: var(--muted); font-weight: 500; font-size: 12px; padding: 4px 8px 6px 0; border-bottom: 1px solid var(--grid); }
+td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+.name { max-width: 300px; overflow-wrap: anywhere; }
+.bar { position: relative; height: 18px; min-width: 180px; }
+.bar .line { position: absolute; top: 8px; height: 2px; background: var(--blue); border-radius: 2px; }
+.bar .dot { position: absolute; top: 3px; width: 12px; height: 12px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 2px var(--surface); margin-left: -6px; }
+.axis { display: flex; justify-content: space-between; color: var(--muted); font-size: 11.5px; min-width: 180px; padding-top: 2px; }
+.badge { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--ring); white-space: nowrap; }
+.badge.yes { color: var(--good); border-color: var(--good); }
+.badge.no { color: var(--ink2); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12.5px; padding: 2px 9px; border-radius: 6px; background: var(--page); border: 1px solid var(--grid); color: var(--ink2); }
+.note { color: var(--ink2); font-size: 13px; }
+.scroll { overflow-x: auto; }
+footer { color: var(--muted); font-size: 12.5px; margin-top: 22px; }
+a { color: var(--blue); }
+.sr { position: absolute; left: -9999px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Honest leaderboards</h1>
+  <p class="lede">Agent benchmark leaderboards rank systems by one score and announce a new record whenever it rises. This page shows how much of that survives sampling noise: rank intervals, the set of systems that cannot be ruled out as best, and an audit of every record claim, computed from each leaderboard's own per-task results.</p>
+  <div class="tabs" role="tablist" id="tabs" aria-label="Benchmark"></div>
+  <div id="view"></div>
+  <footer>
+    Computed with <code>honestboard</code> from public per-task results (SWE-bench <code>experiments</code> repository; Terminal-Bench 2 leaderboard dataset), fetched 2026-10-12. Tasks are the unit of resampling; most submissions are a single run; tuning against public tasks is not modelled. A record that is not significant is not shown to be worse or equal: the data cannot tell it apart from the previous record. Tuning against public tasks is not modelled. Draft, not peer reviewed.
+  </footer>
+</div>
+<script>
+const DATA = /*__DATA__*/null;
+const $ = (s, r = document) => r.querySelector(s);
+const pct = (x, d = 1) => (100 * x).toFixed(d) + "%";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function rankRows(b) {
+  const xmax = Math.max(...b.ranks.map(r => r.hi), 5);
+  return b.ranks.map(r => {
+    const left = ((r.lo - 1) / (xmax - 1)) * 100, width = Math.max(((r.hi - r.lo) / (xmax - 1)) * 100, 0.8);
+    const dot = ((r.rank - 1) / (xmax - 1)) * 100;
+    const pb = r.pbest >= 0.05 ? r.pbest.toFixed(2) : "&lt;0.05";
+    return `<tr>
+      <td class="name">${esc(r.name)}</td>
+      <td class="num">${pct(r.score)}</td>
+      <td><div class="bar" role="img" aria-label="Rank interval ${r.lo} to ${r.hi}, observed rank ${r.rank}">
+        <div class="line" style="left:${left}%;width:${width}%"></div><div class="dot" style="left:${dot}%"></div></div></td>
+      <td class="num">${r.lo}&ndash;${r.hi}</td>
+      <td class="num">${pb}</td></tr>`;
+  }).join("");
+}
+
+function recordRows(b) {
+  return b.records.list.slice().reverse().map(s => `<tr>
+    <td class="num">${esc(s.date)}</td>
+    <td class="name">${esc(s.new)}<div class="note">over ${esc(s.prev)}</div></td>
+    <td class="num">${pct(s.score)}</td>
+    <td class="num">${(100 * s.margin >= 0 ? "+" : "") + (100 * s.margin).toFixed(1)}</td>
+    <td class="num">${s.p < 0.001 ? "&lt;0.001" : s.p.toFixed(3)}</td>
+    <td>${s.sig ? '<span class="badge yes">distinguishable</span>' : '<span class="badge no">not distinguishable</span>'}</td></tr>`).join("");
+}
+
+function render(key) {
+  const b = DATA.find(x => x.key === key);
+  const rec = b.records;
+  const w = b.winner;
+  $("#view").innerHTML = `
+  <p class="sub">${esc(b.blurb)}. ${b.systems} systems with per-task results, ${b.tasks.toLocaleString()} tasks.</p>
+  <div class="cards">
+    <div class="card"><div class="k">Most likely best system tops the board in</div><div class="v">${(Math.max(...b.ranks.map(r => r.pbest)) * 100).toFixed(0)}%</div><div class="s">of task resamples</div></div>
+    <div class="card"><div class="k">Cannot be ruled out as best</div><div class="v">${b.set.size}</div><div class="s">of ${b.systems} systems (95% confidence set)</div></div>
+    ${rec ? `<div class="card"><div class="k">Record claims that hold up</div><div class="v">${rec.sig} of ${rec.steps}</div><div class="s">can be told apart from the previous record at the 5% level (two-sided exact paired test)</div></div>` : ""}
+    <div class="card"><div class="k">This board can detect</div><div class="v">${(100 * b.mdd).toFixed(1)} pts</div><div class="s">${rec && rec.median_margin !== null ? "median record margin " + (100 * rec.median_margin).toFixed(1) + " pts; " : ""}a 1-point gap needs about ${Math.round(b.tasks_for_1pt / 100) * 100 > 0 ? (Math.round(b.tasks_for_1pt / 100) * 100).toLocaleString() : "?"} tasks</div></div>
+    <div class="card"><div class="k">Leader's score, corrected</div><div class="v">${pct(w.adjusted)}</div><div class="s">reported ${pct(w.observed)}</div></div>
+  </div>
+  <section>
+    <h2>Rank intervals</h2>
+    <p class="sub">Each bar is the 95% range of a system's rank when the tasks are resampled; the dot is its observed rank.</p>
+    <div class="scroll"><table><thead><tr><th>System</th><th class="num">Score</th><th>Rank under resampling</th><th class="num">95% range</th><th class="num">Top-rank freq.</th></tr></thead><tbody>${rankRows(b)}</tbody></table></div>
+  </section>
+  <section>
+    <h2>Systems that cannot be ruled out as best</h2>
+    <p class="sub">${b.set.size} of ${b.systems} systems (95% confidence set). This is who the data cannot exclude, not who is likely to be best.</p>
+    <div class="chips">${b.set.members.map(m => `<span class="chip">${esc(m)}</span>`).join("")}</div>
+  </section>
+  ${rec ? `<section>
+    <h2>Every record claim</h2>
+    <p class="sub">${rec.sig} of ${rec.steps} record-setting submissions can be told apart from the previous record at the 5% level in a two-sided exact paired test on the same tasks (${rec.holm} after Holm correction). Newest first.</p>
+    <div class="scroll"><table><thead><tr><th class="num">Date</th><th>New record</th><th class="num">Score</th><th class="num">Margin (pts)</th><th class="num">p (two-sided)</th><th>Verdict</th></tr></thead><tbody>${recordRows(b)}</tbody></table></div>
+  </section>` : ""}
+  <section>
+    <h2>The winner's score, corrected</h2>
+    <p class="sub">${esc(w.name)} reported ${pct(w.observed)}. The top score was picked for being the highest, so it is biased upward. Correcting for that selection gives ${pct(w.adjusted)} (95% interval ${pct(w.ci[0])} to ${pct(w.ci[1])}). Task-sampling luck only; tuning on public tasks and run-to-run randomness are not included.</p>
+  </section>`;
+  document.title = b.label + " | Honest leaderboards";
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.key === key));
+}
+
+const tabs = $("#tabs");
+DATA.forEach(b => {
+  const t = document.createElement("button");
+  t.className = "tab"; t.role = "tab"; t.dataset.key = b.key; t.textContent = b.label;
+  t.addEventListener("click", () => { history.replaceState(null, "", "#" + b.key); render(b.key); });
+  tabs.appendChild(t);
+});
+const start = DATA.find(b => "#" + b.key === location.hash) ? location.hash.slice(1) : DATA[0].key;
+render(start);
+</script>
+</body>
+</html>

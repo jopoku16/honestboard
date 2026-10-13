@@ -1,0 +1,39 @@
+{
+  "board": "verified",
+  "K": 135,
+  "T": 500,
+  "R": 300,
+  "by_n": {
+    "250": {
+      "coverage_all_systems": 0.959604938271605,
+      "coverage_true_top10": 0.9483333333333334,
+      "coverage_selected_winner": 0.9566666666666667,
+      "mean_width_true_top10": 13.969666666666665
+    },
+    "500": {
+      "coverage_all_systems": 0.9646666666666666,
+      "coverage_true_top10": 0.9570000000000001,
+      "coverage_selected_winner": 0.9666666666666667,
+      "mean_width_true_top10": 10.379666666666667
+    }
+  },
+  "bunched": {
+    "n_equal_leaders": 20,
+    "250": {
+      "coverage_equal_leaders": 0.4395,
+      "coverage_equal_leaders_avg": 0.9485000000000002,
+      "coverage_equal_leaders_block": 0.9996666666666666,
+      "coverage_all_systems": 0.8826172839506173,
+      "confidence_set_contains_each_equal_leader": 0.9941666666666666,
+      "median_set_size": 28.0
+    },
+    "500": {
+      "coverage_equal_leaders": 0.4223333333333333,
+      "coverage_equal_leaders_avg": 0.9531666666666668,
+      "coverage_equal_leaders_block": 1.0,
+      "coverage_all_systems": 0.8816049382716051,
+      "confidence_set_contains_each_equal_leader": 0.9916666666666667,
+      "median_set_size": 23.0
+    }
+  }
+}

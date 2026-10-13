@@ -1,0 +1,37 @@
+$ python -m honestboard check swebench_verified.json 20251215_livesweagent_claude-opus-4-5
+20251215_livesweagent_claude-opus-4-5: score 79.2%, observed rank 1, 95% rank interval (1.0,
+    6.0), top-rank freq.=0.35
+Inside the 95% confidence set of the best: True (set size 14)
+Paired test, 20251215_livesweagent_claude-opus-4-5 vs
+    20251205_sonar-foundation-agent_claude-opus-4-5: difference +0.0 pts, one-sided exact
+    p=0.566
+
+$ python -m honestboard report swebench_verified.json
+135 systems, 500 tasks
+
+Leaders with 95% rank intervals and top-rank frequency:
+  20251205_sonar-foundation-agent_claude-opus-4-5       79.2%  rank [1, 5]  top-rank freq.=0.32
+  20251215_livesweagent_claude-opus-4-5                 79.2%  rank [1, 6]  top-rank freq.=0.35
+  20250928_trae_doubao_seed_code                        78.8%  rank [1, 7]  top-rank freq.=0.28
+  20251127_openhands_claude-opus-4-5                    77.6%  rank [2, 11]  top-rank freq.=0.01
+  20251120_livesweagent_gemini-3-pro-preview            77.4%  rank [2, 11]  top-rank freq.=0.02
+  20250804_epam-ai-run-claude-4-sonnet                  76.8%  rank [2, 13]  top-rank freq.=0.01
+  20250902_atlassian-rovo-dev                           76.8%  rank [2, 12]  top-rank freq.=0.00
+  20250819_ACoder                                       76.4%  rank [3, 15]  top-rank freq.=0.00
+  20250901_warp                                         75.6%  rank [4, 17]  top-rank freq.=0.00
+  20250612_trae                                         75.2%  rank [5, 18]  top-rank freq.=0.00
+
+Confidence set of the best (95%): 14 of 135 systems cannot be ruled out as best.
+
+Record claims: 30 steps, 6 beat the previous record at the 5% level (selective exact paired
+    test, conditional on the record event), 2 after Holm correction.
+Resolution: this board detects differences of about 4.3 points (80% power); resolving a 1-point
+    gap would take about 9,277 tasks.
+
+Winner 20251215_livesweagent_claude-opus-4-5: reported 79.2%, selection-adjusted estimate
+    78.1%, 95% interval [74.9%, 81.5%] (naive [75.6%, 82.8%]).
+  conditional method: estimate nan%, interval [-inf%, inf%] (unbounded when the winner's margin
+    is about zero)
+  hybrid (Andrews, Kitagawa and McCloskey): estimate nan%, interval [nan%, nan%] (undefined at
+    an exact tie for first)
+  zoom interval (Zrnic and Fithian): [73.7%, 84.7%] over 47 plausible winners

@@ -1,0 +1,240 @@
+{
+  "design": {
+    "board": "terminalbench.json",
+    "difficulty_sd_logit": 1.6449401009409428,
+    "base_score": 0.8392134831460675,
+    "rho": 0.8385594516992568,
+    "paired_sd_real": 0.26499947000159,
+    "paired_sd_sim": 0.26813921442161065,
+    "K_null": 40,
+    "T_real": 89
+  },
+  "null_global": [
+    {
+      "K": 40,
+      "T": 300,
+      "R": 600,
+      "steps": 1578,
+      "mean_steps_per_board": 2.63,
+      "per_step_rejection_one_sided": 0.018377693282636248,
+      "per_step_rejection_two_sided": 0.010139416983523447,
+      "per_step_rejection_selective": 0.008871989860583017,
+      "holm_any_rejection_per_board": 0.018333333333333333,
+      "by_position": {
+        "1": {
+          "steps": 579,
+          "one": 24,
+          "two": 13,
+          "sel": 12
+        },
+        "2": {
+          "steps": 485,
+          "one": 4,
+          "two": 3,
+          "sel": 2
+        },
+        "3+": {
+          "steps": 514,
+          "one": 1,
+          "two": 0,
+          "sel": 0
+        }
+      }
+    },
+    {
+      "K": 40,
+      "T": 500,
+      "R": 600,
+      "steps": 1654,
+      "mean_steps_per_board": 2.756666666666667,
+      "per_step_rejection_one_sided": 0.016928657799274487,
+      "per_step_rejection_two_sided": 0.0048367593712212815,
+      "per_step_rejection_selective": 0.004232164449818622,
+      "holm_any_rejection_per_board": 0.008333333333333333,
+      "by_position": {
+        "1": {
+          "steps": 578,
+          "one": 23,
+          "two": 7,
+          "sel": 7
+        },
+        "2": {
+          "steps": 492,
+          "one": 2,
+          "two": 0,
+          "sel": 0
+        },
+        "3+": {
+          "steps": 584,
+          "one": 3,
+          "two": 1,
+          "sel": 0
+        }
+      }
+    },
+    {
+      "K": 40,
+      "T": 2000,
+      "R": 600,
+      "steps": 1820,
+      "mean_steps_per_board": 3.033333333333333,
+      "per_step_rejection_one_sided": 0.01868131868131868,
+      "per_step_rejection_two_sided": 0.007692307692307693,
+      "per_step_rejection_selective": 0.007142857142857143,
+      "holm_any_rejection_per_board": 0.016666666666666666,
+      "by_position": {
+        "1": {
+          "steps": 586,
+          "one": 31,
+          "two": 13,
+          "sel": 12
+        },
+        "2": {
+          "steps": 498,
+          "one": 2,
+          "two": 1,
+          "sel": 1
+        },
+        "3+": {
+          "steps": 736,
+          "one": 1,
+          "two": 0,
+          "sel": 0
+        }
+      }
+    }
+  ],
+  "null_selected": [
+    {
+      "T": 300,
+      "pairs": 20000,
+      "selected_steps": 9240,
+      "rejection_one_sided": 0.07132034632034633,
+      "rejection_two_sided": 0.033766233766233764,
+      "rejection_selective": 0.031385281385281384
+    },
+    {
+      "T": 500,
+      "pairs": 20000,
+      "selected_steps": 9432,
+      "rejection_one_sided": 0.0751696352841391,
+      "rejection_two_sided": 0.03307888040712468,
+      "rejection_selective": 0.03254877014418999
+    },
+    {
+      "T": 2000,
+      "pairs": 20000,
+      "selected_steps": 9617,
+      "rejection_one_sided": 0.0847457627118644,
+      "rejection_two_sided": 0.04242487262139961,
+      "rejection_selective": 0.041281064781116775
+    }
+  ],
+  "power": [
+    {
+      "T": 300,
+      "base": 0.8392134831460675,
+      "R": 3000,
+      "power": {
+        "0.010": {
+          "power_two_sided": 0.07033333333333333,
+          "power_one_sided": 0.12133333333333333,
+          "power_selective": 0.06366666666666666,
+          "paired_sd": 0.2655641856083289
+        },
+        "0.020": {
+          "power_two_sided": 0.18266666666666667,
+          "power_one_sided": 0.2836666666666667,
+          "power_selective": 0.169,
+          "paired_sd": 0.2650184010214579
+        },
+        "0.030": {
+          "power_two_sided": 0.416,
+          "power_one_sided": 0.554,
+          "power_selective": 0.39766666666666667,
+          "paired_sd": 0.26524887172977846
+        },
+        "0.050": {
+          "power_two_sided": 0.8776666666666667,
+          "power_one_sided": 0.9336666666666666,
+          "power_selective": 0.8656666666666667,
+          "paired_sd": 0.2696236831383779
+        }
+      },
+      "formula_mdd": 0.04308423520169164,
+      "power_at_formula_mdd": 0.76,
+      "power_at_formula_mdd_selective": 0.7443333333333333,
+      "paired_sd_sim": 0.2663637853744858
+    },
+    {
+      "T": 500,
+      "base": 0.8392134831460675,
+      "R": 3000,
+      "power": {
+        "0.010": {
+          "power_two_sided": 0.09566666666666666,
+          "power_one_sided": 0.16333333333333333,
+          "power_selective": 0.09333333333333334,
+          "paired_sd": 0.2651685817616918
+        },
+        "0.020": {
+          "power_two_sided": 0.32,
+          "power_one_sided": 0.45166666666666666,
+          "power_selective": 0.31733333333333336,
+          "paired_sd": 0.2641356279007429
+        },
+        "0.030": {
+          "power_two_sided": 0.655,
+          "power_one_sided": 0.7766666666666666,
+          "power_selective": 0.652,
+          "paired_sd": 0.2651103499714612
+        },
+        "0.050": {
+          "power_two_sided": 0.986,
+          "power_one_sided": 0.9953333333333333,
+          "power_selective": 0.986,
+          "paired_sd": 0.27085854741065646
+        }
+      },
+      "formula_mdd": 0.033367203278031526,
+      "power_at_formula_mdd": 0.7506666666666667,
+      "power_at_formula_mdd_selective": 0.7486666666666667,
+      "paired_sd_sim": 0.2663182767611381
+    },
+    {
+      "T": 2000,
+      "base": 0.8392134831460675,
+      "R": 3000,
+      "power": {
+        "0.010": {
+          "power_two_sided": 0.3606666666666667,
+          "power_one_sided": 0.476,
+          "power_selective": 0.353,
+          "paired_sd": 0.2655565023894425
+        },
+        "0.020": {
+          "power_two_sided": 0.9193333333333333,
+          "power_one_sided": 0.956,
+          "power_selective": 0.9183333333333333,
+          "paired_sd": 0.26456599475894743
+        },
+        "0.030": {
+          "power_two_sided": 0.9986666666666667,
+          "power_one_sided": 1.0,
+          "power_selective": 0.9986666666666667,
+          "paired_sd": 0.26473160054445727
+        },
+        "0.050": {
+          "power_two_sided": 1.0,
+          "power_one_sided": 1.0,
+          "power_selective": 1.0,
+          "paired_sd": 0.27073388518055724
+        }
+      },
+      "formula_mdd": 0.01668853301563607,
+      "power_at_formula_mdd": 0.7816666666666666,
+      "power_at_formula_mdd_selective": 0.777,
+      "paired_sd_sim": 0.2663969957183511
+    }
+  ]
+}

@@ -1,0 +1,378 @@
+\begin{thebibliography}{55}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Andrews et~al.(2024)Andrews, Kitagawa, and
+  McCloskey]{andrews2024winners}
+Isaiah Andrews, Toru Kitagawa, and Adam McCloskey.
+\newblock Inference on winners.
+\newblock \emph{The Quarterly Journal of Economics}, 139\penalty0 (1):\penalty0
+  305--358, 2024.
+\newblock \doi{10.1093/qje/qjad043}.
+
+\bibitem[Arjmandi(2026)]{arjmandi2026harness}
+Mohsen Arjmandi.
+\newblock Harness or model? isolating the harness effect in agentic coding with
+  a contamination-controlled private suite, 2026.
+\newblock arXiv:2609.11987.
+
+\bibitem[Bakshi et~al.(2026)Bakshi, Gao, Gao, and Panigrahi]{bakshi2026winners}
+Soham Bakshi, Lingjun Gao, Zijun Gao, and Snigdha Panigrahi.
+\newblock Flexible inference for winners with conditional validity, 2026.
+\newblock arXiv:2607.18545.
+
+\bibitem[Blum and Hardt(2015)]{blum2015ladder}
+Avrim Blum and Moritz Hardt.
+\newblock The ladder: A reliable leaderboard for machine learning competitions.
+\newblock In \emph{Proceedings of the 32nd International Conference on Machine
+  Learning}, volume~37 of \emph{Proceedings of Machine Learning Research},
+  pages 1006--1014, 2015.
+
+\bibitem[Bowyer et~al.(2025)Bowyer, Aitchison, and Ivanova]{bowyer2025clt}
+Sam Bowyer, Laurence Aitchison, and Desi~R. Ivanova.
+\newblock Position: Don't use the {CLT} in {LLM} evals with fewer than a few
+  hundred datapoints.
+\newblock In \emph{International Conference on Machine Learning}, 2025.
+\newblock arXiv:2503.01747.
+
+\bibitem[Card et~al.(2020)Card, Henderson, Khandelwal, Jia, Mahowald, and
+  Jurafsky]{card2020power}
+Dallas Card, Peter Henderson, Urvashi Khandelwal, Robin Jia, Kyle Mahowald, and
+  Dan Jurafsky.
+\newblock With little power comes great responsibility.
+\newblock In \emph{Proceedings of the 2020 Conference on Empirical Methods in
+  Natural Language Processing}, 2020.
+\newblock arXiv:2010.06595.
+
+\bibitem[Chatzi et~al.(2024)Chatzi, Straitouri, Thejaswi, and
+  Gomez-Rodriguez]{chatzi2024ppr}
+Ivi Chatzi, Eleni Straitouri, Suhas Thejaswi, and Manuel Gomez-Rodriguez.
+\newblock Prediction-powered ranking of large language models.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2024.
+\newblock arXiv:2402.17826.
+
+\bibitem[Chiang et~al.(2024)]{chiang2024arena}
+Wei-Lin Chiang et~al.
+\newblock Chatbot arena: An open platform for evaluating {LLMs} by human
+  preference, 2024.
+\newblock arXiv:2403.04132.
+
+\bibitem[Efron(2011)]{efron2011tweedie}
+Bradley Efron.
+\newblock Tweedie's formula and selection bias.
+\newblock \emph{Journal of the American Statistical Association}, 106\penalty0
+  (496):\penalty0 1602--1614, 2011.
+
+\bibitem[Efron(2014)]{efron2014model}
+Bradley Efron.
+\newblock Estimation and accuracy after model selection.
+\newblock \emph{Journal of the American Statistical Association}, 109\penalty0
+  (507):\penalty0 991--1007, 2014.
+
+\bibitem[Efron and Tibshirani(1993)]{efron1993bootstrap}
+Bradley Efron and Robert~J. Tibshirani.
+\newblock \emph{An Introduction to the Bootstrap}.
+\newblock Chapman and Hall, 1993.
+
+\bibitem[Fithian et~al.(2014)Fithian, Sun, and Taylor]{fithian2014optimal}
+William Fithian, Dennis Sun, and Jonathan Taylor.
+\newblock Optimal inference after model selection, 2014.
+\newblock arXiv:1410.2597.
+
+\bibitem[Foster and Stine(2008)]{foster2008alphainvesting}
+Dean~P. Foster and Robert~A. Stine.
+\newblock $\alpha$-investing: A procedure for sequential control of expected
+  false discoveries.
+\newblock \emph{Journal of the Royal Statistical Society: Series B},
+  70\penalty0 (2):\penalty0 429--444, 2008.
+\newblock \doi{10.1111/j.1467-9868.2007.00643.x}.
+
+\bibitem[Hansen et~al.(2011)Hansen, Lunde, and Nason]{hansen2011mcs}
+Peter~R. Hansen, Asger Lunde, and James~M. Nason.
+\newblock The model confidence set.
+\newblock \emph{Econometrica}, 79\penalty0 (2):\penalty0 453--497, 2011.
+
+\bibitem[Heineman et~al.(2025)Heineman, Hofmann, Magnusson, Gu, Smith,
+  Hajishirzi, Lo, and Dodge]{heineman2025signal}
+David Heineman, Valentin Hofmann, Ian Magnusson, Yuling Gu, Noah~A. Smith,
+  Hannaneh Hajishirzi, Kyle Lo, and Jesse Dodge.
+\newblock Signal and noise: A framework for reducing uncertainty in language
+  model evaluation, 2025.
+\newblock arXiv:2508.13144.
+
+\bibitem[Hoff and Tokdar(2025)]{hoff2025selective}
+Peter Hoff and Surya Tokdar.
+\newblock Selective and marginal selective inference for exceptional groups,
+  2025.
+\newblock arXiv:2509.13538.
+
+\bibitem[Holm(1979)]{holm1979}
+Sture Holm.
+\newblock A simple sequentially rejective multiple test procedure.
+\newblock \emph{Scandinavian Journal of Statistics}, 6\penalty0 (2):\penalty0
+  65--70, 1979.
+
+\bibitem[Hsu(1981)]{hsu1981mcb}
+Jason~C. Hsu.
+\newblock Simultaneous confidence intervals for all distances from the
+  ``best''.
+\newblock \emph{The Annals of Statistics}, 9\penalty0 (5):\penalty0 1026--1034,
+  1981.
+\newblock \doi{10.1214/aos/1176345582}.
+
+\bibitem[Huang et~al.(2026)Huang, Lee, Tng, and Ge]{huang2026deepswe}
+Wenqi Huang, Charley Lee, Leonard Tng, and Serena Ge.
+\newblock {DeepSWE}: Measuring frontier coding agents on original, long-horizon
+  engineering tasks, 2026.
+\newblock arXiv:2607.07946.
+
+\bibitem[Hung and Fithian(2019)]{hung2019rank}
+Kenneth Hung and William Fithian.
+\newblock Rank verification for exponential families.
+\newblock \emph{The Annals of Statistics}, 47\penalty0 (2):\penalty0 758--782,
+  2019.
+\newblock \doi{10.1214/17-AOS1634}.
+
+\bibitem[Jain(2026)]{jain2026lottery}
+Shourya~V. Jain.
+\newblock The leaderboard lottery: Why top {LLM} rankings are often coin flips,
+  and how to fix them.
+\newblock Poster, ICML 2026 Workshop on Hypothesis Testing, 2026.
+\newblock URL \url{https://icml.cc/virtual/2026/80012}.
+
+\bibitem[Javanmard and Montanari(2018)]{javanmard2018online}
+Adel Javanmard and Andrea Montanari.
+\newblock Online rules for control of false discovery rate and false discovery
+  exceedance.
+\newblock \emph{The Annals of Statistics}, 46\penalty0 (2):\penalty0 526--554,
+  2018.
+\newblock \doi{10.1214/17-aos1559}.
+
+\bibitem[Jimenez et~al.(2024)Jimenez, Yang, Wettig, Yao, Pei, Press, and
+  Narasimhan]{jimenez2024swebench}
+Carlos~E. Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir
+  Press, and Karthik Narasimhan.
+\newblock {SWE-bench}: Can language models resolve real-world {GitHub} issues?
+\newblock In \emph{International Conference on Learning Representations}, 2024.
+\newblock arXiv:2310.06770.
+
+\bibitem[Kapoor et~al.(2025)Kapoor, Stroebl, Siegel, Nadgir, and
+  Narayanan]{kapoor2024agents}
+Sayash Kapoor, Benedikt Stroebl, Zachary~S. Siegel, Nitya Nadgir, and Arvind
+  Narayanan.
+\newblock {AI} agents that matter.
+\newblock \emph{Transactions on Machine Learning Research}, 2025.
+\newblock arXiv:2407.01502.
+
+\bibitem[Kim and Ramdas(2025)]{kim2025confidence}
+Ilmun Kim and Aaditya Ramdas.
+\newblock Locally minimax optimal confidence sets for the best model, 2025.
+\newblock arXiv:2503.21639.
+
+\bibitem[Kotawala(2026)]{kotawala2026resolution}
+Anany Kotawala.
+\newblock Resolution diagnostics for paired {LLM} evaluation, 2026.
+\newblock arXiv:2605.30315. ICML 2026 Workshop on Hypothesis Testing.
+
+\bibitem[K{\"u}bler et~al.(2026)K{\"u}bler, Budhathoki, Kleindessner, Zhou,
+  Yin, Khetan, and Karypis]{kubler2026degradation}
+Jonas K{\"u}bler, Kailash Budhathoki, Matth{\"a}us Kleindessner, Xiong Zhou,
+  Junming Yin, Ashish Khetan, and George Karypis.
+\newblock When {LLMs} get significantly worse: A statistical approach to detect
+  model degradations.
+\newblock In \emph{International Conference on Learning Representations}, 2026.
+\newblock arXiv:2602.10144.
+
+\bibitem[Lee et~al.(2016)Lee, Sun, Sun, and Taylor]{lee2016exact}
+Jason~D. Lee, Dennis~L. Sun, Yuekai Sun, and Jonathan~E. Taylor.
+\newblock Exact post-selection inference, with application to the lasso.
+\newblock \emph{The Annals of Statistics}, 44\penalty0 (3):\penalty0 907--927,
+  2016.
+
+\bibitem[{LessWrong contributor}(2026)]{lesswrong2026tbench}
+{LessWrong contributor}.
+\newblock Terminal-bench leaderboard rankings: Luck or skill?
+\newblock LessWrong, 5 August 2026, 2026.
+\newblock Informal analysis; add the URL before submission.
+
+\bibitem[Liu et~al.(2026)Liu, Liu, Sun, Luo, and Guo]{liu2026converged}
+Fengshuo Liu, Ying Liu, Ruize Sun, Lie Luo, and Siyuan Guo.
+\newblock Coding agents have converged: Why the {SWE-bench} leaderboard can no
+  longer order its top entries, and what to measure instead, 2026.
+\newblock arXiv:2609.17394. To appear, ADMA 2026.
+
+\bibitem[Madaan et~al.(2024)]{madaan2024variance}
+Lovish Madaan et~al.
+\newblock Quantifying variance in evaluation benchmarks, 2024.
+\newblock arXiv:2406.10229. Author list from search result; check before
+  submission.
+
+\bibitem[McNemar(1947)]{mcnemar1947}
+Quinn McNemar.
+\newblock Note on the sampling error of the difference between correlated
+  proportions or percentages.
+\newblock \emph{Psychometrika}, 12\penalty0 (2):\penalty0 153--157, 1947.
+
+\bibitem[Merrill et~al.(2026)Merrill, Shaw, Carlini, Li, Raj, Bercovich,
+  et~al.]{merrill2026terminalbench}
+Mike~A. Merrill, Alexander~G. Shaw, Nicholas Carlini, Boxuan Li, Harsh Raj,
+  Ivan Bercovich, et~al.
+\newblock Terminal-bench: Benchmarking agents on hard, realistic tasks in
+  command line interfaces, 2026.
+\newblock arXiv:2601.11868.
+
+\bibitem[Miller(2024)]{miller2024errorbars}
+Evan Miller.
+\newblock Adding error bars to evals: A statistical approach to language model
+  evaluations, 2024.
+\newblock arXiv:2411.00640.
+
+\bibitem[Mogstad et~al.(2024)Mogstad, Romano, Shaikh, and
+  Wilhelm]{mogstad2024ranks}
+Magne Mogstad, Joseph~P. Romano, Azeem~M. Shaikh, and Daniel Wilhelm.
+\newblock Inference for ranks with applications to mobility across
+  neighbourhoods and academic achievement across countries.
+\newblock \emph{The Review of Economic Studies}, 91\penalty0 (1):\penalty0
+  476--518, 2024.
+\newblock \doi{10.1093/restud/rdad006}.
+
+\bibitem[Neuhof and Benjamini(2026{\natexlab{a}})]{neuhof2026ranking}
+Bitya Neuhof and Yuval Benjamini.
+\newblock Quantifying ranking uncertainty in {LLM} benchmarks,
+  2026{\natexlab{a}}.
+\newblock arXiv:2607.16259.
+
+\bibitem[Neuhof and Benjamini(2026{\natexlab{b}})]{neuhof2026rankintervals}
+Bitya Neuhof and Yuval Benjamini.
+\newblock Rank intervals for leaderboards: A hierarchical framework for model
+  evaluation, 2026{\natexlab{b}}.
+\newblock arXiv:2606.08679.
+
+\bibitem[{OpenAI}(2024)]{openai2024verified}
+{OpenAI}.
+\newblock Introducing {SWE-bench Verified}.
+\newblock \url{https://openai.com/index/introducing-swe-bench-verified/}, 2024.
+\newblock Release note, August 2024; URL to be checked before submission.
+
+\bibitem[Petrou-Zeniou and Shaikh(2024)]{petrouzeniou2024ranking}
+Andreas Petrou-Zeniou and Azeem~M. Shaikh.
+\newblock Inference after ranking with applications to economic mobility, 2024.
+\newblock arXiv:2410.19212.
+
+\bibitem[Ramdas et~al.(2017)Ramdas, Yang, Wainwright, and
+  Jordan]{ramdas2017lord}
+Aaditya Ramdas, Fanny Yang, Martin~J. Wainwright, and Michael~I. Jordan.
+\newblock Online control of the false discovery rate with decaying memory.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2017.
+\newblock arXiv:1710.00499.
+
+\bibitem[Roelofs et~al.(2019)Roelofs, Shankar, Recht, Fridovich-Keil, Hardt,
+  Miller, and Schmidt]{roelofs2019meta}
+Rebecca Roelofs, Vaishaal Shankar, Benjamin Recht, Sara Fridovich-Keil, Moritz
+  Hardt, John Miller, and Ludwig Schmidt.
+\newblock A meta-analysis of overfitting in machine learning.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~32, 2019.
+
+\bibitem[Shaked and Shanthikumar(2007)]{shaked2007stochastic}
+Moshe Shaked and J.~George Shanthikumar.
+\newblock \emph{Stochastic Orders}.
+\newblock Springer, New York, 2007.
+\newblock \doi{10.1007/978-0-387-34675-5}.
+
+\bibitem[Singh et~al.(2025)]{singh2025illusion}
+Shivalika Singh et~al.
+\newblock The leaderboard illusion, 2025.
+\newblock arXiv:2504.20879. Author list from search result; check before
+  submission.
+
+\bibitem[{SWE-bench team}(2025)]{swebenchmultilingual}
+{SWE-bench team}.
+\newblock {SWE-bench} {Multilingual} (dataset).
+\newblock Hugging Face dataset SWE-bench/SWE-bench\_Multilingual, 2025.
+\newblock Accessed 2026-10-12.
+
+\bibitem[{SWE-bench team}(2026)]{swebenchexperiments}
+{SWE-bench team}.
+\newblock {SWE-bench} leaderboard submissions (repository).
+\newblock \url{https://github.com/SWE-bench/experiments}, 2026.
+\newblock Accessed 2026-10-12.
+
+\bibitem[{Terminal-Bench contributors}(2026)]{terminalbench2026}
+{Terminal-Bench contributors}.
+\newblock Terminal-bench 2 leaderboard submissions (dataset).
+\newblock
+  \url{https://huggingface.co/datasets/harborframework/terminal-bench-2-leaderboard},
+  2026.
+\newblock Accessed 2026-10-12.
+
+\bibitem[Tian and Ramdas(2021)]{tian2021onlinefwer}
+Jinjin Tian and Aaditya Ramdas.
+\newblock Online control of the familywise error rate.
+\newblock \emph{Statistical Methods in Medical Research}, 30\penalty0
+  (4):\penalty0 976--993, 2021.
+\newblock \doi{10.1177/0962280220983381}.
+
+\bibitem[Vats and Golev(2026)]{vats2026scaffold}
+Naman Vats and Oleg Golev.
+\newblock The scaffold effect in coding agents: Harness choice as a hidden
+  variable in coding-agent evaluation, 2026.
+\newblock arXiv:2607.22585.
+
+\bibitem[White et~al.(2025)White, Dooley, Roberts, Pal, Feuer, Jain,
+  Shwartz-Ziv, Jain, Saifullah, Dey, Shubh-Agrawal, Sandha, Naidu, Hegde,
+  LeCun, Goldstein, Neiswanger, and Goldblum]{white2025livebench}
+Colin White, Samuel Dooley, Manley Roberts, Arka Pal, Benjamin Feuer,
+  Siddhartha Jain, Ravid Shwartz-Ziv, Neel Jain, Khalid Saifullah, Sreemanti
+  Dey, Shubh-Agrawal, Sandeep~Singh Sandha, Siddartha Naidu, Chinmay Hegde,
+  Yann LeCun, Tom Goldstein, Willie Neiswanger, and Micah Goldblum.
+\newblock {LiveBench}: A challenging, contamination-limited {LLM} benchmark.
+\newblock In \emph{International Conference on Learning Representations}, 2025.
+\newblock arXiv:2406.19314.
+
+\bibitem[Wiens(2003)]{wiens2003fallback}
+Brian~L. Wiens.
+\newblock A fixed sequence {Bonferroni} procedure for testing multiple
+  endpoints.
+\newblock \emph{Pharmaceutical Statistics}, 2\penalty0 (3):\penalty0 211--215,
+  2003.
+\newblock \doi{10.1002/pst.64}.
+
+\bibitem[Yang and Chen(2026)]{yang2026hidden}
+Chen Yang and Jun Chen.
+\newblock How sensitive are {LLM} leaderboard claims to hidden model
+  selection?, 2026.
+\newblock arXiv:2609.28177.
+
+\bibitem[Yang et~al.(2024)Yang, Jimenez, et~al.]{yang2024swebenchmm}
+John Yang, Carlos~E. Jimenez, et~al.
+\newblock {SWE-bench} {Multimodal}: Do {AI} systems generalize to visual
+  software domains?, 2024.
+\newblock arXiv:2410.03859. Full author list to be completed from the arXiv
+  page.
+
+\bibitem[Zhang et~al.(2026)Zhang, Wang, Ge, Xu, Hamm, and
+  Reddy]{zhang2026harness}
+Yunbei Zhang, Janet Wang, Yingqiang Ge, Weijie Xu, Jihun Hamm, and Chandan~K.
+  Reddy.
+\newblock Stop comparing {LLM} agents without disclosing the harness, 2026.
+\newblock arXiv:2605.23950.
+
+\bibitem[Zrnic and Fithian(2024)]{zrnic2024locally}
+Tijana Zrnic and William Fithian.
+\newblock Locally simultaneous inference.
+\newblock \emph{The Annals of Statistics}, 52\penalty0 (3):\penalty0
+  1227--1253, 2024.
+\newblock \doi{10.1214/24-aos2391}.
+
+\bibitem[Zrnic and Fithian(2025)]{zrnic2025flexible}
+Tijana Zrnic and William Fithian.
+\newblock A flexible defense against the winner's curse.
+\newblock \emph{The Annals of Statistics}, 53\penalty0 (6):\penalty0
+  2516--2535, 2025.
+\newblock \doi{10.1214/25-aos2553}.
+
+\end{thebibliography}

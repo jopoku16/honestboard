@@ -1,0 +1,92 @@
+{
+  "design": {
+    "T": 500,
+    "rho": 0.29158468186855313,
+    "base": 0.773,
+    "pairs": 20000
+  },
+  "selected": [
+    {
+      "V": 1,
+      "submissions": 20000,
+      "record_share": 0.47875,
+      "size_selective": 0.03498694516971279,
+      "size_corrected": 0.03498694516971279
+    },
+    {
+      "V": 2,
+      "submissions": 20000,
+      "record_share": 0.6424,
+      "size_selective": 0.049112702366127026,
+      "size_corrected": 0.02459526774595268
+    },
+    {
+      "V": 3,
+      "submissions": 20000,
+      "record_share": 0.7273,
+      "size_selective": 0.06709748384435583,
+      "size_corrected": 0.021242953389247903
+    },
+    {
+      "V": 5,
+      "submissions": 20000,
+      "record_share": 0.80945,
+      "size_selective": 0.08240163073692013,
+      "size_corrected": 0.017604546296868244
+    },
+    {
+      "V": 10,
+      "submissions": 20000,
+      "record_share": 0.89545,
+      "size_selective": 0.12396002010162488,
+      "size_corrected": 0.014629515885867441
+    }
+  ],
+  "global": [
+    {
+      "V": 1,
+      "boards": 200,
+      "steps_per_board": 3.04,
+      "per_step_selective": 0.008223684210526315,
+      "per_step_corrected": 0.008223684210526315,
+      "fwer_selective": 0.025,
+      "fwer_corrected": 0.025
+    },
+    {
+      "V": 2,
+      "boards": 200,
+      "steps_per_board": 2.865,
+      "per_step_selective": 0.0034904013961605585,
+      "per_step_corrected": 0.0,
+      "fwer_selective": 0.01,
+      "fwer_corrected": 0.0
+    },
+    {
+      "V": 3,
+      "boards": 200,
+      "steps_per_board": 2.83,
+      "per_step_selective": 0.0,
+      "per_step_corrected": 0.0,
+      "fwer_selective": 0.0,
+      "fwer_corrected": 0.0
+    },
+    {
+      "V": 5,
+      "boards": 200,
+      "steps_per_board": 2.94,
+      "per_step_selective": 0.0,
+      "per_step_corrected": 0.0,
+      "fwer_selective": 0.0,
+      "fwer_corrected": 0.0
+    },
+    {
+      "V": 10,
+      "boards": 200,
+      "steps_per_board": 2.86,
+      "per_step_selective": 0.0,
+      "per_step_corrected": 0.0,
+      "fwer_selective": 0.0,
+      "fwer_corrected": 0.0
+    }
+  ]
+}

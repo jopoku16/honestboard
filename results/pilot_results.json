@@ -1,0 +1,298 @@
+{
+  "K": 135,
+  "T": 500,
+  "tasks_seen": 471,
+  "best": 0.792,
+  "n_contenders_5pt": 16,
+  "optimism": {
+    "all_submissions_top1": {
+      "mean_pts": 2.0894797518849373,
+      "lo": -3.1740307807922363,
+      "hi": 7.369533181190491
+    },
+    "all_submissions_top3": {
+      "mean_pts": 1.089389156550169,
+      "lo": -3.477451577782631,
+      "hi": 5.549613758921623
+    },
+    "all_submissions_top5": {
+      "mean_pts": 0.9653955698013306,
+      "lo": -3.1880244612693787,
+      "hi": 5.2101463079452515
+    },
+    "contenders_5pt_top1": {
+      "mean_pts": 1.9741592928767204,
+      "lo": -1.4963540248572826,
+      "hi": 6.117372214794159
+    },
+    "contenders_5pt_top3": {
+      "mean_pts": 1.1649479158222675,
+      "lo": -1.2084661051630974,
+      "hi": 3.671364113688469
+    },
+    "contenders_5pt_top5": {
+      "mean_pts": 0.9544401429593563,
+      "lo": -0.7051048800349236,
+      "hi": 2.7223002165555954
+    }
+  },
+  "rank_intervals": [
+    {
+      "name": "20251215_livesweagent_claude-opus-4-5",
+      "score": 0.792,
+      "rank_lo": 1.0,
+      "rank_hi": 6.0,
+      "p_rank1": 0.3905
+    },
+    {
+      "name": "20251205_sonar-foundation-agent_claude-opus-4-5",
+      "score": 0.792,
+      "rank_lo": 1.0,
+      "rank_hi": 6.0,
+      "p_rank1": 0.31125
+    },
+    {
+      "name": "20250928_trae_doubao_seed_code",
+      "score": 0.788,
+      "rank_lo": 1.0,
+      "rank_hi": 7.0,
+      "p_rank1": 0.23875
+    },
+    {
+      "name": "20251127_openhands_claude-opus-4-5",
+      "score": 0.776,
+      "rank_lo": 2.0,
+      "rank_hi": 10.0,
+      "p_rank1": 0.0095
+    },
+    {
+      "name": "20251120_livesweagent_gemini-3-pro-preview",
+      "score": 0.774,
+      "rank_lo": 2.0,
+      "rank_hi": 11.0,
+      "p_rank1": 0.02375
+    },
+    {
+      "name": "20250902_atlassian-rovo-dev",
+      "score": 0.768,
+      "rank_lo": 2.0,
+      "rank_hi": 13.0,
+      "p_rank1": 0.007
+    },
+    {
+      "name": "20250804_epam-ai-run-claude-4-sonnet",
+      "score": 0.768,
+      "rank_lo": 2.0,
+      "rank_hi": 13.0,
+      "p_rank1": 0.01375
+    },
+    {
+      "name": "20250819_ACoder",
+      "score": 0.764,
+      "rank_lo": 3.0,
+      "rank_hi": 14.0,
+      "p_rank1": 0.005
+    },
+    {
+      "name": "20250901_warp",
+      "score": 0.756,
+      "rank_lo": 4.0,
+      "rank_hi": 16.0,
+      "p_rank1": 0.00025
+    },
+    {
+      "name": "20250612_trae",
+      "score": 0.752,
+      "rank_lo": 5.0,
+      "rank_hi": 16.0,
+      "p_rank1": 0.00025
+    }
+  ],
+  "p_leader_is_leader": 0.3905,
+  "records": {
+    "n": 30,
+    "significant_at_5pct": 6,
+    "rows": [
+      {
+        "prev": "20231010_rag_claude2",
+        "new": "20240402_sweagent_gpt4",
+        "margin_pts": 18.000000715255737,
+        "p": 0.0
+      },
+      {
+        "prev": "20240402_sweagent_gpt4",
+        "new": "20240509_amazon-q-developer-agent-20240430-dev",
+        "margin_pts": 3.200000151991844,
+        "p": 0.1365
+      },
+      {
+        "prev": "20240509_amazon-q-developer-agent-20240430-dev",
+        "new": "20240612_MASAI_gpt4o",
+        "margin_pts": 7.000000029802322,
+        "p": 0.0005
+      },
+      {
+        "prev": "20240612_MASAI_gpt4o",
+        "new": "20240617_factory_code_droid",
+        "margin_pts": 4.399999976158142,
+        "p": 0.0385
+      },
+      {
+        "prev": "20240617_factory_code_droid",
+        "new": "20240628_autocoderover-v20240620",
+        "margin_pts": 1.4000000432133675,
+        "p": 0.5445
+      },
+      {
+        "prev": "20240628_autocoderover-v20240620",
+        "new": "20240721_amazon-q-developer-agent-20240719-dev",
+        "margin_pts": 0.4000000189989805,
+        "p": 0.86
+      },
+      {
+        "prev": "20240721_amazon-q-developer-agent-20240719-dev",
+        "new": "20240820_honeycomb",
+        "margin_pts": 1.7999999225139618,
+        "p": 0.395
+      },
+      {
+        "prev": "20240820_honeycomb",
+        "new": "20240824_gru",
+        "margin_pts": 4.600000008940697,
+        "p": 0.0425
+      },
+      {
+        "prev": "20240824_gru",
+        "new": "20240924_solver",
+        "margin_pts": 0.20000000949949026,
+        "p": 0.987
+      },
+      {
+        "prev": "20240924_solver",
+        "new": "20241022_tools_claude-3-5-sonnet-updated",
+        "margin_pts": 3.5999998450279236,
+        "p": 0.0765
+      },
+      {
+        "prev": "20241022_tools_claude-3-5-sonnet-updated",
+        "new": "20241028_solver",
+        "margin_pts": 0.9999999776482582,
+        "p": 0.6345
+      },
+      {
+        "prev": "20241028_solver",
+        "new": "20241029_OpenHands-CodeAct-2.1-sonnet-20241022",
+        "margin_pts": 2.9999999329447746,
+        "p": 0.1345
+      },
+      {
+        "prev": "20241029_OpenHands-CodeAct-2.1-sonnet-20241022",
+        "new": "20241108_devlo",
+        "margin_pts": 1.2000000104308128,
+        "p": 0.5395
+      },
+      {
+        "prev": "20241108_devlo",
+        "new": "20241202_amazon-q-developer-agent-20241202-dev",
+        "margin_pts": 0.800000037997961,
+        "p": 0.714
+      },
+      {
+        "prev": "20241202_amazon-q-developer-agent-20241202-dev",
+        "new": "20241208_gru",
+        "margin_pts": 1.9999999552965164,
+        "p": 0.3455
+      },
+      {
+        "prev": "20241208_gru",
+        "new": "20241213_devlo",
+        "margin_pts": 1.2000000104308128,
+        "p": 0.536
+      },
+      {
+        "prev": "20241213_devlo",
+        "new": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+        "margin_pts": 3.999999910593033,
+        "p": 0.0395
+      },
+      {
+        "prev": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+        "new": "20250110_blackboxai_agent_v1.1",
+        "margin_pts": 0.6000000052154064,
+        "p": 0.801
+      },
+      {
+        "prev": "20250110_blackboxai_agent_v1.1",
+        "new": "20250117_wandb_programmer_o1_crosscheck5",
+        "margin_pts": 1.7999999225139618,
+        "p": 0.39
+      },
+      {
+        "prev": "20250117_wandb_programmer_o1_crosscheck5",
+        "new": "20250316_augment_agent_v0",
+        "margin_pts": 0.800000037997961,
+        "p": 0.7035
+      },
+      {
+        "prev": "20250316_augment_agent_v0",
+        "new": "20250415_openhands",
+        "margin_pts": 0.4000000189989805,
+        "p": 0.869
+      },
+      {
+        "prev": "20250415_openhands",
+        "new": "20250430_zencoder_ai",
+        "margin_pts": 4.1999999433755875,
+        "p": 0.0195
+      },
+      {
+        "prev": "20250430_zencoder_ai",
+        "new": "20250515_Refact_Agent",
+        "margin_pts": 0.4000000189989805,
+        "p": 0.846
+      },
+      {
+        "prev": "20250515_Refact_Agent",
+        "new": "20250519_trae",
+        "margin_pts": 0.20000000949949026,
+        "p": 0.937
+      },
+      {
+        "prev": "20250519_trae",
+        "new": "20250522_tools_claude-4-opus",
+        "margin_pts": 2.6000000536441803,
+        "p": 0.1575
+      },
+      {
+        "prev": "20250522_tools_claude-4-opus",
+        "new": "20250603_Refact_Agent_claude-4-sonnet",
+        "margin_pts": 1.2000000104308128,
+        "p": 0.524
+      },
+      {
+        "prev": "20250603_Refact_Agent_claude-4-sonnet",
+        "new": "20250612_trae",
+        "margin_pts": 0.800000037997961,
+        "p": 0.632
+      },
+      {
+        "prev": "20250612_trae",
+        "new": "20250804_epam-ai-run-claude-4-sonnet",
+        "margin_pts": 1.600000075995922,
+        "p": 0.2855
+      },
+      {
+        "prev": "20250804_epam-ai-run-claude-4-sonnet",
+        "new": "20250928_trae_doubao_seed_code",
+        "margin_pts": 1.9999999552965164,
+        "p": 0.224
+      },
+      {
+        "prev": "20250928_trae_doubao_seed_code",
+        "new": "20251205_sonar-foundation-agent_claude-opus-4-5",
+        "margin_pts": 0.4000000189989805,
+        "p": 0.8535
+      }
+    ]
+  }
+}

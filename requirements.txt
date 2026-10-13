@@ -1,0 +1,9 @@
+# Versions the results in paper/ were generated with (Python 3.13.7, Windows 11). Newer versions should give the
+# same numbers up to Monte Carlo seeds; see REPRODUCE.md.
+numpy==2.4.6
+scipy==1.16.3
+pandas==2.3.3
+pyarrow==25.0.0
+matplotlib==3.11.0
+requests==2.34.2
+pytest==9.1.1

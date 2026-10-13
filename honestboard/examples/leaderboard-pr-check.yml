@@ -1,0 +1,41 @@
+# Example workflow for a leaderboard repository (not active in this project).
+# Copy to .github/workflows/ in a repository laid out like github.com/SWE-bench/experiments, adjust the
+# paths, and publish honestboard first (pip install honestboard).
+#
+# On every pull request that adds a submission, it posts a short report: the score, the rank interval, the
+# margin over the current record, a paired test of the claim, and what the benchmark can resolve.
+name: honestboard submission check
+
+on:
+  pull_request:
+    paths:
+      - "evaluation/verified/**"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install honestboard
+      - name: Check each new submission folder
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # folders under evaluation/verified/ touched by this pull request
+          dirs=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- evaluation/verified \
+                 | cut -d/ -f1-3 | sort -u)
+          : > comment.md
+          for d in $dirs; do
+            python -m honestboard pr-check evaluation/verified "$d" --tasks tasks/verified_ids.json >> comment.md
+            echo >> comment.md
+          done
+          if [ -s comment.md ]; then gh pr comment "${{ github.event.pull_request.number }}" --body-file comment.md; fi

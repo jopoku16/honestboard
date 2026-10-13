@@ -1,0 +1,32 @@
+{
+  "board": "verified",
+  "K": 135,
+  "T": 500,
+  "R": 600,
+  "V1b": {
+    "n_equal_top": 20
+  },
+  "V4": {
+    "100": {
+      "p_winner_is_true_best": 0.39,
+      "set_covers_true_best_when_winner_wrong": 1.0,
+      "n_winner_wrong": 183,
+      "median_set_size": 34.0,
+      "n_true_best": 2
+    },
+    "250": {
+      "p_winner_is_true_best": 0.65,
+      "set_covers_true_best_when_winner_wrong": 1.0,
+      "n_winner_wrong": 105,
+      "median_set_size": 19.0,
+      "n_true_best": 2
+    },
+    "500": {
+      "p_winner_is_true_best": 0.6966666666666667,
+      "set_covers_true_best_when_winner_wrong": 0.989010989010989,
+      "n_winner_wrong": 91,
+      "median_set_size": 12.0,
+      "n_true_best": 2
+    }
+  }
+}

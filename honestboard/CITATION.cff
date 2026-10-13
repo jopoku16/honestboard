@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use honestboard, please cite the paper."
+title: "honestboard: honest uncertainty for agent leaderboards"
+type: software
+authors:
+  - family-names: Opoku
+    given-names: Jeffery
+    affiliation: "School of Mathematical and Statistical Sciences, University of Texas Rio Grande Valley"
+  - family-names: Banahene
+    given-names: David
+    affiliation: "Department of Biostatistics, Robert Stempel College of Public Health and Social Work, Florida International University"
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/jopoku16/honestboard"
+abstract: "Rank intervals, confidence sets for the best system, record-claim audits, resolution limits and selection-corrected winner scores for AI-agent leaderboards with per-task results."
+keywords:
+  - benchmarks
+  - leaderboards
+  - agents
+  - statistical inference
+preferred-citation:
+  type: article
+  title: "Statistical Inference for AI-Agent Leaderboards: Record Claims, Rank Uncertainty and the Winner's Curse"
+  authors:
+    - family-names: Opoku
+      given-names: Jeffery
+    - family-names: Banahene
+      given-names: David
+  year: 2026
+  notes: "Draft; add the arXiv identifier when posted."

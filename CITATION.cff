@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use honestboard or the audit, please cite the paper below."
+title: "honestboard: statistical inference for AI leaderboards"
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/jopoku16/honestboard"
+authors:
+  - family-names: Opoku
+    given-names: Jeffery
+    affiliation: "School of Mathematical and Statistical Sciences, University of Texas Rio Grande Valley"
+  - family-names: Banahene
+    given-names: David
+    affiliation: "Department of Biostatistics, Robert Stempel College of Public Health and Social Work, Florida International University"
+preferred-citation:
+  type: unpublished
+  title: "Statistical Inference for AI-Agent Leaderboards: Record Claims, Rank Uncertainty and the Winner's Curse"
+  authors:
+    - family-names: Opoku
+      given-names: Jeffery
+    - family-names: Banahene
+      given-names: David
+  year: 2026
+  notes: "Preprint in preparation; the arXiv identifier will be added here."

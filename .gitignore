@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# raw downloads are not redistributed (see DATA_SOURCES.md); the built boards in data/boards are
+data/raw_*.json
+data/livebench/
+
+# internal drafts, review packets, planning notes, run logs and exploratory scans
+release/
+notes/
+literature/
+tests/
+results/validation_verified_OLDCODE_R1000.json
+results/*.log
+results/*.log.err
+results/*.err
+results/landscape_*.md
+src/scan_openalex_landscape.py
+src/build_review_packet.py
+
+# LaTeX build files (main.tex, refs.bib, main.bbl, numbers.tex, tab_*.tex and main.pdf are kept)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/*.blg
+paper/*.toc
+
+# CI workflow files: pushing them needs the gh 'workflow' scope (gh auth refresh -s workflow); re-add afterwards
+.github/workflows/
+honestboard/.github/workflows/

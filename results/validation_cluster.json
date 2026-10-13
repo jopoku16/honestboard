@@ -1,0 +1,57 @@
+{
+  "design": {
+    "board": "swebench_verified",
+    "G": 12,
+    "T": 500,
+    "rho": 0.29158468186855313,
+    "base": 0.773,
+    "pairs": 20000,
+    "tau_est_pts": 0.0,
+    "tau_est_logit": 0.0,
+    "repository_sizes": [
+      22,
+      231,
+      34,
+      2,
+      1,
+      8,
+      22,
+      10,
+      19,
+      32,
+      44,
+      75
+    ],
+    "real_se_ratio_top10": 1.13275895809429
+  },
+  "levels": [
+    {
+      "tau_logit": 0.0,
+      "selected_steps": 9451,
+      "reject_task_selective": 0.038197016188763096,
+      "reject_cluster_selective": 0.025076711459104856,
+      "se_ratio_cluster_over_task": 0.878675374681526
+    },
+    {
+      "tau_logit": 0.25,
+      "selected_steps": 9547,
+      "reject_task_selective": 0.09594637058761915,
+      "reject_cluster_selective": 0.030795014140567716,
+      "se_ratio_cluster_over_task": 1.0090240569258389
+    },
+    {
+      "tau_logit": 0.5,
+      "selected_steps": 9656,
+      "reject_task_selective": 0.2486536868268434,
+      "reject_cluster_selective": 0.03376139188069594,
+      "se_ratio_cluster_over_task": 1.3179330066488375
+    },
+    {
+      "tau_logit": 1.0,
+      "selected_steps": 9858,
+      "reject_task_selective": 0.4940150131872591,
+      "reject_cluster_selective": 0.03662000405761818,
+      "se_ratio_cluster_over_task": 2.0811689953977175
+    }
+  ]
+}
