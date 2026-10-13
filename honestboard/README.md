@@ -8,7 +8,7 @@ Honest uncertainty for agent leaderboards. Give it the per-task results of every
 - **Who could still be the best?** A 95% confidence set of the best system.
 - **What is the winner's score, corrected?** The top score on a leaderboard is biased upward because it was picked for being highest. `honestboard` removes most of that selection bias.
 - **How many record claims survive?** An audit of every record step in a leaderboard's history, with a Holm correction.
-- **Certify records as they arrive.** `certify_chain` runs a sequential rule along the submission history: the exact sign-test p-value conditional on the record event, at levels set by alpha-spending (family-wise error over the whole chain, any number of records, no independence assumption) or by LORD++ (online FDR; certified records earn back budget), against the leaderboard holder or against the last certified record.
+- **Certify records as they arrive.** `certify_chain` runs a sequential rule along the submission history: the exact sign-test p-value conditional on the record event (with a per-date factor for submissions that share a date), at levels set by alpha-spending or by the online fallback rule (family-wise error over the whole chain, any number of records, no independence assumption), by tenure-indexed spending on the certified baseline, or by LORD++ (online FDR; certified records earn back budget), against the leaderboard holder or against the last certified record.
 
 It needs per-task outcomes (which tasks each system solved), not just the headline score. A checkout of the SWE-bench `experiments` repository loads with one call (`from_swebench_experiments`); any other leaderboard works once you write a board file (format below).
 
@@ -22,7 +22,7 @@ b = Board.from_json("swebench_verified.json")   # board files may carry a "clust
 b.compare("20250928_trae_doubao_seed_code", "20251205_sonar-foundation-agent_claude-opus-4-5")
 b.rank_summary(top=10)              # 95% rank intervals and top-rank frequency
 b.confidence_set_best()             # systems that cannot be ruled out as best
-b.record_audit()                    # every record step: one-sided exact test, Holm-adjusted
+b.record_audit()                    # every record step: selective exact test (with the per-date factor), Holm-adjusted
 b.record_lags()                     # how far back a record is distinguishable
 from honestboard import certify_chain
 certify_chain(b, rule="lord", baseline="certified")   # sequential certification in date order
@@ -68,7 +68,8 @@ For repeated trials use `"rates": {task: share_passed}` instead of `"resolved"`.
 ## Install and test
 
 ```
-pip install -e .          # numpy and scipy only
+pip install honestboard   # from PyPI (numpy and scipy only); or, from a checkout of this folder:
+pip install -e .
 python -m pytest tests
 ```
 

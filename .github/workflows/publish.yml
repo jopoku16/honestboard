@@ -1,0 +1,40 @@
+name: Publish honestboard to PyPI
+
+# Runs when a GitHub release is published (tag v0.1.0 and so on). Uploads through PyPI's trusted publishing
+# (OpenID Connect), so no API token is stored anywhere: PyPI must list this repository, this workflow file and
+# the environment name "pypi" as a trusted publisher for the project "honestboard".
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip build twine
+      - run: python -m build
+        working-directory: honestboard
+      - run: python -m twine check honestboard/dist/*
+      - run: pip install honestboard/dist/*.whl pytest && python -m pytest honestboard/tests -q
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: honestboard/dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
