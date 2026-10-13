@@ -14,7 +14,7 @@ data/livebench/
 release/
 notes/
 literature/
-tests/
+/tests/
 results/validation_verified_OLDCODE_R1000.json
 results/*.log
 results/*.log.err
