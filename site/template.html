@@ -113,7 +113,7 @@ function render(key) {
   <div class="cards">
     <div class="card"><div class="k">Most likely best system tops the board in</div><div class="v">${(Math.max(...b.ranks.map(r => r.pbest)) * 100).toFixed(0)}%</div><div class="s">of task resamples</div></div>
     <div class="card"><div class="k">Cannot be ruled out as best</div><div class="v">${b.set.size}</div><div class="s">of ${b.systems} systems (95% confidence set)</div></div>
-    ${rec ? `<div class="card"><div class="k">Record claims that hold up</div><div class="v">${rec.sig} of ${rec.steps}</div><div class="s">can be told apart from the previous record at the 5% level (two-sided exact paired test)</div></div>` : ""}
+    ${rec ? `<div class="card"><div class="k">Record claims that hold up</div><div class="v">${rec.sig} of ${rec.steps}</div><div class="s">are clearly better than the previous record at the 5% level (selective exact paired test)</div></div>` : ""}
     <div class="card"><div class="k">This board can detect</div><div class="v">${(100 * b.mdd).toFixed(1)} pts</div><div class="s">${rec && rec.median_margin !== null ? "median record margin " + (100 * rec.median_margin).toFixed(1) + " pts; " : ""}a 1-point gap needs about ${Math.round(b.tasks_for_1pt / 100) * 100 > 0 ? (Math.round(b.tasks_for_1pt / 100) * 100).toLocaleString() : "?"} tasks</div></div>
     <div class="card"><div class="k">Leader's score, corrected</div><div class="v">${pct(w.adjusted)}</div><div class="s">reported ${pct(w.observed)}</div></div>
   </div>
@@ -129,7 +129,7 @@ function render(key) {
   </section>
   ${rec ? `<section>
     <h2>Every record claim</h2>
-    <p class="sub">${rec.sig} of ${rec.steps} record-setting submissions can be told apart from the previous record at the 5% level in a two-sided exact paired test on the same tasks (${rec.holm} after Holm correction). Newest first.</p>
+    <p class="sub">${rec.sig} of ${rec.steps} record-setting submissions are clearly better than the previous record at the 5% level in the selective exact paired test on the same tasks (${rec.holm} after Holm correction). Newest first.</p>
     <div class="scroll"><table><thead><tr><th class="num">Date</th><th>New record</th><th class="num">Score</th><th class="num">Margin (pts)</th><th class="num">p (two-sided)</th><th>Verdict</th></tr></thead><tbody>${recordRows(b)}</tbody></table></div>
   </section>` : ""}
   <section>
