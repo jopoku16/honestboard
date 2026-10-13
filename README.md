@@ -1,7 +1,7 @@
 # Phase B, Statistics Paper 1
 
 **Certifying AI-Agent Leaderboard Records: Selective Tests, Online Guarantees and the Winner's Curse**
-Jeffery Opoku (UTRGV) and David Banahene (FIU). Software: `honestboard`.
+Jeffery Opoku (UTRGV) and David Banahene (FIU). Software: `honestboard` (on PyPI: `pip install honestboard`).
 
 Status (2026-10-13): manuscript draft (`paper/main.pdf`, 34 pages, prose written in plain English, with a 5-page `paper/supplement.pdf` holding Tables S1 to S5 and Figure S1), analysis, validation, package and figures; everything compiles and the 58 package tests pass. An independent read of the proofs and claims on 2026-10-13 was acted on the same day. The record test carries a per-date correction for same-date submissions (the best-first challenger is the best of its date); the audit counts are unchanged by it. Preprint in preparation. This repository holds the code, the built boards, every result file, the figures and the manuscript source; raw downloads are not redistributed (see `DATA_SOURCES.md`). Live page: https://jopoku16.github.io/honestboard/.
 

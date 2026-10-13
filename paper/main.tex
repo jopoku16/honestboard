@@ -650,7 +650,7 @@ Four records are too few to compare with the agent boards, and the board is a re
 \end{table}
 
 \section{The honestboard package}\label{sec:tool}
-\texttt{honestboard} (it needs only numpy and scipy) implements everything above.
+\texttt{honestboard} (on PyPI as \texttt{pip install honestboard}; it needs only numpy and scipy) implements everything above.
 A \texttt{Board} holds the systems-by-tasks table, with loaders for JSON, CSV and a checkout of the SWE-bench \texttt{experiments} repository.
 \texttt{Board.check\_claim(system)} returns, in one call, the observed rank and its interval, how often the system ranks first, whether it could be the best, the paired test against its closest rival, and, for the leader, the winner's-curse-corrected score.
 \texttt{Board.record\_audit()} walks through a leaderboard's history and tests every record step; \texttt{Board.resolution()} gives the smallest gap the board can see and the tasks needed for a one-point gap.
