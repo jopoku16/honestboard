@@ -202,8 +202,11 @@ Jason~D. Lee, Dennis~L. Sun, Yuekai Sun, and Jonathan~E. Taylor.
 \bibitem[{LessWrong contributor}(2026)]{lesswrong2026tbench}
 {LessWrong contributor}.
 \newblock Terminal-bench leaderboard rankings: Luck or skill?
-\newblock LessWrong, 5 August 2026, 2026.
-\newblock Informal analysis; add the URL before submission.
+\newblock LessWrong post,
+  \url{https://www.lesswrong.com/posts/GiPmLmmbT6DyrwYkH/terminal-bench-leaderboard-rankings-luck-or-skill},
+  2026.
+\newblock Informal analysis; task-clustered bootstrap with a
+  Benjamini--Hochberg correction over all pairs.
 
 \bibitem[Liu et~al.(2026)Liu, Liu, Sun, Luo, and Guo]{liu2026converged}
 Fengshuo Liu, Ying Liu, Ruize Sun, Lie Luo, and Siyuan Guo.
@@ -211,11 +214,12 @@ Fengshuo Liu, Ying Liu, Ruize Sun, Lie Luo, and Siyuan Guo.
   longer order its top entries, and what to measure instead, 2026.
 \newblock arXiv:2609.17394. To appear, ADMA 2026.
 
-\bibitem[Madaan et~al.(2024)]{madaan2024variance}
-Lovish Madaan et~al.
+\bibitem[Madaan et~al.(2024)Madaan, Singh, Schaeffer, Poulton, Koyejo,
+  Stenetorp, Narang, and Hupkes]{madaan2024variance}
+Lovish Madaan, Aaditya~K. Singh, Rylan Schaeffer, Andrew Poulton, Sanmi Koyejo,
+  Pontus Stenetorp, Sharan Narang, and Dieuwke Hupkes.
 \newblock Quantifying variance in evaluation benchmarks, 2024.
-\newblock arXiv:2406.10229. Author list from search result; check before
-  submission.
+\newblock arXiv:2406.10229.
 
 \bibitem[McNemar(1947)]{mcnemar1947}
 Quinn McNemar.
@@ -262,7 +266,7 @@ Bitya Neuhof and Yuval Benjamini.
 {OpenAI}.
 \newblock Introducing {SWE-bench Verified}.
 \newblock \url{https://openai.com/index/introducing-swe-bench-verified/}, 2024.
-\newblock Release note, August 2024; URL to be checked before submission.
+\newblock Release note, August 2024; URL checked 2026-10-12.
 
 \bibitem[Petrou-Zeniou and Shaikh(2024)]{petrouzeniou2024ranking}
 Andreas Petrou-Zeniou and Azeem~M. Shaikh.
@@ -290,11 +294,13 @@ Moshe Shaked and J.~George Shanthikumar.
 \newblock Springer, New York, 2007.
 \newblock \doi{10.1007/978-0-387-34675-5}.
 
-\bibitem[Singh et~al.(2025)]{singh2025illusion}
-Shivalika Singh et~al.
+\bibitem[Singh et~al.(2025)Singh, Nan, Wang, D'Souza, Kapoor, {\"U}st{\"u}n,
+  Koyejo, Deng, Longpre, Smith, Ermis, Fadaee, and Hooker]{singh2025illusion}
+Shivalika Singh, Yiyang Nan, Alex Wang, Daniel D'Souza, Sayash Kapoor, Ahmet
+  {\"U}st{\"u}n, Sanmi Koyejo, Yuntian Deng, Shayne Longpre, Noah~A. Smith,
+  Beyza Ermis, Marzieh Fadaee, and Sara Hooker.
 \newblock The leaderboard illusion, 2025.
-\newblock arXiv:2504.20879. Author list from search result; check before
-  submission.
+\newblock arXiv:2504.20879.
 
 \bibitem[{SWE-bench team}(2025)]{swebenchmultilingual}
 {SWE-bench team}.
@@ -354,12 +360,14 @@ Chen Yang and Jun Chen.
   selection?, 2026.
 \newblock arXiv:2609.28177.
 
-\bibitem[Yang et~al.(2024)Yang, Jimenez, et~al.]{yang2024swebenchmm}
-John Yang, Carlos~E. Jimenez, et~al.
+\bibitem[Yang et~al.(2024)Yang, Jimenez, Zhang, Lieret, Yang, Wu, Press,
+  Muennighoff, Synnaeve, Narasimhan, Yang, Wang, and Press]{yang2024swebenchmm}
+John Yang, Carlos~E. Jimenez, Alex~L. Zhang, Kilian Lieret, Joyce Yang, Xindi
+  Wu, Ori Press, Niklas Muennighoff, Gabriel Synnaeve, Karthik~R. Narasimhan,
+  Diyi Yang, Sida~I. Wang, and Ofir Press.
 \newblock {SWE-bench} {Multimodal}: Do {AI} systems generalize to visual
   software domains?, 2024.
-\newblock arXiv:2410.03859. Full author list to be completed from the arXiv
-  page.
+\newblock arXiv:2410.03859.
 
 \bibitem[Zhang et~al.(2026)Zhang, Wang, Ge, Xu, Hamm, and
   Reddy]{zhang2026harness}
