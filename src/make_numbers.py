@@ -82,6 +82,10 @@ if cl_tot:
     put("ClusterSig", cl_tot["significant"]); put("ClusterSteps", cl_tot["steps"]); put("ClusterSigPct", pct(cl_tot["significant"] / cl_tot["steps"]))
     put("SWEIidSig", sum(b["records"]["significant"] for b in agent_boards if b["board"].startswith("SWE-bench") and "records" in b))
 put("BoardsWithSteps", sum(1 for b in agent_boards if "records" in b and b["records"]["steps"] > 0))
+_steps = [s for b in agent_boards if "records" in b for s in b["records"]["details"]]
+put("TotalDateGroupSteps", sum(1 for s in _steps if s.get("date_group", 1) > 1))
+put("TotalSigUncorrected", sum(1 for s in _steps if s.get("p_uncorrected", s["p"]) <= 0.05))
+put("TotalDateGroupMax", max((s.get("date_group", 1) for s in _steps), default=1))
 
 # ---- per board ----
 for key, label in KEYS.items():

@@ -334,7 +334,13 @@ class Board:
                 cur = k
         return chain
 
-    def record_audit(self, alpha=0.05, tie_order="best_first", sided="selective", cluster=False):
+    def date_group_size(self, k):
+        """Number of submissions that share submission k's date (k included)."""
+        if self.dates is None:
+            return 1
+        return int(sum(1 for d in self.dates if d == self.dates[k]))
+
+    def record_audit(self, alpha=0.05, tie_order="best_first", sided="selective", cluster=False, date_correction=True):
         """Test every new record against the record it replaced.
 
         A record step is selected because the challenger scored higher. sided='selective' (default) uses
@@ -342,19 +348,28 @@ class Board:
         super-uniform given the record event under the task-level null (and conservative when the holder
         is a running maximum). sided='two' is the two-sided exact p-value (equal to the selective one for
         an odd number of discordant tasks, slightly smaller for an even number); sided='one' is the
-        one-sided p-value at level alpha, whose size among selected steps is about 2 alpha. Significance
-        is p <= alpha; Holm's correction is applied over the record steps of this board. cluster=True uses
-        the cluster-level sign-flip test instead (needs cluster labels)."""
+        one-sided p-value at level alpha, whose size among selected steps is about 2 alpha.
+
+        Under the best-first ordering of same-date submissions the challenger at a record step is the best
+        of its date, a second selection that the record event does not cover; date_correction=True (default)
+        multiplies the p-value by the number of submissions on the challenger's date (a Bonferroni factor
+        over the date's members, which restores the guarantee). The uncorrected value is kept as
+        `p_uncorrected`. The worst-first ordering is a bound and is not corrected.
+
+        Significance is p <= alpha; Holm's correction is applied over the record steps of this board.
+        cluster=True uses the cluster-level sign-flip test instead (needs cluster labels)."""
         if sided not in ("one", "two", "selective"):
             raise ValueError("sided must be 'one', 'two' or 'selective'")
         chain = self._record_chain(tie_order)
         steps = []
         for a, b in zip(chain[:-1], chain[1:]):
             c = self.compare(a, b, B=10, seed=0, cluster=cluster)
-            steps.append({"previous": self.names[a], "new": self.names[b], "date": self.dates[b],
+            g = self.date_group_size(b) if (date_correction and tie_order == "best_first") else 1
+            raw = {"one": c["p_one_sided"], "two": c["p_two_sided"], "selective": c["p_selective"]}[sided]
+            steps.append({"previous": self.names[a], "new": self.names[b], "date": self.dates[b], "date_group": g,
                           "margin": c["diff"], "p_one_sided": c["p_one_sided"], "p_two_sided": c["p_two_sided"],
-                          "p_selective": c["p_selective"],
-                          "p": {"one": c["p_one_sided"], "two": c["p_two_sided"], "selective": c["p_selective"]}[sided],
+                          "p_selective": c["p_selective"], "p_uncorrected": raw,
+                          "p": float(min(1.0, g * raw)),
                           "b_only": c["b_only"], "a_only": c["a_only"]})
         m = len(steps)
         ps = np.array([s["p"] for s in steps]) if m else np.array([])
@@ -367,21 +382,22 @@ class Board:
         for s, h in zip(steps, holm):
             s["significant_raw"] = bool(s["p"] <= alpha)
             s["significant_holm"] = bool(h)
-        return {"alpha": alpha, "sided": sided, "tie_order": tie_order, "n_steps": m,
+        return {"alpha": alpha, "sided": sided, "tie_order": tie_order, "date_correction": bool(date_correction and tie_order == "best_first"), "n_steps": m,
                 "n_significant_raw": int(sum(s["significant_raw"] for s in steps)),
                 "n_significant_holm": int(holm.sum()), "steps": steps}
 
-    def record_lags(self, alpha=0.05, tie_order="best_first", sided="selective"):
+    def record_lags(self, alpha=0.05, tie_order="best_first", sided="selective", date_correction=True):
         """For each record, how many records back one has to go before the record beats that earlier
-        record significantly (the record test as in record_audit, no multiplicity correction). None
-        if it never does within the board's history."""
+        record significantly (the record test as in record_audit, with the same date correction, no
+        multiplicity correction). None if it never does within the board's history."""
         chain = self._record_chain(tie_order)
         key = {"one": "p_one_sided", "two": "p_two_sided", "selective": "p_selective"}[sided]
         lags = []
         for i in range(1, len(chain)):
             lag = None
+            g = self.date_group_size(chain[i]) if (date_correction and tie_order == "best_first") else 1
             for j in range(1, i + 1):
-                if self.compare(chain[i - j], chain[i], B=10, seed=0)[key] <= alpha:
+                if min(1.0, g * self.compare(chain[i - j], chain[i], B=10, seed=0)[key]) <= alpha:
                     lag = j
                     break
             lags.append(lag)

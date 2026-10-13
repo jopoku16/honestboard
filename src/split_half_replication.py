@@ -84,6 +84,7 @@ for label, fname in BOARDS:
     for s in a["steps"]:
         i, j = b0.names.index(s["previous"]), b0.names.index(s["new"])
         d = b0.Y[j].astype(float) - b0.Y[i].astype(float)
+        g = s.get("date_group", 1)                                # the per-date correction of the record test
         if b0.is_binary:
             disc = np.where(d != 0)[0]
             sign = d[disc] > 0
@@ -92,9 +93,9 @@ for label, fname in BOARDS:
             Hd = H[:, disc]
             n1 = Hd.sum(1); nb1 = (Hd & sign).sum(1)
             n2 = n - n1; nb2 = int(sign.sum()) - nb1
-            sig1 = p_two_sided(nb1, n1) <= 0.05
+            sig1 = np.minimum(1.0, g * p_two_sided(nb1, n1)) <= 0.05
             rep = nb2 > n2 - nb2
-            repsig = rep & (p_two_sided(nb2, n2) <= 0.05)
+            repsig = rep & (np.minimum(1.0, g * p_two_sided(nb2, n2)) <= 0.05)
         else:                                                     # rates: paired sign-flip test on each half
             n = int((d != 0).sum())
             sig1, rep, repsig = np.zeros(R, bool), np.zeros(R, bool), np.zeros(R, bool)
@@ -103,9 +104,9 @@ for label, fname in BOARDS:
                 h1, h2 = perm[: T // 2], perm[T // 2:]
                 c1 = Board(b0.names, b0.Y[:, h1]).compare(i, j, B=2000, seed=r)
                 c2 = Board(b0.names, b0.Y[:, h2]).compare(i, j, B=2000, seed=r + 1)
-                sig1[r] = c1["p_selective"] <= 0.05
+                sig1[r] = min(1.0, g * c1["p_selective"]) <= 0.05
                 rep[r] = c2["diff"] > 0
-                repsig[r] = rep[r] and c2["p_selective"] <= 0.05
+                repsig[r] = rep[r] and min(1.0, g * c2["p_selective"]) <= 0.05
         e = {"new": s["new"], "previous": s["previous"], "margin": s["margin"], "p_full": s["p"], "sig_full": bool(s["significant_raw"]),
              "n_discordant": n, "n_sig1": int(sig1.sum()), "rep_sig1": int((rep & sig1).sum()), "repsig_sig1": int((repsig & sig1).sum()),
              "n_nonsig1": int((~sig1).sum()), "rep_nonsig1": int((rep & ~sig1).sum()), "repsig_nonsig1": int((repsig & ~sig1).sum())}

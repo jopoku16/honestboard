@@ -130,49 +130,61 @@ def fallback_level(t: int, alpha: float, prev_level: float, prev_certified: bool
     return float(alpha_spending_level(t, alpha) + (prev_level if prev_certified else 0.0))
 
 
-def tenure_level(alpha: float, n_certified: int, submissions_since_holder: int) -> float:
-    """Tenure-indexed spending: alpha * gamma(j) * gamma(m) with j the index of the current holder's tenure (one plus
-    the number of certifications so far) and m the number of submissions since the holder arrived, gamma(k) =
-    6/(pi^2 k^2). Both indices are fixed by the submission order and the earlier history, which is what the
-    chain-wise guarantee for the certified baseline needs; the price is that budget is spent on every submission,
-    tested or not."""
-    return float(alpha * (6.0 / (np.pi ** 2 * n_certified ** 2)) * (6.0 / (np.pi ** 2 * submissions_since_holder ** 2)))
+def tenure_level(alpha: float, n_certified: int, dates_since_holder: int) -> float:
+    """Tenure-indexed spending for the certified baseline: alpha * gamma(j) * gamma(m) with j the index of the
+    current holder's tenure (one plus the number of certifications so far) and m the number of distinct submission
+    dates since the holder's date, gamma(k) = 6/(pi^2 k^2). Both indices are fixed by the submission calendar and
+    the earlier history, which is what the chain-wise guarantee needs; several submissions on one date share the
+    slot and are handled by the per-date correction. The price is that budget is spent on every date, tested or
+    not."""
+    return float(alpha * (6.0 / (np.pi ** 2 * n_certified ** 2)) * (6.0 / (np.pi ** 2 * dates_since_holder ** 2)))
 
 
-def certify_chain(board, alpha=0.05, rule="lord", pvalue="exact", baseline="leader", tie_order="best_first", w0=None, seed=0):
+def certify_chain(board, alpha=0.05, rule="lord", pvalue="exact", baseline="leader", tie_order="best_first", w0=None, seed=0,
+                  date_correction=True):
     """Walk the submissions in date order and certify records.
 
     rule: 'unadjusted' (level alpha every step), 'holm' (retrospective, over the realised chain),
           'spending' (alpha * 6 / (pi^2 i^2) for the i-th tested record; family-wise control for any number of
           records), 'fallback' (spending plus the level of the previous record when it was certified; the same
-          family-wise guarantee with more power along runs of genuine records), 'tenure' (spending indexed by the
-          holder's tenure and the submissions since it arrived, which carries the chain-wise guarantee for the
-          certified baseline), 'lord' (LORD++ online FDR).
+          family-wise guarantee with more power along runs of genuine records), 'tenure' (certified baseline only:
+          spending indexed by the holder's tenure and the dates since its date, which carries the chain-wise
+          guarantee for that baseline), 'lord' (LORD++ online FDR).
     pvalue: 'exact' (sign test conditional on the record event; sign flips for rates) or 'polyhedral'
             (normal approximation, conditional on the record event and on the holder having been the maximum).
     baseline: 'leader' tests each leaderboard record against the record it replaced; 'certified' tests every
               submission that beats the last certified record against that record (the baseline moves only when
-              a record is certified)."""
+              a record is certified).
+    date_correction: under the best-first ordering a tested submission was selected among the submissions of its
+              date; the p-value is multiplied by the size of that group (a Bonferroni factor), which the chain-wise
+              guarantees need. The worst-first ordering is a bound and is not corrected."""
     if rule not in ("unadjusted", "holm", "spending", "fallback", "tenure", "lord"):
         raise ValueError("rule must be 'unadjusted', 'holm', 'spending', 'fallback', 'tenure' or 'lord'")
     if pvalue not in ("exact", "polyhedral"):
         raise ValueError("pvalue must be 'exact' or 'polyhedral'")
     if baseline not in ("leader", "certified"):
         raise ValueError("baseline must be 'leader' or 'certified'")
+    if rule == "tenure" and baseline != "certified":
+        raise ValueError("the tenure rule is defined for the certified baseline")
     w0 = alpha / 2 if w0 is None else w0
     order = _submission_order(board, tie_order)
     sc = board.scores()
     sigma = board.sigma() if pvalue == "polyhedral" else None
+    correct = bool(date_correction and tie_order == "best_first")
+    date_rank = {}                                     # distinct dates in order, for the tenure index
+    for k in order:
+        date_rank.setdefault(board.dates[k], len(date_rank))
     holder = order[0]
     certified_holder = order[0]
-    ref_pos = {"leader": 0, "certified": 0}            # position (in the order) of the current reference
     steps, rejections, t = [], [], 0
     prev_level, prev_cert = 0.0, False
     for pos, k in enumerate(order[1:], start=1):
         ref = holder if baseline == "leader" else certified_holder
         if sc[k] > sc[ref] + 1e-12:
             t += 1
-            p = _step_pvalue(board, ref, k, pvalue, sigma, order[:pos], seed)
+            p_raw = _step_pvalue(board, ref, k, pvalue, sigma, order[:pos], seed)
+            g = board.date_group_size(k) if correct else 1
+            p = min(1.0, g * p_raw)
             if rule == "unadjusted":
                 level = alpha
             elif rule == "spending":
@@ -180,7 +192,7 @@ def certify_chain(board, alpha=0.05, rule="lord", pvalue="exact", baseline="lead
             elif rule == "fallback":
                 level = fallback_level(t, alpha, prev_level, prev_cert)
             elif rule == "tenure":
-                level = tenure_level(alpha, len(rejections) + 1, pos - ref_pos[baseline])
+                level = tenure_level(alpha, len(rejections) + 1, max(1, date_rank[board.dates[k]] - date_rank[board.dates[ref]]))
             elif rule == "lord":
                 level = lord_level(t, alpha, w0, rejections)
             else:
@@ -190,12 +202,11 @@ def certify_chain(board, alpha=0.05, rule="lord", pvalue="exact", baseline="lead
             if cert:
                 rejections.append(t)
                 certified_holder = k
-                ref_pos["certified"] = pos
             steps.append({"test": t, "position": pos, "new": board.names[k], "reference": board.names[ref],
-                          "margin": float(sc[k] - sc[ref]), "p": float(p), "level": level, "certified": cert})
+                          "margin": float(sc[k] - sc[ref]), "p": float(p), "p_uncorrected": float(p_raw), "date_group": g,
+                          "level": level, "certified": cert})
         if sc[k] > sc[holder] + 1e-12:
             holder = k
-            ref_pos["leader"] = pos
     if rule == "holm":
         m = len(steps)
         ps = np.array([s["p"] for s in steps]) if m else np.array([])
@@ -208,7 +219,7 @@ def certify_chain(board, alpha=0.05, rule="lord", pvalue="exact", baseline="lead
         for s, r in zip(steps, rej):
             s["certified"] = bool(r)
             s["level"] = None
-    return {"rule": rule, "pvalue": pvalue, "baseline": baseline, "alpha": alpha, "n_tests": len(steps),
+    return {"rule": rule, "pvalue": pvalue, "baseline": baseline, "alpha": alpha, "date_correction": correct, "n_tests": len(steps),
             "n_certified": int(sum(1 for s in steps if s["certified"])),
             "certified": [s["new"] for s in steps if s["certified"]], "steps": steps,
             "final_certified_holder": board.names[certified_holder]}

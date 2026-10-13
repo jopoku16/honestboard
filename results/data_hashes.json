@@ -74,18 +74,18 @@
     },
     "results/audit_summary.json": {
       "group": "results",
-      "bytes": 70833,
-      "sha256": "eec9c96b1e42d898636b47a8b7bda070d1b1deb3bb29f9a5c89cc9fa159ab84e"
+      "bytes": 76916,
+      "sha256": "fc72dfff257d018c54b49fe92888f168915f1e3a5cdacf33805db70d557c85c0"
     },
     "results/chain_audit.json": {
       "group": "results",
-      "bytes": 457369,
-      "sha256": "e04960dc54cb5e7d03fe23b00cf0dad64ade0e36ebe4370b2df6d99a336c61d3"
+      "bytes": 559175,
+      "sha256": "7f63e0c341e4196c15a910640623b1f36f350b20f9454c5bbe4ab26e55252ae7"
     },
     "results/data_hashes.json": {
       "group": "results",
       "bytes": 11313,
-      "sha256": "2e669e922e8213ce3b793d69cad7640ea1c21dacfcb140fea60f665449abab63"
+      "sha256": "e10a55e2b047f41c49f6e55f5b222aa0cdd9e54e9a48f221701b0fd4962b3b60"
     },
     "results/livebench_build.json": {
       "group": "results",
@@ -104,8 +104,8 @@
     },
     "results/split_half.json": {
       "group": "results",
-      "bytes": 77324,
-      "sha256": "169f9a279368b0159d2086378e283dbd242c6f5aaaa0d9375dee145364967870"
+      "bytes": 77227,
+      "sha256": "d88e65f3175019a935a3d0de25eed45dfd09c6e49d493eaabf505aa6ae798037"
     },
     "results/tb_build.json": {
       "group": "results",
@@ -220,7 +220,7 @@
     "paper/tab_chain_audit.tex": {
       "group": "tables",
       "bytes": 693,
-      "sha256": "a2a7c1a165fa9253d4f96c680490010073c8d3908b919d0b9b5f94593333f704"
+      "sha256": "c341af10c0a20ed28bd9f021c3839482079aaeaf2dba05415a1d5c2e8075613e"
     },
     "paper/tab_chain_sim.tex": {
       "group": "tables",
@@ -235,7 +235,7 @@
     "paper/tab_lags.tex": {
       "group": "tables",
       "bytes": 390,
-      "sha256": "edb7a216c5adc0fd03ba8d4efeec7cd7c647ed302acaa5e4bbb273108b44b8b9"
+      "sha256": "708aef55393e1ce795cbdefa726b87efaae9c9835786940c62b26441ec186946"
     },
     "paper/tab_lottery.tex": {
       "group": "tables",
@@ -245,7 +245,7 @@
     "paper/tab_nonagent.tex": {
       "group": "tables",
       "bytes": 956,
-      "sha256": "60b6f08fefe03286a4cfac575ef0bc68360525c7971bba32b2744756fd7c19da"
+      "sha256": "db5d93e1ff76385a5652755fc73463fe1e372ebd9dcb7114c644263f4d41a099"
     },
     "paper/tab_position.tex": {
       "group": "tables",
@@ -275,12 +275,12 @@
     "paper/tab_sensitivity.tex": {
       "group": "tables",
       "bytes": 546,
-      "sha256": "2209ac940141e286da56c839640c3262147132162b40fd81782c6a1c920ce984"
+      "sha256": "63a5dbcbdbc87b9657d75e89eadfd5b85dc24ddfa1188e1a0f9b8f02746dd731"
     },
     "paper/tab_split_half.tex": {
       "group": "tables",
       "bytes": 683,
-      "sha256": "2e06815ebf8c744d37725d3f057337920886ae72a6232a98a21fd998bf4d0db4"
+      "sha256": "70d0b5fa0cf3bec7c2c87bcf0193234db14398565e0ca20ddc89a93771e73764"
     },
     "paper/tab_tries.tex": {
       "group": "tables",
@@ -309,8 +309,8 @@
     },
     "paper/numbers.tex": {
       "group": "numbers",
-      "bytes": 78850,
-      "sha256": "87a3771f6b704da83c00b2eeb5bc979366856af81efc07479c56206f803e6908"
+      "bytes": 78973,
+      "sha256": "c57862b049ab0ce1ce5137ea84153d20edc4f03679ea779794053f12cf4575c6"
     }
   },
   "numpy": "2.4.6",
