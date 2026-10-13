@@ -31,6 +31,12 @@ if os.path.exists(sup):
     os.makedirs(os.path.join(OUT, "anc"), exist_ok=True)
     shutil.copy(sup, os.path.join(OUT, "anc", "supplement.pdf"))
     include.append("anc/supplement.pdf")
+# the compiled manuscript travels in anc/ as well, for readers of the bundle; arXiv builds its own from main.tex
+mp = os.path.join(PAP, "main.pdf")
+if os.path.exists(mp):
+    os.makedirs(os.path.join(OUT, "anc"), exist_ok=True)
+    shutil.copy(mp, os.path.join(OUT, "anc", "manuscript.pdf"))
+    include.append("anc/manuscript.pdf")
 zpath = os.path.join(ROOT, "release", "arxiv_source.zip")
 with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
     for f in include:
