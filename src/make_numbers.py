@@ -251,7 +251,7 @@ if lbb:
 # ---- sequential certification ----
 chain_sim = load("validation_chain.json")
 chain_audit = load("chain_audit.json")
-RULE_TAG = {"unadjusted": "Unadj", "holm": "Holm", "spending": "Spend", "fallback": "Fall", "lord": "Lord"}
+RULE_TAG = {"unadjusted": "Unadj", "holm": "Holm", "spending": "Spend", "fallback": "Fall", "tenure": "Ten", "lord": "Lord"}
 PV_TAG = {"exact": "", "polyhedral": "Poly"}
 BASE_TAG = {"leader": "", "certified": "Cert"}
 
@@ -530,7 +530,8 @@ if rank_v:
 
 if chain_sim:
     LAB = {"unadjusted_exact_leader": "unadjusted, exact", "holm_exact_leader": "Holm over the realised chain", "spending_exact_leader": "alpha-spending, exact",
-           "fallback_exact_leader": "online fallback, exact",
+           "fallback_exact_leader": "online fallback, exact", "spending_exact_certified": "alpha-spending, exact, certified baseline",
+           "tenure_exact_certified": "tenure-indexed spending, exact, certified baseline",
            "lord_exact_leader": "LORD++, exact", "spending_polyhedral_leader": "alpha-spending, polyhedral", "lord_polyhedral_leader": "LORD++, polyhedral",
            "lord_exact_certified": "LORD++, exact, certified baseline"}
     sc_ = chain_sim["scenarios"]
@@ -572,10 +573,12 @@ if split:
                     f"{pct(r['nonsig1']['n'] / tot) if tot else '--'}\\% & {fmt(r['nonsig1']['rep'])} & {fmt(nl['nonsig1']['rep'])} \\\\\n")
         f.write("\\bottomrule\n\\end{tabular}\n")
 if chain_audit:
-    cols = ["unadjusted_exact_leader", "holm_exact_leader", "spending_exact_leader", "fallback_exact_leader", "lord_exact_leader", "lord_polyhedral_leader", "spending_exact_certified"]
+    cols = ["unadjusted_exact_leader", "holm_exact_leader", "spending_exact_leader", "fallback_exact_leader", "lord_exact_leader", "lord_polyhedral_leader",
+            "spending_exact_certified", "tenure_exact_certified"]
     cols = [c for c in cols if c in chain_audit["totals"]]
     HEAD = {"unadjusted_exact_leader": "Unadjusted", "holm_exact_leader": "Holm", "spending_exact_leader": "Spending", "fallback_exact_leader": "Fallback",
-            "lord_exact_leader": "LORD++", "lord_polyhedral_leader": "LORD++ (polyhedral)", "spending_exact_certified": "Spending (certified baseline)"}
+            "lord_exact_leader": "LORD++", "lord_polyhedral_leader": "LORD++ (polyhedral)", "spending_exact_certified": "Spending, certified baseline",
+            "tenure_exact_certified": "Tenure, certified baseline"}
     with open(os.path.join(PAP, "tab_chain_audit.tex"), "w") as f:
         f.write("\\begin{tabular}{lr" + "r" * len(cols) + "}\n\\toprule\nBoard & Records & " + " & ".join(HEAD[c] for c in cols) + " \\\\\n\\midrule\n")
         for entry in chain_audit["boards"]:

@@ -75,6 +75,22 @@
         "mean_tests": 19.346666666666668,
         "mean_certified": 0.023333333333333334,
         "undefined_pvalues": 0
+      },
+      "spending_exact_certified": {
+        "fwer": 0.04,
+        "fdr": 0.04,
+        "power": null,
+        "mean_tests": 18.79,
+        "mean_certified": 0.04,
+        "undefined_pvalues": 0
+      },
+      "tenure_exact_certified": {
+        "fwer": 0.03,
+        "fdr": 0.03,
+        "power": null,
+        "mean_tests": 19.13,
+        "mean_certified": 0.03,
+        "undefined_pvalues": 0
       }
     },
     "staircase": {
@@ -140,6 +156,22 @@
         "power": 0.10779325120514194,
         "mean_tests": 28.756666666666668,
         "mean_certified": 2.6866666666666665,
+        "undefined_pvalues": 0
+      },
+      "spending_exact_certified": {
+        "fwer": 0.0033333333333333335,
+        "fdr": 0.0011111111111111111,
+        "power": 0.09380234505862646,
+        "mean_tests": 29.5,
+        "mean_certified": 2.43,
+        "undefined_pvalues": 0
+      },
+      "tenure_exact_certified": {
+        "fwer": 0.0,
+        "fdr": 0.0,
+        "power": 0.08223109558273022,
+        "mean_tests": 30.246666666666666,
+        "mean_certified": 2.1966666666666668,
         "undefined_pvalues": 0
       }
     },
@@ -207,6 +239,22 @@
         "mean_tests": 19.14666666666667,
         "mean_certified": 0.71,
         "undefined_pvalues": 0
+      },
+      "spending_exact_certified": {
+        "fwer": 0.013333333333333334,
+        "fdr": 0.013333333333333334,
+        "power": 0.11317165953399905,
+        "mean_tests": 17.516666666666666,
+        "mean_certified": 0.8066666666666666,
+        "undefined_pvalues": 0
+      },
+      "tenure_exact_certified": {
+        "fwer": 0.013333333333333334,
+        "fdr": 0.013333333333333334,
+        "power": 0.043898398674765325,
+        "mean_tests": 21.826666666666668,
+        "mean_certified": 0.5433333333333333,
+        "undefined_pvalues": 0
       }
     },
     "variant": {
@@ -267,6 +315,22 @@
         "undefined_pvalues": 0
       },
       "lord_exact_certified": {
+        "fwer": 0.006666666666666667,
+        "fdr": 0.006666666666666667,
+        "power": null,
+        "mean_tests": 17.64,
+        "mean_certified": 0.006666666666666667,
+        "undefined_pvalues": 0
+      },
+      "spending_exact_certified": {
+        "fwer": 0.016666666666666666,
+        "fdr": 0.016666666666666666,
+        "power": null,
+        "mean_tests": 17.413333333333334,
+        "mean_certified": 0.016666666666666666,
+        "undefined_pvalues": 0
+      },
+      "tenure_exact_certified": {
         "fwer": 0.006666666666666667,
         "fdr": 0.006666666666666667,
         "power": null,

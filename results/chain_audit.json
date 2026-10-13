@@ -3277,6 +3277,1326 @@
               "certified": false
             }
           ]
+        },
+        "fallback_exact_certified": {
+          "n_tests": 56,
+          "n_certified": 7,
+          "certified": [
+            "20240402_sweagent_gpt4",
+            "20240612_MASAI_gpt4o",
+            "20240824_gru",
+            "20241108_devlo",
+            "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+            "20250515_Refact_Agent",
+            "20250928_trae_doubao_seed_code"
+          ],
+          "final_certified_holder": "20250928_trae_doubao_seed_code",
+          "steps": [
+            {
+              "test": 1,
+              "position": 4,
+              "new": "20240402_sweagent_gpt4",
+              "reference": "20231010_rag_claude2",
+              "margin": 0.18,
+              "p": 8.757005287400747e-21,
+              "level": 0.03039635509270134,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 8,
+              "new": "20240509_amazon-q-developer-agent-20240430-dev",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.032,
+              "p": 0.156914130295238,
+              "level": 0.03799544386587667,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 9,
+              "new": "20240612_MASAI_gpt4o",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.10200000000000001,
+              "p": 4.848718134555303e-06,
+              "level": 0.0033773727880779263,
+              "certified": true
+            },
+            {
+              "test": 4,
+              "position": 11,
+              "new": "20240617_factory_code_droid",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.043999999999999984,
+              "p": 0.04635821171561141,
+              "level": 0.00527714498137176,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 12,
+              "new": "20240620_sweagent_claude3.5sonnet",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.010000000000000009,
+              "p": 0.7117032769279398,
+              "level": 0.0012158542037080534,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 13,
+              "new": "20240628_autocoderover-v20240620",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.057999999999999996,
+              "p": 0.005077381119448146,
+              "level": 0.0008443431970194816,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 14,
+              "new": "20240721_amazon-q-developer-agent-20240719-dev",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.062,
+              "p": 0.005319279348701688,
+              "level": 0.0006203337774020681,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 16,
+              "new": "20240820_honeycomb",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.08000000000000002,
+              "p": 0.0004993648886955592,
+              "level": 0.00047494304832345843,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 18,
+              "new": "20240824_gru",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.126,
+              "p": 5.801973989742981e-09,
+              "level": 0.0003752636431197696,
+              "certified": true
+            },
+            {
+              "test": 10,
+              "position": 22,
+              "new": "20240924_solver",
+              "reference": "20240824_gru",
+              "margin": 0.0020000000000000018,
+              "p": 1.0,
+              "level": 0.0006792271940467829,
+              "certified": false
+            },
+            {
+              "test": 11,
+              "position": 29,
+              "new": "20241022_tools_claude-3-5-sonnet-updated",
+              "reference": "20240824_gru",
+              "margin": 0.03799999999999998,
+              "p": 0.08995433294496442,
+              "level": 0.0002512095462206722,
+              "certified": false
+            },
+            {
+              "test": 12,
+              "position": 31,
+              "new": "20241023_emergent",
+              "reference": "20240824_gru",
+              "margin": 0.014000000000000012,
+              "p": 0.5296020954762453,
+              "level": 0.0002110857992548704,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 32,
+              "new": "20241025_composio_swekit",
+              "reference": "20240824_gru",
+              "margin": 0.033999999999999975,
+              "p": 0.10735158653318877,
+              "level": 0.00017986008930592507,
+              "certified": false
+            },
+            {
+              "test": 14,
+              "position": 33,
+              "new": "20241028_solver",
+              "reference": "20240824_gru",
+              "margin": 0.04799999999999999,
+              "p": 0.025647449230608767,
+              "level": 0.00015508344435051703,
+              "certified": false
+            },
+            {
+              "test": 15,
+              "position": 35,
+              "new": "20241029_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "reference": "20240824_gru",
+              "margin": 0.07800000000000001,
+              "p": 0.0003509981791372752,
+              "level": 0.00013509491152311707,
+              "certified": false
+            },
+            {
+              "test": 16,
+              "position": 38,
+              "new": "20241105_nfactorial",
+              "reference": "20240824_gru",
+              "margin": 0.03999999999999998,
+              "p": 0.05387168817729504,
+              "level": 0.00011873576208086461,
+              "certified": false
+            },
+            {
+              "test": 17,
+              "position": 39,
+              "new": "20241106_navie-2-gpt4o-sonnet",
+              "reference": "20240824_gru",
+              "margin": 0.019999999999999962,
+              "p": 0.4273399662992053,
+              "level": 0.00010517769928270359,
+              "certified": false
+            },
+            {
+              "test": 18,
+              "position": 40,
+              "new": "20241108_devlo",
+              "reference": "20240824_gru",
+              "margin": 0.09000000000000002,
+              "p": 1.3153673146192212e-05,
+              "level": 9.38159107799424e-05,
+              "certified": true
+            },
+            {
+              "test": 19,
+              "position": 47,
+              "new": "20241202_amazon-q-developer-agent-20241202-dev",
+              "reference": "20241108_devlo",
+              "margin": 0.008000000000000007,
+              "p": 0.8143257364048619,
+              "level": 0.00017801634039961369,
+              "certified": false
+            },
+            {
+              "test": 20,
+              "position": 49,
+              "new": "20241208_gru",
+              "reference": "20241108_devlo",
+              "margin": 0.027999999999999914,
+              "p": 0.17045122762802736,
+              "level": 7.599088773175334e-05,
+              "certified": false
+            },
+            {
+              "test": 21,
+              "position": 50,
+              "new": "20241212_epam-ai-run-claude-3-5-sonnet",
+              "reference": "20241108_devlo",
+              "margin": 0.01200000000000001,
+              "p": 0.6234461138270321,
+              "level": 6.892597526689645e-05,
+              "certified": false
+            },
+            {
+              "test": 22,
+              "position": 52,
+              "new": "20241213_devlo",
+              "reference": "20241108_devlo",
+              "margin": 0.039999999999999925,
+              "p": 0.020680690091620484,
+              "level": 6.280238655516806e-05,
+              "certified": false
+            },
+            {
+              "test": 23,
+              "position": 53,
+              "new": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "reference": "20241108_devlo",
+              "margin": 0.07999999999999996,
+              "p": 1.6048965795692355e-05,
+              "level": 5.746002853062634e-05,
+              "certified": true
+            },
+            {
+              "test": 24,
+              "position": 55,
+              "new": "20250110_blackboxai_agent_v1.1",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.006000000000000005,
+              "p": 0.8375560707290736,
+              "level": 0.00011023147834434395,
+              "certified": false
+            },
+            {
+              "test": 25,
+              "position": 58,
+              "new": "20250117_wandb_programmer_o1_crosscheck5",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.02400000000000002,
+              "p": 0.2686373673965588,
+              "level": 4.8634168148322146e-05,
+              "certified": false
+            },
+            {
+              "test": 26,
+              "position": 63,
+              "new": "20250206_agentscope",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.01200000000000001,
+              "p": 0.6185600536257234,
+              "level": 4.496502232648127e-05,
+              "certified": false
+            },
+            {
+              "test": 27,
+              "position": 65,
+              "new": "20250224_tools_claude-3-7-sonnet",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.010000000000000009,
+              "p": 0.687885343579691,
+              "level": 4.1695960346641064e-05,
+              "certified": false
+            },
+            {
+              "test": 28,
+              "position": 66,
+              "new": "20250225_sweagent_claude-3-7-sonnet",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.0020000000000000018,
+              "p": 1.0,
+              "level": 3.8770861087629257e-05,
+              "certified": false
+            },
+            {
+              "test": 29,
+              "position": 68,
+              "new": "20250228_epam-ai-run-claude-3-5-sonnet",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.006000000000000005,
+              "p": 0.8043170001933986,
+              "level": 3.614310950380658e-05,
+              "certified": false
+            },
+            {
+              "test": 30,
+              "position": 70,
+              "new": "20250316_augment_agent_v0",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.03200000000000003,
+              "p": 0.09756884598998643,
+              "level": 3.377372788077927e-05,
+              "certified": false
+            },
+            {
+              "test": 31,
+              "position": 71,
+              "new": "20250405_amazon-q-developer-agent-20250405-dev",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.03200000000000003,
+              "p": 0.09314287182762238,
+              "level": 3.162992205275893e-05,
+              "certified": false
+            },
+            {
+              "test": 32,
+              "position": 74,
+              "new": "20250415_openhands",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.03600000000000003,
+              "p": 0.06895761513665688,
+              "level": 2.9683940520216152e-05,
+              "certified": false
+            },
+            {
+              "test": 33,
+              "position": 75,
+              "new": "20250430_zencoder_ai",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.07799999999999996,
+              "p": 4.32152092498388e-05,
+              "level": 2.7912171802296913e-05,
+              "certified": false
+            },
+            {
+              "test": 34,
+              "position": 76,
+              "new": "20250503_patchpilot-v1.1-o4-mini",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.02400000000000002,
+              "p": 0.2517124533155626,
+              "level": 2.6294424820675897e-05,
+              "certified": false
+            },
+            {
+              "test": 35,
+              "position": 78,
+              "new": "20250514_aime_coder",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.04200000000000004,
+              "p": 0.022033458764822118,
+              "level": 2.4813351096082723e-05,
+              "certified": false
+            },
+            {
+              "test": 36,
+              "position": 79,
+              "new": "20250515_Refact_Agent",
+              "reference": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "margin": 0.08199999999999996,
+              "p": 4.19404240892411e-06,
+              "level": 2.34539776949856e-05,
+              "certified": true
+            },
+            {
+              "test": 37,
+              "position": 81,
+              "new": "20250519_trae",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.0020000000000000018,
+              "p": 1.0,
+              "level": 4.565730500886532e-05,
+              "certified": false
+            },
+            {
+              "test": 38,
+              "position": 84,
+              "new": "20250522_tools_claude-4-opus",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.028000000000000025,
+              "p": 0.15985063203008665,
+              "level": 2.1050107404917825e-05,
+              "certified": false
+            },
+            {
+              "test": 39,
+              "position": 85,
+              "new": "20250522_tools_claude-4-sonnet",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.020000000000000018,
+              "p": 0.28916286890701426,
+              "level": 1.9984454367325008e-05,
+              "certified": false
+            },
+            {
+              "test": 40,
+              "position": 90,
+              "new": "20250603_Refact_Agent_claude-4-sonnet",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.040000000000000036,
+              "p": 0.013317364365872263,
+              "level": 1.8997721932938334e-05,
+              "certified": false
+            },
+            {
+              "test": 41,
+              "position": 92,
+              "new": "20250611_moatless_claude-4-sonnet-20250514",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.0040000000000000036,
+              "p": 1.0,
+              "level": 1.8082305230637322e-05,
+              "certified": false
+            },
+            {
+              "test": 42,
+              "position": 93,
+              "new": "20250612_trae",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.04800000000000004,
+              "p": 0.00473575877320197,
+              "level": 1.7231493816724113e-05,
+              "certified": false
+            },
+            {
+              "test": 43,
+              "position": 96,
+              "new": "20250623_warp",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.006000000000000005,
+              "p": 0.8099490529189246,
+              "level": 1.643934834651235e-05,
+              "certified": false
+            },
+            {
+              "test": 44,
+              "position": 100,
+              "new": "20250710_bloop",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.008000000000000007,
+              "p": 0.7787680292588641,
+              "level": 1.5700596638792014e-05,
+              "certified": false
+            },
+            {
+              "test": 45,
+              "position": 101,
+              "new": "20250715_qodo_command",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.008000000000000007,
+              "p": 0.798800263903333,
+              "level": 1.5010545724790785e-05,
+              "certified": false
+            },
+            {
+              "test": 46,
+              "position": 103,
+              "new": "20250720_Lingxi-v1.5_claude-4-sonnet-20250514",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.04200000000000004,
+              "p": 0.005486344876760142,
+              "level": 1.4365007132656586e-05,
+              "certified": false
+            },
+            {
+              "test": 47,
+              "position": 106,
+              "new": "20250731_harness_ai",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.04400000000000004,
+              "p": 0.003579403126773861,
+              "level": 1.3760233179131433e-05,
+              "certified": false
+            },
+            {
+              "test": 48,
+              "position": 107,
+              "new": "20250804_epam-ai-run-claude-4-sonnet",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.06400000000000006,
+              "p": 0.0001447976382035668,
+              "level": 1.31928624534294e-05,
+              "certified": false
+            },
+            {
+              "test": 49,
+              "position": 112,
+              "new": "20250807_openhands_gpt5",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.014000000000000012,
+              "p": 0.4703685318581444,
+              "level": 1.2659873008205472e-05,
+              "certified": false
+            },
+            {
+              "test": 50,
+              "position": 113,
+              "new": "20250819_ACoder",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.06000000000000005,
+              "p": 0.0004865164638793738,
+              "level": 1.2158542037080536e-05,
+              "certified": false
+            },
+            {
+              "test": 51,
+              "position": 114,
+              "new": "20250901_warp",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.052000000000000046,
+              "p": 0.0037157114012057253,
+              "level": 1.168641103141151e-05,
+              "certified": false
+            },
+            {
+              "test": 52,
+              "position": 117,
+              "new": "20250902_atlassian-rovo-dev",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.06400000000000006,
+              "p": 0.0001447976382035668,
+              "level": 1.1241255581620317e-05,
+              "certified": false
+            },
+            {
+              "test": 53,
+              "position": 118,
+              "new": "20250915_JoyCode",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.04200000000000004,
+              "p": 0.018617751433194638,
+              "level": 1.0821059128765161e-05,
+              "certified": false
+            },
+            {
+              "test": 54,
+              "position": 120,
+              "new": "20250928_trae_doubao_seed_code",
+              "reference": "20250515_Refact_Agent",
+              "margin": 0.08400000000000007,
+              "p": 1.0660324996310924e-06,
+              "level": 1.0423990086660266e-05,
+              "certified": true
+            },
+            {
+              "test": 55,
+              "position": 132,
+              "new": "20251205_sonar-foundation-agent_claude-opus-4-5",
+              "reference": "20250928_trae_doubao_seed_code",
+              "margin": 0.0040000000000000036,
+              "p": 1.0,
+              "level": 2.0472371935487153e-05,
+              "certified": false
+            },
+            {
+              "test": 56,
+              "position": 133,
+              "new": "20251215_livesweagent_claude-opus-4-5",
+              "reference": "20250928_trae_doubao_seed_code",
+              "margin": 0.0040000000000000036,
+              "p": 1.0,
+              "level": 9.692715271907314e-06,
+              "certified": false
+            }
+          ]
+        },
+        "tenure_exact_certified": {
+          "n_tests": 73,
+          "n_certified": 5,
+          "certified": [
+            "20240402_sweagent_gpt4",
+            "20240612_MASAI_gpt4o",
+            "20240824_gru",
+            "20241208_gru",
+            "20250430_zencoder_ai"
+          ],
+          "final_certified_holder": "20250430_zencoder_ai",
+          "steps": [
+            {
+              "test": 1,
+              "position": 4,
+              "new": "20240402_sweagent_gpt4",
+              "reference": "20231010_rag_claude2",
+              "margin": 0.18,
+              "p": 8.757005287400747e-21,
+              "level": 0.0011549230036519878,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 8,
+              "new": "20240509_amazon-q-developer-agent-20240430-dev",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.032,
+              "p": 0.156914130295238,
+              "level": 0.00028873075091299694,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 9,
+              "new": "20240612_MASAI_gpt4o",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.10200000000000001,
+              "p": 4.848718134555303e-06,
+              "level": 0.00018478768058431805,
+              "certified": true
+            },
+            {
+              "test": 4,
+              "position": 11,
+              "new": "20240617_factory_code_droid",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.043999999999999984,
+              "p": 0.04635821171561141,
+              "level": 0.0005132991127342168,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 12,
+              "new": "20240620_sweagent_claude3.5sonnet",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.010000000000000009,
+              "p": 0.7117032769279398,
+              "level": 0.00022813293899298523,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 13,
+              "new": "20240628_autocoderover-v20240620",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.057999999999999996,
+              "p": 0.005077381119448146,
+              "level": 0.0001283247781835542,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 14,
+              "new": "20240721_amazon-q-developer-agent-20240719-dev",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.062,
+              "p": 0.005319279348701688,
+              "level": 8.212785803747468e-05,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 16,
+              "new": "20240820_honeycomb",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.08000000000000002,
+              "p": 0.0004993648886955592,
+              "level": 4.190196838646668e-05,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 18,
+              "new": "20240824_gru",
+              "reference": "20240612_MASAI_gpt4o",
+              "margin": 0.126,
+              "p": 5.801973989742981e-09,
+              "level": 2.5348104332553917e-05,
+              "certified": true
+            },
+            {
+              "test": 10,
+              "position": 22,
+              "new": "20240924_solver",
+              "reference": "20240824_gru",
+              "margin": 0.0020000000000000018,
+              "p": 1.0,
+              "level": 7.218268772824923e-05,
+              "certified": false
+            },
+            {
+              "test": 11,
+              "position": 29,
+              "new": "20241022_tools_claude-3-5-sonnet-updated",
+              "reference": "20240824_gru",
+              "margin": 0.03799999999999998,
+              "p": 0.08995433294496442,
+              "level": 9.5448182119999e-06,
+              "certified": false
+            },
+            {
+              "test": 12,
+              "position": 31,
+              "new": "20241023_emergent",
+              "reference": "20240824_gru",
+              "margin": 0.014000000000000012,
+              "p": 0.5296020954762453,
+              "level": 6.8338639269348395e-06,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 32,
+              "new": "20241025_composio_swekit",
+              "reference": "20240824_gru",
+              "margin": 0.033999999999999975,
+              "p": 0.10735158653318877,
+              "level": 5.892464304346877e-06,
+              "certified": false
+            },
+            {
+              "test": 14,
+              "position": 33,
+              "new": "20241028_solver",
+              "reference": "20240824_gru",
+              "margin": 0.04799999999999999,
+              "p": 0.025647449230608767,
+              "level": 5.132991127342169e-06,
+              "certified": false
+            },
+            {
+              "test": 15,
+              "position": 35,
+              "new": "20241029_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "reference": "20240824_gru",
+              "margin": 0.07800000000000001,
+              "p": 0.0003509981791372752,
+              "level": 3.99627336903802e-06,
+              "certified": false
+            },
+            {
+              "test": 16,
+              "position": 38,
+              "new": "20241105_nfactorial",
+              "reference": "20240824_gru",
+              "margin": 0.03999999999999998,
+              "p": 0.05387168817729504,
+              "level": 2.8873075091299695e-06,
+              "certified": false
+            },
+            {
+              "test": 17,
+              "position": 39,
+              "new": "20241106_navie-2-gpt4o-sonnet",
+              "reference": "20240824_gru",
+              "margin": 0.019999999999999962,
+              "p": 0.4273399662992053,
+              "level": 2.618873024154167e-06,
+              "certified": false
+            },
+            {
+              "test": 18,
+              "position": 40,
+              "new": "20241108_devlo",
+              "reference": "20240824_gru",
+              "margin": 0.09000000000000002,
+              "p": 1.3153673146192212e-05,
+              "level": 2.386204552999975e-06,
+              "certified": false
+            },
+            {
+              "test": 19,
+              "position": 41,
+              "new": "20241108_autocoderover-v2.0-claude-3-5-sonnet-20241022",
+              "reference": "20240824_gru",
+              "margin": 0.010000000000000009,
+              "p": 0.7018111820646821,
+              "level": 2.183219288567085e-06,
+              "certified": false
+            },
+            {
+              "test": 20,
+              "position": 44,
+              "new": "20241125_enginelabs",
+              "reference": "20240824_gru",
+              "margin": 0.066,
+              "p": 0.004981347901780454,
+              "level": 1.7084659817337099e-06,
+              "certified": false
+            },
+            {
+              "test": 21,
+              "position": 45,
+              "new": "20241125_marscode-agent-dev",
+              "reference": "20240824_gru",
+              "margin": 0.04799999999999999,
+              "p": 0.036460582174049044,
+              "level": 1.5842565207846196e-06,
+              "certified": false
+            },
+            {
+              "test": 22,
+              "position": 47,
+              "new": "20241202_amazon-q-developer-agent-20241202-dev",
+              "reference": "20240824_gru",
+              "margin": 0.09800000000000003,
+              "p": 1.8534768352189517e-06,
+              "level": 1.3732734882901162e-06,
+              "certified": false
+            },
+            {
+              "test": 23,
+              "position": 48,
+              "new": "20241202_agentless-1.5_claude-3.5-sonnet-20241022",
+              "reference": "20240824_gru",
+              "margin": 0.055999999999999994,
+              "p": 0.008459923101122202,
+              "level": 1.2832477818355422e-06,
+              "certified": false
+            },
+            {
+              "test": 24,
+              "position": 49,
+              "new": "20241208_gru",
+              "reference": "20240824_gru",
+              "margin": 0.11799999999999994,
+              "p": 1.7924150285414472e-09,
+              "level": 1.2017929278376562e-06,
+              "certified": true
+            },
+            {
+              "test": 25,
+              "position": 52,
+              "new": "20241213_devlo",
+              "reference": "20241208_gru",
+              "margin": 0.01200000000000001,
+              "p": 0.6413110816912114,
+              "level": 8.21278580374747e-05,
+              "certified": false
+            },
+            {
+              "test": 26,
+              "position": 53,
+              "new": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search",
+              "reference": "20241208_gru",
+              "margin": 0.052000000000000046,
+              "p": 0.011260514166105308,
+              "level": 4.619692014607952e-05,
+              "certified": false
+            },
+            {
+              "test": 27,
+              "position": 54,
+              "new": "20241223_emergent",
+              "reference": "20241208_gru",
+              "margin": 0.0020000000000000018,
+              "p": 1.0,
+              "level": 2.956602889349089e-05,
+              "certified": false
+            },
+            {
+              "test": 28,
+              "position": 55,
+              "new": "20250110_blackboxai_agent_v1.1",
+              "reference": "20241208_gru",
+              "margin": 0.05800000000000005,
+              "p": 0.0060160815152493375,
+              "level": 2.0531964509368674e-05,
+              "certified": false
+            },
+            {
+              "test": 29,
+              "position": 56,
+              "new": "20250110_learn_by_interact_claude3.5",
+              "reference": "20241208_gru",
+              "margin": 0.03200000000000003,
+              "p": 0.17646808826569993,
+              "level": 1.5084708619128006e-05,
+              "certified": false
+            },
+            {
+              "test": 30,
+              "position": 58,
+              "new": "20250117_wandb_programmer_o1_crosscheck5",
+              "reference": "20241208_gru",
+              "margin": 0.07600000000000007,
+              "p": 0.00023164711987236865,
+              "level": 9.125317559719411e-06,
+              "certified": false
+            },
+            {
+              "test": 31,
+              "position": 62,
+              "new": "20250203_openhands_4x_scaled",
+              "reference": "20241208_gru",
+              "margin": 0.038000000000000034,
+              "p": 0.05300311301096221,
+              "level": 4.373672913238297e-06,
+              "certified": false
+            },
+            {
+              "test": 32,
+              "position": 63,
+              "new": "20250206_agentscope",
+              "reference": "20241208_gru",
+              "margin": 0.06400000000000006,
+              "p": 0.0009249438023149232,
+              "level": 3.7711771547820015e-06,
+              "certified": false
+            },
+            {
+              "test": 33,
+              "position": 65,
+              "new": "20250224_tools_claude-3-7-sonnet",
+              "reference": "20241208_gru",
+              "margin": 0.062000000000000055,
+              "p": 0.00492815385225528,
+              "level": 2.88730750912997e-06,
+              "certified": false
+            },
+            {
+              "test": 34,
+              "position": 66,
+              "new": "20250225_sweagent_claude-3-7-sonnet",
+              "reference": "20241208_gru",
+              "margin": 0.05400000000000005,
+              "p": 0.005013598900146383,
+              "level": 2.5576149561843333e-06,
+              "certified": false
+            },
+            {
+              "test": 35,
+              "position": 68,
+              "new": "20250228_epam-ai-run-claude-3-5-sonnet",
+              "reference": "20241208_gru",
+              "margin": 0.05800000000000005,
+              "p": 0.0034618534914423833,
+              "level": 2.0475089261420282e-06,
+              "certified": false
+            },
+            {
+              "test": 36,
+              "position": 70,
+              "new": "20250316_augment_agent_v0",
+              "reference": "20241208_gru",
+              "margin": 0.08400000000000007,
+              "p": 3.4940937896436494e-05,
+              "level": 1.676078735458667e-06,
+              "certified": false
+            },
+            {
+              "test": 37,
+              "position": 71,
+              "new": "20250405_amazon-q-developer-agent-20250405-dev",
+              "reference": "20241208_gru",
+              "margin": 0.08400000000000007,
+              "p": 2.8710584643112915e-05,
+              "level": 1.527170913919984e-06,
+              "certified": false
+            },
+            {
+              "test": 38,
+              "position": 73,
+              "new": "20250410_cortexa",
+              "reference": "20241208_gru",
+              "margin": 0.01200000000000001,
+              "p": 0.6370775033202128,
+              "level": 1.2832477818355422e-06,
+              "certified": false
+            },
+            {
+              "test": 39,
+              "position": 74,
+              "new": "20250415_openhands",
+              "reference": "20241208_gru",
+              "margin": 0.08800000000000008,
+              "p": 7.863026331810897e-05,
+              "level": 1.1826411557396357e-06,
+              "certified": false
+            },
+            {
+              "test": 40,
+              "position": 75,
+              "new": "20250430_zencoder_ai",
+              "reference": "20241208_gru",
+              "margin": 0.13,
+              "p": 2.4892806052232855e-10,
+              "level": 1.0934182283095743e-06,
+              "certified": true
+            },
+            {
+              "test": 41,
+              "position": 79,
+              "new": "20250515_Refact_Agent",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.0040000000000000036,
+              "p": 1.0,
+              "level": 3.208119454588855e-05,
+              "certified": false
+            },
+            {
+              "test": 42,
+              "position": 81,
+              "new": "20250519_trae",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.006000000000000005,
+              "p": 0.8043170001933986,
+              "level": 1.4258308687061577e-05,
+              "certified": false
+            },
+            {
+              "test": 43,
+              "position": 82,
+              "new": "20250519_devlo",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.0020000000000000018,
+              "p": 1.0,
+              "level": 1.047549209661667e-05,
+              "certified": false
+            },
+            {
+              "test": 44,
+              "position": 84,
+              "new": "20250522_tools_claude-4-opus",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.03200000000000003,
+              "p": 0.11942421484468747,
+              "level": 6.337026083138479e-06,
+              "certified": false
+            },
+            {
+              "test": 45,
+              "position": 85,
+              "new": "20250522_tools_claude-4-sonnet",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.02400000000000002,
+              "p": 0.23373113814848231,
+              "level": 5.132991127342168e-06,
+              "certified": false
+            },
+            {
+              "test": 46,
+              "position": 87,
+              "new": "20250524_openhands_claude_4_sonnet",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.0040000000000000036,
+              "p": 1.0,
+              "level": 3.5645771717653942e-06,
+              "certified": false
+            },
+            {
+              "test": 47,
+              "position": 90,
+              "new": "20250603_Refact_Agent_claude-4-sonnet",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.04400000000000004,
+              "p": 0.014095416014273396,
+              "level": 2.2813293899298527e-06,
+              "certified": false
+            },
+            {
+              "test": 48,
+              "position": 91,
+              "new": "20250610_augment_agent_v1",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.0040000000000000036,
+              "p": 1.0,
+              "level": 2.005074659118034e-06,
+              "certified": false
+            },
+            {
+              "test": 49,
+              "position": 92,
+              "new": "20250611_moatless_claude-4-sonnet-20250514",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.008000000000000007,
+              "p": 0.7927211866835465,
+              "level": 1.7761214973502312e-06,
+              "certified": false
+            },
+            {
+              "test": 50,
+              "position": 93,
+              "new": "20250612_trae",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.052000000000000046,
+              "p": 0.0037157114012057253,
+              "level": 1.5842565207846198e-06,
+              "certified": false
+            },
+            {
+              "test": 51,
+              "position": 96,
+              "new": "20250623_warp",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.010000000000000009,
+              "p": 0.6487911623106449,
+              "level": 1.163943566290741e-06,
+              "certified": false
+            },
+            {
+              "test": 52,
+              "position": 100,
+              "new": "20250710_bloop",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.01200000000000001,
+              "p": 0.6082077403613267,
+              "level": 8.21278580374747e-07,
+              "certified": false
+            },
+            {
+              "test": 53,
+              "position": 101,
+              "new": "20250715_qodo_command",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.01200000000000001,
+              "p": 0.6281542356976962,
+              "level": 7.59318214103871e-07,
+              "certified": false
+            },
+            {
+              "test": 54,
+              "position": 103,
+              "new": "20250720_Lingxi-v1.5_claude-4-sonnet-20250514",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.04600000000000004,
+              "p": 0.005918433252619308,
+              "level": 6.547182560385419e-07,
+              "certified": false
+            },
+            {
+              "test": 55,
+              "position": 106,
+              "new": "20250731_harness_ai",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.04800000000000004,
+              "p": 0.0035103363341853554,
+              "level": 5.341301901500695e-07,
+              "certified": false
+            },
+            {
+              "test": 56,
+              "position": 107,
+              "new": "20250804_epam-ai-run-claude-4-sonnet",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.06800000000000006,
+              "p": 0.00013273787289585384,
+              "level": 5.012686647795086e-07,
+              "certified": false
+            },
+            {
+              "test": 57,
+              "position": 112,
+              "new": "20250807_openhands_gpt5",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.018000000000000016,
+              "p": 0.3491818381705883,
+              "level": 3.749445673734235e-07,
+              "certified": false
+            },
+            {
+              "test": 58,
+              "position": 113,
+              "new": "20250819_ACoder",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.06400000000000006,
+              "p": 0.0002291926856044168,
+              "level": 3.554702996774355e-07,
+              "certified": false
+            },
+            {
+              "test": 59,
+              "position": 114,
+              "new": "20250901_warp",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.05600000000000005,
+              "p": 0.0025514349895378284,
+              "level": 3.3747476182394265e-07,
+              "certified": false
+            },
+            {
+              "test": 60,
+              "position": 117,
+              "new": "20250902_atlassian-rovo-dev",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.06800000000000006,
+              "p": 0.00010592115166537392,
+              "level": 2.9098589157268523e-07,
+              "certified": false
+            },
+            {
+              "test": 61,
+              "position": 118,
+              "new": "20250915_JoyCode",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.04600000000000004,
+              "p": 0.010582117051705276,
+              "level": 2.7760903879622327e-07,
+              "certified": false
+            },
+            {
+              "test": 62,
+              "position": 120,
+              "new": "20250928_trae_doubao_seed_code",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.08800000000000008,
+              "p": 2.3552302388296655e-06,
+              "level": 2.5348104332553916e-07,
+              "certified": false
+            },
+            {
+              "test": 63,
+              "position": 121,
+              "new": "20250929_Prometheus_v1.2_gpt5",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.01200000000000001,
+              "p": 0.6370775033202128,
+              "level": 2.425799209518983e-07,
+              "certified": false
+            },
+            {
+              "test": 64,
+              "position": 123,
+              "new": "20251014_Lingxi_kimi_k2",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.01200000000000001,
+              "p": 0.6082077403613267,
+              "level": 2.2278607323533714e-07,
+              "certified": false
+            },
+            {
+              "test": 65,
+              "position": 124,
+              "new": "20251015_Prometheus_v1.2.1_gpt5",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.04400000000000004,
+              "p": 0.02513924672902005,
+              "level": 2.137855529921769e-07,
+              "certified": false
+            },
+            {
+              "test": 66,
+              "position": 125,
+              "new": "20251021_SalesforceAIResearch_SAGE_bash_only",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.030000000000000027,
+              "p": 0.12385305946180149,
+              "level": 2.0531964509368674e-07,
+              "certified": false
+            },
+            {
+              "test": 67,
+              "position": 126,
+              "new": "20251103_sonar-foundation-agent_claude-sonnet-4-5",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.04800000000000004,
+              "p": 0.009639813902224764,
+              "level": 1.9734683303891455e-07,
+              "certified": false
+            },
+            {
+              "test": 68,
+              "position": 127,
+              "new": "20251103_SalesforceAIResearch_SAGE_OpenHands",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.038000000000000034,
+              "p": 0.027119992403126344,
+              "level": 1.8982955352596775e-07,
+              "certified": false
+            },
+            {
+              "test": 69,
+              "position": 130,
+              "new": "20251120_livesweagent_gemini-3-pro-preview",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.07400000000000007,
+              "p": 3.7615127804166154e-05,
+              "level": 1.6968565710222044e-07,
+              "certified": false
+            },
+            {
+              "test": 70,
+              "position": 131,
+              "new": "20251127_openhands_claude-opus-4-5",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.07600000000000007,
+              "p": 3.542936150581352e-05,
+              "level": 1.6367956400963548e-07,
+              "certified": false
+            },
+            {
+              "test": 71,
+              "position": 132,
+              "new": "20251205_sonar-foundation-agent_claude-opus-4-5",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.09200000000000008,
+              "p": 1.6627111789243714e-07,
+              "level": 1.5798679985663797e-07,
+              "certified": false
+            },
+            {
+              "test": 72,
+              "position": 133,
+              "new": "20251215_livesweagent_claude-opus-4-5",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.09200000000000008,
+              "p": 2.4873338253593396e-07,
+              "level": 1.5258594314334624e-07,
+              "certified": false
+            },
+            {
+              "test": 73,
+              "position": 134,
+              "new": "20260901_mini-v2.4.2_gemini-3-5-flash",
+              "reference": "20250430_zencoder_ai",
+              "margin": 0.018000000000000016,
+              "p": 0.45581402955519185,
+              "level": 1.4745737223045587e-07,
+              "certified": false
+            }
+          ]
         }
       }
     },
@@ -4982,6 +6302,562 @@
               "certified": false
             }
           ]
+        },
+        "fallback_exact_certified": {
+          "n_tests": 31,
+          "n_certified": 4,
+          "certified": [
+            "20240402_sweagent_gpt4",
+            "20240523_aider",
+            "20240627_abanteai_mentatbot_gpt4o",
+            "20250114_Isoform"
+          ],
+          "final_certified_holder": "20250114_Isoform",
+          "steps": [
+            {
+              "test": 1,
+              "position": 4,
+              "new": "20240402_sweagent_gpt4",
+              "reference": "20231010_rag_claude2",
+              "margin": 0.15,
+              "p": 1.9674928353197174e-11,
+              "level": 0.03039635509270134,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 8,
+              "new": "20240509_amazon-q-developer-agent-20240430-dev",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.023333333333333345,
+              "p": 0.43499280512215344,
+              "level": 0.03799544386587667,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 9,
+              "new": "20240523_aider",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.08333333333333331,
+              "p": 0.0010158471941252858,
+              "level": 0.0033773727880779263,
+              "certified": true
+            },
+            {
+              "test": 4,
+              "position": 12,
+              "new": "20240604_CodeR",
+              "reference": "20240523_aider",
+              "margin": 0.020000000000000018,
+              "p": 0.5847928058959583,
+              "level": 0.00527714498137176,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 13,
+              "new": "20240612_MASAI_gpt4o",
+              "reference": "20240523_aider",
+              "margin": 0.010000000000000009,
+              "p": 0.7838463022094989,
+              "level": 0.0012158542037080534,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 14,
+              "new": "20240612_IBM_Research_Agent101",
+              "reference": "20240523_aider",
+              "margin": 0.003333333333333355,
+              "p": 1.0,
+              "level": 0.0008443431970194816,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 16,
+              "new": "20240617_factory_code_droid",
+              "reference": "20240523_aider",
+              "margin": 0.050000000000000044,
+              "p": 0.08168153394154004,
+              "level": 0.0006203337774020681,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 19,
+              "new": "20240621_autocoderover-v20240620",
+              "reference": "20240523_aider",
+              "margin": 0.043333333333333335,
+              "p": 0.11116111910399346,
+              "level": 0.00047494304832345843,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 20,
+              "new": "20240622_Lingma_Agent",
+              "reference": "20240523_aider",
+              "margin": 0.06666666666666671,
+              "p": 0.015031162966488296,
+              "level": 0.0003752636431197696,
+              "certified": false
+            },
+            {
+              "test": 10,
+              "position": 21,
+              "new": "20240623_moatless_claude35sonnet",
+              "reference": "20240523_aider",
+              "margin": 0.003333333333333355,
+              "p": 1.0,
+              "level": 0.00030396355092701335,
+              "certified": false
+            },
+            {
+              "test": 11,
+              "position": 22,
+              "new": "20240627_abanteai_mentatbot_gpt4o",
+              "reference": "20240523_aider",
+              "margin": 0.1166666666666667,
+              "p": 7.665168380445455e-06,
+              "level": 0.0002512095462206722,
+              "certified": true
+            },
+            {
+              "test": 12,
+              "position": 24,
+              "new": "20240702_codestory_aide_mixed",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.04999999999999999,
+              "p": 0.06744461190078899,
+              "level": 0.00046229534547554264,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 33,
+              "new": "20240820_honeycomb",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.003333333333333355,
+              "p": 1.0,
+              "level": 0.00017986008930592507,
+              "certified": false
+            },
+            {
+              "test": 14,
+              "position": 37,
+              "new": "20240912_marscode-agent-dev",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.013333333333333308,
+              "p": 0.798800263903333,
+              "level": 0.00015508344435051703,
+              "certified": false
+            },
+            {
+              "test": 15,
+              "position": 40,
+              "new": "20241025_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.03666666666666668,
+              "p": 0.26042552589724394,
+              "level": 0.00013509491152311707,
+              "certified": false
+            },
+            {
+              "test": 16,
+              "position": 42,
+              "new": "20241030_composio_swekit",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.02999999999999997,
+              "p": 0.33555761823401514,
+              "level": 0.00011873576208086461,
+              "certified": false
+            },
+            {
+              "test": 17,
+              "position": 45,
+              "new": "20241117_moatless_claude-3.5-sonnet-20241022",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.003333333333333355,
+              "p": 1.0,
+              "level": 0.00010517769928270359,
+              "certified": false
+            },
+            {
+              "test": 18,
+              "position": 47,
+              "new": "20241122_devlo",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.09333333333333332,
+              "p": 0.00120803949835552,
+              "level": 9.38159107799424e-05,
+              "certified": false
+            },
+            {
+              "test": 19,
+              "position": 48,
+              "new": "20241127_globant_codefixer_agent",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.10333333333333333,
+              "p": 0.0006393977673643537,
+              "level": 8.42004296196713e-05,
+              "certified": false
+            },
+            {
+              "test": 20,
+              "position": 50,
+              "new": "20241202_agentless-1.5_claude-3.5-sonnet-20241022",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.026666666666666672,
+              "p": 0.43124623944250545,
+              "level": 7.599088773175334e-05,
+              "certified": false
+            },
+            {
+              "test": 21,
+              "position": 52,
+              "new": "20241207_kodu_sonnet_v1",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.06666666666666665,
+              "p": 0.051264432309566704,
+              "level": 6.892597526689645e-05,
+              "certified": false
+            },
+            {
+              "test": 22,
+              "position": 53,
+              "new": "20241208_gru",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.10666666666666669,
+              "p": 0.00018347678939939236,
+              "level": 6.280238655516806e-05,
+              "certified": false
+            },
+            {
+              "test": 23,
+              "position": 54,
+              "new": "20241220_blackboxai_agent_v1",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.10999999999999999,
+              "p": 0.00037834276316077876,
+              "level": 5.746002853062634e-05,
+              "certified": false
+            },
+            {
+              "test": 24,
+              "position": 55,
+              "new": "20241220_PatchKitty-0.9_claude-3.5-sonnet-20241022",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.033333333333333326,
+              "p": 0.28123796650896976,
+              "level": 5.27714498137176e-05,
+              "certified": false
+            },
+            {
+              "test": 25,
+              "position": 59,
+              "new": "20250113_OrcaLoca",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.02999999999999997,
+              "p": 0.3284320626971899,
+              "level": 4.8634168148322146e-05,
+              "certified": false
+            },
+            {
+              "test": 26,
+              "position": 60,
+              "new": "20250113_OpenCSG-Starship-Agentic-Coder_gpt4o",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.016666666666666663,
+              "p": 0.6353076420876662,
+              "level": 4.496502232648127e-05,
+              "certified": false
+            },
+            {
+              "test": 27,
+              "position": 61,
+              "new": "20250114_Isoform",
+              "reference": "20240627_abanteai_mentatbot_gpt4o",
+              "margin": 0.17000000000000004,
+              "p": 3.3216173725435766e-08,
+              "level": 4.1695960346641064e-05,
+              "certified": true
+            },
+            {
+              "test": 28,
+              "position": 69,
+              "new": "20250425_Refact_Agent",
+              "reference": "20250114_Isoform",
+              "margin": 0.04999999999999993,
+              "p": 0.05806414679240908,
+              "level": 8.046682143427032e-05,
+              "certified": false
+            },
+            {
+              "test": 29,
+              "position": 72,
+              "new": "20250526_sweagent_claude-4-sonnet-20250514",
+              "reference": "20250114_Isoform",
+              "margin": 0.016666666666666607,
+              "p": 0.6089207154048287,
+              "level": 3.614310950380658e-05,
+              "certified": false
+            },
+            {
+              "test": 30,
+              "position": 77,
+              "new": "20250625_ExpeRepair-v1_claude-4-sonnet-20250514",
+              "reference": "20250114_Isoform",
+              "margin": 0.053333333333333344,
+              "p": 0.04509756703354454,
+              "level": 3.377372788077927e-05,
+              "certified": false
+            },
+            {
+              "test": 31,
+              "position": 82,
+              "new": "20250906_KGCompass_claude-4-sonnet-20250514",
+              "reference": "20250114_Isoform",
+              "margin": 0.033333333333333326,
+              "p": 0.31864293148775485,
+              "level": 3.162992205275893e-05,
+              "certified": false
+            }
+          ]
+        },
+        "tenure_exact_certified": {
+          "n_tests": 22,
+          "n_certified": 4,
+          "certified": [
+            "20240402_sweagent_gpt4",
+            "20240604_CodeR",
+            "20240702_codestory_aide_mixed",
+            "20250425_Refact_Agent"
+          ],
+          "final_certified_holder": "20250425_Refact_Agent",
+          "steps": [
+            {
+              "test": 1,
+              "position": 4,
+              "new": "20240402_sweagent_gpt4",
+              "reference": "20231010_rag_claude2",
+              "margin": 0.15,
+              "p": 1.9674928353197174e-11,
+              "level": 0.0011549230036519878,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 8,
+              "new": "20240509_amazon-q-developer-agent-20240430-dev",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.023333333333333345,
+              "p": 0.43499280512215344,
+              "level": 0.00028873075091299694,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 9,
+              "new": "20240523_aider",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.08333333333333331,
+              "p": 0.0010158471941252858,
+              "level": 0.00018478768058431805,
+              "certified": false
+            },
+            {
+              "test": 4,
+              "position": 10,
+              "new": "20240524_opencsg_starship_gpt4",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.05666666666666667,
+              "p": 0.021294114141387155,
+              "level": 0.0001283247781835542,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 11,
+              "new": "20240530_autocoderover-v20240408",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.010000000000000009,
+              "p": 0.7754496546815659,
+              "level": 9.427942886955003e-05,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 12,
+              "new": "20240604_CodeR",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.10333333333333333,
+              "p": 1.4737715885004832e-05,
+              "level": 7.218268772824923e-05,
+              "certified": true
+            },
+            {
+              "test": 7,
+              "position": 16,
+              "new": "20240617_factory_code_droid",
+              "reference": "20240604_CodeR",
+              "margin": 0.030000000000000027,
+              "p": 0.33555761823401514,
+              "level": 0.0001283247781835542,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 19,
+              "new": "20240621_autocoderover-v20240620",
+              "reference": "20240604_CodeR",
+              "margin": 0.023333333333333317,
+              "p": 0.44996253629022254,
+              "level": 4.190196838646668e-05,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 20,
+              "new": "20240622_Lingma_Agent",
+              "reference": "20240604_CodeR",
+              "margin": 0.04666666666666669,
+              "p": 0.09109641738672407,
+              "level": 3.208119454588855e-05,
+              "certified": false
+            },
+            {
+              "test": 10,
+              "position": 22,
+              "new": "20240627_abanteai_mentatbot_gpt4o",
+              "reference": "20240604_CodeR",
+              "margin": 0.09666666666666668,
+              "p": 0.0010795155066662821,
+              "level": 2.053196450936867e-05,
+              "certified": false
+            },
+            {
+              "test": 11,
+              "position": 24,
+              "new": "20240702_codestory_aide_mixed",
+              "reference": "20240604_CodeR",
+              "margin": 0.14666666666666667,
+              "p": 5.800718588297168e-09,
+              "level": 1.4258308687061577e-05,
+              "certified": true
+            },
+            {
+              "test": 12,
+              "position": 47,
+              "new": "20241122_devlo",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.043333333333333335,
+              "p": 0.12991792302255253,
+              "level": 2.183219288567085e-06,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 48,
+              "new": "20241127_globant_codefixer_agent",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.053333333333333344,
+              "p": 0.06655301562109249,
+              "level": 2.005074659118034e-06,
+              "certified": false
+            },
+            {
+              "test": 14,
+              "position": 52,
+              "new": "20241207_kodu_sonnet_v1",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.016666666666666663,
+              "p": 0.664645490413215,
+              "level": 1.4731160760867192e-06,
+              "certified": false
+            },
+            {
+              "test": 15,
+              "position": 53,
+              "new": "20241208_gru",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.0566666666666667,
+              "p": 0.024092907698449295,
+              "level": 1.3732734882901162e-06,
+              "certified": false
+            },
+            {
+              "test": 16,
+              "position": 54,
+              "new": "20241220_blackboxai_agent_v1",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.06,
+              "p": 0.03944176599612784,
+              "level": 1.2832477818355422e-06,
+              "certified": false
+            },
+            {
+              "test": 17,
+              "position": 61,
+              "new": "20250114_Isoform",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.12000000000000005,
+              "p": 4.807485846870522e-05,
+              "level": 8.43625276590203e-07,
+              "certified": false
+            },
+            {
+              "test": 18,
+              "position": 63,
+              "new": "20250205_dars_agent_claude_3.5_sonnet_deepseek_r1",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.03999999999999998,
+              "p": 0.18005302004664026,
+              "level": 7.59318214103871e-07,
+              "certified": false
+            },
+            {
+              "test": 19,
+              "position": 66,
+              "new": "20250226_sweagent_claude-3-7-sonnet-20250219",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.04999999999999999,
+              "p": 0.07217743850092259,
+              "level": 6.547182560385418e-07,
+              "certified": false
+            },
+            {
+              "test": 20,
+              "position": 68,
+              "new": "20250310_codefuse-cgm",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.010000000000000009,
+              "p": 0.755228657504631,
+              "level": 5.965511382499938e-07,
+              "certified": false
+            },
+            {
+              "test": 21,
+              "position": 69,
+              "new": "20250425_Refact_Agent",
+              "reference": "20240702_codestory_aide_mixed",
+              "margin": 0.16999999999999998,
+              "p": 5.194941262584361e-09,
+              "level": 5.703323474824631e-07,
+              "certified": true
+            },
+            {
+              "test": 22,
+              "position": 77,
+              "new": "20250625_ExpeRepair-v1_claude-4-sonnet-20250514",
+              "reference": "20250425_Refact_Agent",
+              "margin": 0.0033333333333334103,
+              "p": 1.0,
+              "level": 1.154923003651988e-05,
+              "certified": false
+            }
+          ]
         }
       }
     },
@@ -6315,6 +8191,300 @@
               "certified": true
             }
           ]
+        },
+        "fallback_exact_certified": {
+          "n_tests": 13,
+          "n_certified": 9,
+          "certified": [
+            "20240402_sweagent_gpt4",
+            "20240615_appmap-navie_gpt4o",
+            "20240617_factory_code_droid",
+            "20240820_honeycomb",
+            "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+            "20250227_sweagent-claude-3-7-20250219",
+            "20250522_amazon-q-developer-agent-20250405-dev",
+            "20250605_atlassian-rovo-dev",
+            "20251219_sonar-foundation-agent_claude-opus-4-5"
+          ],
+          "final_certified_holder": "20251219_sonar-foundation-agent_claude-opus-4-5",
+          "steps": [
+            {
+              "test": 1,
+              "position": 4,
+              "new": "20240402_sweagent_gpt4",
+              "reference": "20231010_rag_claude2",
+              "margin": 0.1050566695727986,
+              "p": 1.0795480871270195e-54,
+              "level": 0.03039635509270134,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 8,
+              "new": "20240509_amazon-q-developer-agent-20240430-dev",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.013513513513513528,
+              "p": 0.07948989998432063,
+              "level": 0.03799544386587667,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 9,
+              "new": "20240615_appmap-navie_gpt4o",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.02136006974716652,
+              "p": 0.003351111296464869,
+              "level": 0.0033773727880779263,
+              "certified": true
+            },
+            {
+              "test": 4,
+              "position": 10,
+              "new": "20240617_factory_code_droid",
+              "reference": "20240615_appmap-navie_gpt4o",
+              "margin": 0.04664341761115956,
+              "p": 1.5477634626343844e-10,
+              "level": 0.00527714498137176,
+              "certified": true
+            },
+            {
+              "test": 5,
+              "position": 13,
+              "new": "20240721_amazon-q-developer-agent-20240719-dev",
+              "reference": "20240617_factory_code_droid",
+              "margin": 0.0047951176983435095,
+              "p": 0.5657117847551193,
+              "level": 0.006492999185079814,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 15,
+              "new": "20240820_honeycomb",
+              "reference": "20240617_factory_code_droid",
+              "margin": 0.027898866608544015,
+              "p": 0.000316646228093049,
+              "level": 0.0008443431970194816,
+              "certified": true
+            },
+            {
+              "test": 7,
+              "position": 16,
+              "new": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "reference": "20240820_honeycomb",
+              "margin": 0.0732345248474281,
+              "p": 1.981045669788434e-18,
+              "level": 0.0014646769744215498,
+              "certified": true
+            },
+            {
+              "test": 8,
+              "position": 18,
+              "new": "20250131_amazon-q-developer-agent-20241202-dev",
+              "reference": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "margin": 0.006102877070618962,
+              "p": 0.47026586283716126,
+              "level": 0.001939620022745008,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 19,
+              "new": "20250227_sweagent-claude-3-7-20250219",
+              "reference": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "margin": 0.04446381865736704,
+              "p": 3.944745266500595e-08,
+              "level": 0.0003752636431197696,
+              "certified": true
+            },
+            {
+              "test": 10,
+              "position": 20,
+              "new": "20250522_amazon-q-developer-agent-20250405-dev",
+              "reference": "20250227_sweagent-claude-3-7-20250219",
+              "margin": 0.032693984306887525,
+              "p": 5.186506056027475e-06,
+              "level": 0.0006792271940467829,
+              "certified": true
+            },
+            {
+              "test": 11,
+              "position": 21,
+              "new": "20250605_atlassian-rovo-dev",
+              "reference": "20250522_amazon-q-developer-agent-20250405-dev",
+              "margin": 0.048823016564952026,
+              "p": 5.053723117237463e-11,
+              "level": 0.0009304367402674552,
+              "certified": true
+            },
+            {
+              "test": 12,
+              "position": 22,
+              "new": "20251027_salesforce_SAGE",
+              "reference": "20250605_atlassian-rovo-dev",
+              "margin": 0.02266782911944204,
+              "p": 0.006609947585040146,
+              "level": 0.0011415225395223255,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 23,
+              "new": "20251219_sonar-foundation-agent_claude-opus-4-5",
+              "reference": "20250605_atlassian-rovo-dev",
+              "margin": 0.10636442894507414,
+              "p": 1.226229936663191e-40,
+              "level": 0.00017986008930592507,
+              "certified": true
+            }
+          ]
+        },
+        "tenure_exact_certified": {
+          "n_tests": 13,
+          "n_certified": 7,
+          "certified": [
+            "20240402_sweagent_gpt4",
+            "20240617_factory_code_droid",
+            "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+            "20250227_sweagent-claude-3-7-20250219",
+            "20250522_amazon-q-developer-agent-20250405-dev",
+            "20250605_atlassian-rovo-dev",
+            "20251219_sonar-foundation-agent_claude-opus-4-5"
+          ],
+          "final_certified_holder": "20251219_sonar-foundation-agent_claude-opus-4-5",
+          "steps": [
+            {
+              "test": 1,
+              "position": 4,
+              "new": "20240402_sweagent_gpt4",
+              "reference": "20231010_rag_claude2",
+              "margin": 0.1050566695727986,
+              "p": 1.0795480871270195e-54,
+              "level": 0.0011549230036519878,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 8,
+              "new": "20240509_amazon-q-developer-agent-20240430-dev",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.013513513513513528,
+              "p": 0.07948989998432063,
+              "level": 0.00028873075091299694,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 9,
+              "new": "20240615_appmap-navie_gpt4o",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.02136006974716652,
+              "p": 0.003351111296464869,
+              "level": 0.00018478768058431805,
+              "certified": false
+            },
+            {
+              "test": 4,
+              "position": 10,
+              "new": "20240617_factory_code_droid",
+              "reference": "20240402_sweagent_gpt4",
+              "margin": 0.06800348735832608,
+              "p": 3.064097355685903e-19,
+              "level": 0.0001283247781835542,
+              "certified": true
+            },
+            {
+              "test": 5,
+              "position": 13,
+              "new": "20240721_amazon-q-developer-agent-20240719-dev",
+              "reference": "20240617_factory_code_droid",
+              "margin": 0.0047951176983435095,
+              "p": 0.5657117847551193,
+              "level": 0.00022813293899298523,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 15,
+              "new": "20240820_honeycomb",
+              "reference": "20240617_factory_code_droid",
+              "margin": 0.027898866608544015,
+              "p": 0.000316646228093049,
+              "level": 8.212785803747468e-05,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 16,
+              "new": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "reference": "20240617_factory_code_droid",
+              "margin": 0.10113339145597211,
+              "p": 5.199080771921332e-34,
+              "level": 5.703323474824631e-05,
+              "certified": true
+            },
+            {
+              "test": 8,
+              "position": 18,
+              "new": "20250131_amazon-q-developer-agent-20241202-dev",
+              "reference": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "margin": 0.006102877070618962,
+              "p": 0.47026586283716126,
+              "level": 0.00028873075091299694,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 19,
+              "new": "20250227_sweagent-claude-3-7-20250219",
+              "reference": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022",
+              "margin": 0.04446381865736704,
+              "p": 3.944745266500595e-08,
+              "level": 0.0001283247781835542,
+              "certified": true
+            },
+            {
+              "test": 10,
+              "position": 20,
+              "new": "20250522_amazon-q-developer-agent-20250405-dev",
+              "reference": "20250227_sweagent-claude-3-7-20250219",
+              "margin": 0.032693984306887525,
+              "p": 5.186506056027475e-06,
+              "level": 0.0007391507223372723,
+              "certified": true
+            },
+            {
+              "test": 11,
+              "position": 21,
+              "new": "20250605_atlassian-rovo-dev",
+              "reference": "20250522_amazon-q-developer-agent-20250405-dev",
+              "margin": 0.048823016564952026,
+              "p": 5.053723117237463e-11,
+              "level": 0.0005132991127342168,
+              "certified": true
+            },
+            {
+              "test": 12,
+              "position": 22,
+              "new": "20251027_salesforce_SAGE",
+              "reference": "20250605_atlassian-rovo-dev",
+              "margin": 0.02266782911944204,
+              "p": 0.006609947585040146,
+              "level": 0.0003771177154782002,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 23,
+              "new": "20251219_sonar-foundation-agent_claude-opus-4-5",
+              "reference": "20250605_atlassian-rovo-dev",
+              "margin": 0.10636442894507414,
+              "p": 1.226229936663191e-40,
+              "level": 9.427942886955004e-05,
+              "certified": true
+            }
+          ]
         }
       }
     },
@@ -7051,6 +9221,188 @@
               "certified": false
             }
           ]
+        },
+        "fallback_exact_certified": {
+          "n_tests": 8,
+          "n_certified": 2,
+          "certified": [
+            "20250325_globant_codefixer_agent",
+            "20250528_OpenHands-Versa-claude4"
+          ],
+          "final_certified_holder": "20250528_OpenHands-Versa-claude4",
+          "steps": [
+            {
+              "test": 1,
+              "position": 1,
+              "new": "20250311_zencoder",
+              "reference": "20250226_agentless_lite_claude3.5",
+              "margin": 0.01764705882352946,
+              "p": 0.2975952082844287,
+              "level": 0.03039635509270134,
+              "certified": false
+            },
+            {
+              "test": 2,
+              "position": 2,
+              "new": "20250325_globant_codefixer_agent",
+              "reference": "20250226_agentless_lite_claude3.5",
+              "margin": 0.0431372549019608,
+              "p": 0.001431212854273536,
+              "level": 0.007599088773175335,
+              "certified": true
+            },
+            {
+              "test": 3,
+              "position": 3,
+              "new": "20250401_zencoder",
+              "reference": "20250325_globant_codefixer_agent",
+              "margin": 0.009803921568627472,
+              "p": 0.5223973804968409,
+              "level": 0.01097646156125326,
+              "certified": false
+            },
+            {
+              "test": 4,
+              "position": 4,
+              "new": "20250509_OpenHands-Versa_claude3.7",
+              "reference": "20250325_globant_codefixer_agent",
+              "margin": 0.017647058823529405,
+              "p": 0.24296021728332562,
+              "level": 0.0018997721932938337,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 5,
+              "new": "20250528_OpenHands-Versa-claude4",
+              "reference": "20250325_globant_codefixer_agent",
+              "margin": 0.04901960784313725,
+              "p": 0.0004697573180081349,
+              "level": 0.0012158542037080534,
+              "certified": true
+            },
+            {
+              "test": 6,
+              "position": 9,
+              "new": "20250611_Refact_Agent_claude-4-sonnet",
+              "reference": "20250528_OpenHands-Versa-claude4",
+              "margin": 0.011764705882352955,
+              "p": 0.5225292391532719,
+              "level": 0.002060197400727535,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 10,
+              "new": "20250701_GUIRepair_o3",
+              "reference": "20250528_OpenHands-Versa-claude4",
+              "margin": 0.01568627450980392,
+              "p": 0.39120740869418313,
+              "level": 0.0006203337774020681,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 11,
+              "new": "20251117_codefuse_pycfuse_svr",
+              "reference": "20250528_OpenHands-Versa-claude4",
+              "margin": 0.01568627450980392,
+              "p": 0.36299122254225935,
+              "level": 0.00047494304832345843,
+              "certified": false
+            }
+          ]
+        },
+        "tenure_exact_certified": {
+          "n_tests": 8,
+          "n_certified": 2,
+          "certified": [
+            "20250325_globant_codefixer_agent",
+            "20250528_OpenHands-Versa-claude4"
+          ],
+          "final_certified_holder": "20250528_OpenHands-Versa-claude4",
+          "steps": [
+            {
+              "test": 1,
+              "position": 1,
+              "new": "20250311_zencoder",
+              "reference": "20250226_agentless_lite_claude3.5",
+              "margin": 0.01764705882352946,
+              "p": 0.2975952082844287,
+              "level": 0.018478768058431804,
+              "certified": false
+            },
+            {
+              "test": 2,
+              "position": 2,
+              "new": "20250325_globant_codefixer_agent",
+              "reference": "20250226_agentless_lite_claude3.5",
+              "margin": 0.0431372549019608,
+              "p": 0.001431212854273536,
+              "level": 0.004619692014607951,
+              "certified": true
+            },
+            {
+              "test": 3,
+              "position": 3,
+              "new": "20250401_zencoder",
+              "reference": "20250325_globant_codefixer_agent",
+              "margin": 0.009803921568627472,
+              "p": 0.5223973804968409,
+              "level": 0.004619692014607951,
+              "certified": false
+            },
+            {
+              "test": 4,
+              "position": 4,
+              "new": "20250509_OpenHands-Versa_claude3.7",
+              "reference": "20250325_globant_codefixer_agent",
+              "margin": 0.017647058823529405,
+              "p": 0.24296021728332562,
+              "level": 0.0011549230036519878,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 5,
+              "new": "20250528_OpenHands-Versa-claude4",
+              "reference": "20250325_globant_codefixer_agent",
+              "margin": 0.04901960784313725,
+              "p": 0.0004697573180081349,
+              "level": 0.0005132991127342168,
+              "certified": true
+            },
+            {
+              "test": 6,
+              "position": 9,
+              "new": "20250611_Refact_Agent_claude-4-sonnet",
+              "reference": "20250528_OpenHands-Versa-claude4",
+              "margin": 0.011764705882352955,
+              "p": 0.5225292391532719,
+              "level": 0.0001283247781835542,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 10,
+              "new": "20250701_GUIRepair_o3",
+              "reference": "20250528_OpenHands-Versa-claude4",
+              "margin": 0.01568627450980392,
+              "p": 0.39120740869418313,
+              "level": 8.212785803747468e-05,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 11,
+              "new": "20251117_codefuse_pycfuse_svr",
+              "reference": "20250528_OpenHands-Versa-claude4",
+              "margin": 0.01568627450980392,
+              "p": 0.36299122254225935,
+              "level": 5.703323474824631e-05,
+              "certified": false
+            }
+          ]
         }
       }
     },
@@ -7115,6 +9467,20 @@
           "steps": []
         },
         "spending_exact_certified": {
+          "n_tests": 0,
+          "n_certified": 0,
+          "certified": [],
+          "final_certified_holder": "20260213_mini-v2.0.0a0_gemini-3-flash",
+          "steps": []
+        },
+        "fallback_exact_certified": {
+          "n_tests": 0,
+          "n_certified": 0,
+          "certified": [],
+          "final_certified_holder": "20260213_mini-v2.0.0a0_gemini-3-flash",
+          "steps": []
+        },
+        "tenure_exact_certified": {
           "n_tests": 0,
           "n_certified": 0,
           "certified": [],
@@ -8586,6 +10952,766 @@
               "certified": false
             }
           ]
+        },
+        "fallback_exact_certified": {
+          "n_tests": 37,
+          "n_certified": 1,
+          "certified": [
+            "Ante__Gemini-3-Pro-Preview"
+          ],
+          "final_certified_holder": "Ante__Gemini-3-Pro-Preview",
+          "steps": [
+            {
+              "test": 1,
+              "position": 2,
+              "new": "Ante__Gemini-3-Pro-Preview",
+              "reference": "MAYA__Claude-4.5-sonnet",
+              "margin": 0.22022471910112357,
+              "p": 0.0008199241570154761,
+              "level": 0.03039635509270134,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 7,
+              "new": "OpenSage__Gemini-3-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.004494382022471988,
+              "p": 1.0,
+              "level": 0.03799544386587667,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 10,
+              "new": "Droid__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.051685393258427026,
+              "p": 0.2215562880831086,
+              "level": 0.0033773727880779263,
+              "certified": false
+            },
+            {
+              "test": 4,
+              "position": 13,
+              "new": "Simple-Codex__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.09887640449438195,
+              "p": 0.0047533537551494665,
+              "level": 0.0018997721932938337,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 17,
+              "new": "CodeBrain-1__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.0561797752808989,
+              "p": 0.11691911691911692,
+              "level": 0.0012158542037080534,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 18,
+              "new": "Mux__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.017977528089887618,
+              "p": 0.7135805062493435,
+              "level": 0.0008443431970194816,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 19,
+              "new": "Judy__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.07191011235955058,
+              "p": 0.03730242360379347,
+              "level": 0.0006203337774020681,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 20,
+              "new": "Deep-Agents__GPT-5.2-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.011235955056179914,
+              "p": 0.7799940161563778,
+              "level": 0.00047494304832345843,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 21,
+              "new": "Mux__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.09887640449438218,
+              "p": 0.006697852434616202,
+              "level": 0.0003752636431197696,
+              "certified": false
+            },
+            {
+              "test": 10,
+              "position": 22,
+              "new": "Terminus-KIRA__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.09662921348314613,
+              "p": 0.0067400138764991575,
+              "level": 0.00030396355092701335,
+              "certified": false
+            },
+            {
+              "test": 11,
+              "position": 24,
+              "new": "Droid__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.12584269662921355,
+              "p": 0.0012569393526762334,
+              "level": 0.0002512095462206722,
+              "certified": false
+            },
+            {
+              "test": 12,
+              "position": 26,
+              "new": "Terminus-KIRA__Gemini-3.1-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.101123595505618,
+              "p": 0.00030057108506161706,
+              "level": 0.0002110857992548704,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 27,
+              "new": "Ante__Gemini-3.1-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.0898876404494382,
+              "p": 0.004782146652497344,
+              "level": 0.00017986008930592507,
+              "certified": false
+            },
+            {
+              "test": 14,
+              "position": 28,
+              "new": "OB-1_GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.07640449438202257,
+              "p": 0.01920204821847664,
+              "level": 0.00015508344435051703,
+              "certified": false
+            },
+            {
+              "test": 15,
+              "position": 29,
+              "new": "Forge__Gemini-3.1-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.13707865168539346,
+              "p": 0.0016969454981034138,
+              "level": 0.00013509491152311707,
+              "certified": false
+            },
+            {
+              "test": 16,
+              "position": 30,
+              "new": "MAYA__Claude-4.6-opus",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.07191011235955058,
+              "p": 0.031503630926954296,
+              "level": 0.00011873576208086461,
+              "certified": false
+            },
+            {
+              "test": 17,
+              "position": 31,
+              "new": "OpenSage__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.13707865168539346,
+              "p": 0.00020022024226649314,
+              "level": 0.00010517769928270359,
+              "certified": false
+            },
+            {
+              "test": 18,
+              "position": 33,
+              "new": "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17752808988764057,
+              "p": 0.00010033109260559848,
+              "level": 9.38159107799424e-05,
+              "certified": false
+            },
+            {
+              "test": 19,
+              "position": 34,
+              "new": "Junie_CLI__Gemini-3-Flash-Preview-Gemini-3.1-Pro-Preview-Claude-Opus-4.6-GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.06292134831460683,
+              "p": 0.011937059142702116,
+              "level": 8.42004296196713e-05,
+              "certified": false
+            },
+            {
+              "test": 20,
+              "position": 35,
+              "new": "Forge__GPT-5.4",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17078651685393265,
+              "p": 0.00030966143682906687,
+              "level": 7.599088773175334e-05,
+              "certified": false
+            },
+            {
+              "test": 21,
+              "position": 36,
+              "new": "Judy__Gemini-3.1-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.15505617977528097,
+              "p": 9.858044164037855e-05,
+              "level": 6.892597526689645e-05,
+              "certified": false
+            },
+            {
+              "test": 22,
+              "position": 38,
+              "new": "Forge__Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17078651685393265,
+              "p": 0.0001031778786628147,
+              "level": 6.280238655516806e-05,
+              "certified": false
+            },
+            {
+              "test": 23,
+              "position": 39,
+              "new": "Capy__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.10505617977528092,
+              "p": 0.0022983911262116517,
+              "level": 5.746002853062634e-05,
+              "certified": false
+            },
+            {
+              "test": 24,
+              "position": 40,
+              "new": "spoox-o-m__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.0674157303370786,
+              "p": 0.07211285398462997,
+              "level": 5.27714498137176e-05,
+              "certified": false
+            },
+            {
+              "test": 25,
+              "position": 43,
+              "new": "Codelia__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.11011235955056187,
+              "p": 0.004096722621902478,
+              "level": 4.8634168148322146e-05,
+              "certified": false
+            },
+            {
+              "test": 26,
+              "position": 47,
+              "new": "pilot-real__claude-opus-4-6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17303370786516858,
+              "p": 0.0014952153110047847,
+              "level": 4.496502232648127e-05,
+              "certified": false
+            },
+            {
+              "test": 27,
+              "position": 48,
+              "new": "CodeBrain-1.5__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.16629213483146066,
+              "p": 0.00010462439840970915,
+              "level": 4.1695960346641064e-05,
+              "certified": false
+            },
+            {
+              "test": 28,
+              "position": 49,
+              "new": "Meta-Harness__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.11685393258426968,
+              "p": 0.002114835571534313,
+              "level": 3.8770861087629257e-05,
+              "certified": false
+            },
+            {
+              "test": 29,
+              "position": 55,
+              "new": "WOZCODE__Claude-Opus-4-7",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.12655163188871066,
+              "p": 0.0002006823198876179,
+              "level": 3.614310950380658e-05,
+              "certified": false
+            },
+            {
+              "test": 30,
+              "position": 56,
+              "new": "LemonCode__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.13707865168539324,
+              "p": 0.0014151420196098251,
+              "level": 3.377372788077927e-05,
+              "certified": false
+            },
+            {
+              "test": 31,
+              "position": 58,
+              "new": "LemonHarness_GPT-5.3-CodeX",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.19775280898876413,
+              "p": 0.0001037344398340249,
+              "level": 3.162992205275893e-05,
+              "certified": false
+            },
+            {
+              "test": 32,
+              "position": 61,
+              "new": "Capy__GPT-5.5",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.1842696629213484,
+              "p": 0.00010406910188365075,
+              "level": 2.9683940520216152e-05,
+              "certified": false
+            },
+            {
+              "test": 33,
+              "position": 62,
+              "new": "vix__claude-opus-4-7",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.251685393258427,
+              "p": 0.00010417751849150954,
+              "level": 2.7912171802296913e-05,
+              "certified": false
+            },
+            {
+              "test": 34,
+              "position": 63,
+              "new": "NexAU-AHE__gpt-5.5",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.1977528089887639,
+              "p": 0.00010340192327577293,
+              "level": 2.6294424820675897e-05,
+              "certified": false
+            },
+            {
+              "test": 35,
+              "position": 64,
+              "new": "JJAgent__Multiple",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.22359550561797759,
+              "p": 9.977052778609199e-05,
+              "level": 2.4813351096082723e-05,
+              "certified": false
+            },
+            {
+              "test": 36,
+              "position": 65,
+              "new": "Polaris__Claude-Opus-4.7-GPT-5.5-Gemini-3.1-Pro",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17303370786516858,
+              "p": 0.00010197838058331633,
+              "level": 2.34539776949856e-05,
+              "certified": false
+            },
+            {
+              "test": 37,
+              "position": 66,
+              "new": "clnkr__GPT-5.5",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.013483146067415741,
+              "p": 0.8076272976970209,
+              "level": 2.2203327313879722e-05,
+              "certified": false
+            }
+          ]
+        },
+        "tenure_exact_certified": {
+          "n_tests": 37,
+          "n_certified": 1,
+          "certified": [
+            "Ante__Gemini-3-Pro-Preview"
+          ],
+          "final_certified_holder": "Ante__Gemini-3-Pro-Preview",
+          "steps": [
+            {
+              "test": 1,
+              "position": 2,
+              "new": "Ante__Gemini-3-Pro-Preview",
+              "reference": "MAYA__Claude-4.5-sonnet",
+              "margin": 0.22022471910112357,
+              "p": 0.0008199241570154761,
+              "level": 0.004619692014607951,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 7,
+              "new": "OpenSage__Gemini-3-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.004494382022471988,
+              "p": 1.0,
+              "level": 0.00018478768058431805,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 10,
+              "new": "Droid__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.051685393258427026,
+              "p": 0.2215562880831086,
+              "level": 7.218268772824923e-05,
+              "certified": false
+            },
+            {
+              "test": 4,
+              "position": 13,
+              "new": "Simple-Codex__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.09887640449438195,
+              "p": 0.0047533537551494665,
+              "level": 3.81792728479996e-05,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 17,
+              "new": "CodeBrain-1__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.0561797752808989,
+              "p": 0.11691911691911692,
+              "level": 2.0531964509368674e-05,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 18,
+              "new": "Mux__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.017977528089887618,
+              "p": 0.7135805062493435,
+              "level": 1.804567193206231e-05,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 19,
+              "new": "Judy__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.07191011235955058,
+              "p": 0.03730242360379347,
+              "level": 1.598509347615208e-05,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 20,
+              "new": "Deep-Agents__GPT-5.2-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.011235955056179914,
+              "p": 0.7799940161563778,
+              "level": 1.4258308687061577e-05,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 21,
+              "new": "Mux__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.09887640449438218,
+              "p": 0.006697852434616202,
+              "level": 1.2796930788387676e-05,
+              "certified": false
+            },
+            {
+              "test": 10,
+              "position": 22,
+              "new": "Terminus-KIRA__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.09662921348314613,
+              "p": 0.0067400138764991575,
+              "level": 1.1549230036519878e-05,
+              "certified": false
+            },
+            {
+              "test": 11,
+              "position": 24,
+              "new": "Droid__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.12584269662921355,
+              "p": 0.0012569393526762334,
+              "level": 9.5448182119999e-06,
+              "certified": false
+            },
+            {
+              "test": 12,
+              "position": 26,
+              "new": "Terminus-KIRA__Gemini-3.1-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.101123595505618,
+              "p": 0.00030057108506161706,
+              "level": 8.020298636472137e-06,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 27,
+              "new": "Ante__Gemini-3.1-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.0898876404494382,
+              "p": 0.004782146652497344,
+              "level": 7.391507223372722e-06,
+              "certified": false
+            },
+            {
+              "test": 14,
+              "position": 28,
+              "new": "OB-1_GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.07640449438202257,
+              "p": 0.01920204821847664,
+              "level": 6.8338639269348395e-06,
+              "certified": false
+            },
+            {
+              "test": 15,
+              "position": 29,
+              "new": "Forge__Gemini-3.1-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.13707865168539346,
+              "p": 0.0016969454981034138,
+              "level": 6.337026083138478e-06,
+              "certified": false
+            },
+            {
+              "test": 16,
+              "position": 30,
+              "new": "MAYA__Claude-4.6-opus",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.07191011235955058,
+              "p": 0.031503630926954296,
+              "level": 5.892464304346877e-06,
+              "certified": false
+            },
+            {
+              "test": 17,
+              "position": 31,
+              "new": "OpenSage__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.13707865168539346,
+              "p": 0.00020022024226649314,
+              "level": 5.493093953160465e-06,
+              "certified": false
+            },
+            {
+              "test": 18,
+              "position": 33,
+              "new": "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17752808988764057,
+              "p": 0.00010033109260559848,
+              "level": 4.807171711350625e-06,
+              "certified": false
+            },
+            {
+              "test": 19,
+              "position": 34,
+              "new": "Junie_CLI__Gemini-3-Flash-Preview-Gemini-3.1-Pro-Preview-Claude-Opus-4.6-GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.06292134831460683,
+              "p": 0.011937059142702116,
+              "level": 4.511417983015577e-06,
+              "certified": false
+            },
+            {
+              "test": 20,
+              "position": 35,
+              "new": "Forge__GPT-5.4",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17078651685393265,
+              "p": 0.00030966143682906687,
+              "level": 4.242141427555511e-06,
+              "certified": false
+            },
+            {
+              "test": 21,
+              "position": 36,
+              "new": "Judy__Gemini-3.1-Pro-Preview",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.15505617977528097,
+              "p": 9.858044164037855e-05,
+              "level": 3.99627336903802e-06,
+              "certified": false
+            },
+            {
+              "test": 22,
+              "position": 38,
+              "new": "Forge__Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17078651685393265,
+              "p": 0.0001031778786628147,
+              "level": 3.5645771717653942e-06,
+              "certified": false
+            },
+            {
+              "test": 23,
+              "position": 39,
+              "new": "Capy__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.10505617977528092,
+              "p": 0.0022983911262116517,
+              "level": 3.374501106360812e-06,
+              "certified": false
+            },
+            {
+              "test": 24,
+              "position": 40,
+              "new": "spoox-o-m__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.0674157303370786,
+              "p": 0.07211285398462997,
+              "level": 3.199232697096919e-06,
+              "certified": false
+            },
+            {
+              "test": 25,
+              "position": 43,
+              "new": "Codelia__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.11011235955056187,
+              "p": 0.004096722621902478,
+              "level": 2.748180853425313e-06,
+              "certified": false
+            },
+            {
+              "test": 26,
+              "position": 47,
+              "new": "pilot-real__claude-opus-4-6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17303370786516858,
+              "p": 0.0014952153110047847,
+              "level": 2.2813293899298523e-06,
+              "certified": false
+            },
+            {
+              "test": 27,
+              "position": 48,
+              "new": "CodeBrain-1.5__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.16629213483146066,
+              "p": 0.00010462439840970915,
+              "level": 2.183219288567085e-06,
+              "certified": false
+            },
+            {
+              "test": 28,
+              "position": 49,
+              "new": "Meta-Harness__Claude-Opus-4.6",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.11685393258426968,
+              "p": 0.002114835571534313,
+              "level": 2.0913046693562478e-06,
+              "certified": false
+            },
+            {
+              "test": 29,
+              "position": 55,
+              "new": "WOZCODE__Claude-Opus-4-7",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.12655163188871066,
+              "p": 0.0002006823198876179,
+              "level": 1.6446037787853154e-06,
+              "certified": false
+            },
+            {
+              "test": 30,
+              "position": 56,
+              "new": "LemonCode__GPT-5.3-Codex",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.13707865168539324,
+              "p": 0.0014151420196098251,
+              "level": 1.5842565207846196e-06,
+              "certified": false
+            },
+            {
+              "test": 31,
+              "position": 58,
+              "new": "LemonHarness_GPT-5.3-CodeX",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.19775280898876413,
+              "p": 0.0001037344398340249,
+              "level": 1.4731160760867192e-06,
+              "certified": false
+            },
+            {
+              "test": 32,
+              "position": 61,
+              "new": "Capy__GPT-5.5",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.1842696629213484,
+              "p": 0.00010406910188365075,
+              "level": 1.3271163500741029e-06,
+              "certified": false
+            },
+            {
+              "test": 33,
+              "position": 62,
+              "new": "vix__claude-opus-4-7",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.251685393258427,
+              "p": 0.00010417751849150954,
+              "level": 1.2832477818355422e-06,
+              "certified": false
+            },
+            {
+              "test": 34,
+              "position": 63,
+              "new": "NexAU-AHE__gpt-5.5",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.1977528089887639,
+              "p": 0.00010340192327577293,
+              "level": 1.2415189504455662e-06,
+              "certified": false
+            },
+            {
+              "test": 35,
+              "position": 64,
+              "new": "JJAgent__Multiple",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.22359550561797759,
+              "p": 9.977052778609199e-05,
+              "level": 1.2017929278376562e-06,
+              "certified": false
+            },
+            {
+              "test": 36,
+              "position": 65,
+              "new": "Polaris__Claude-Opus-4.7-GPT-5.5-Gemini-3.1-Pro",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.17303370786516858,
+              "p": 0.00010197838058331633,
+              "level": 1.1639435662907411e-06,
+              "certified": false
+            },
+            {
+              "test": 37,
+              "position": 66,
+              "new": "clnkr__GPT-5.5",
+              "reference": "Ante__Gemini-3-Pro-Preview",
+              "margin": 0.013483146067415741,
+              "p": 0.8076272976970209,
+              "level": 1.1278544957538943e-06,
+              "certified": false
+            }
+          ]
         }
       }
     },
@@ -9143,6 +12269,357 @@
               "certified": true
             }
           ]
+        },
+        "fallback_exact_certified": {
+          "n_tests": 4,
+          "n_certified": 4,
+          "certified": [
+            "claude-3-5-sonnet-20240620",
+            "o1-preview-2024-09-12",
+            "o1-2024-12-17-high",
+            "gemini-2.5-pro-exp-03-25"
+          ],
+          "final_certified_holder": "gemini-2.5-pro-exp-03-25",
+          "steps": [
+            {
+              "test": 1,
+              "position": 9,
+              "new": "claude-3-5-sonnet-20240620",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.05613751052825222,
+              "p": 0.01686527974146637,
+              "level": 0.03039635509270134,
+              "certified": true
+            },
+            {
+              "test": 2,
+              "position": 21,
+              "new": "o1-preview-2024-09-12",
+              "reference": "claude-3-5-sonnet-20240620",
+              "margin": 0.059731606506879587,
+              "p": 0.02035345512311358,
+              "level": 0.03799544386587667,
+              "certified": true
+            },
+            {
+              "test": 3,
+              "position": 53,
+              "new": "o1-2024-12-17-high",
+              "reference": "o1-preview-2024-09-12",
+              "margin": 0.05643267395812834,
+              "p": 0.018187299035369774,
+              "level": 0.0413728166539546,
+              "certified": true
+            },
+            {
+              "test": 4,
+              "position": 92,
+              "new": "gemini-2.5-pro-exp-03-25",
+              "reference": "o1-2024-12-17-high",
+              "margin": 0.07681640449533877,
+              "p": 0.0006009615384615385,
+              "level": 0.04327258884724843,
+              "certified": true
+            }
+          ]
+        },
+        "tenure_exact_certified": {
+          "n_tests": 29,
+          "n_certified": 0,
+          "certified": [],
+          "final_certified_holder": "gpt-4o-2024-05-13",
+          "steps": [
+            {
+              "test": 1,
+              "position": 9,
+              "new": "claude-3-5-sonnet-20240620",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.05613751052825222,
+              "p": 0.01686527974146637,
+              "level": 0.00022813293899298523,
+              "certified": false
+            },
+            {
+              "test": 2,
+              "position": 21,
+              "new": "o1-preview-2024-09-12",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.11586911703513181,
+              "p": 0.00010066438494060802,
+              "level": 4.1901968386466675e-05,
+              "certified": false
+            },
+            {
+              "test": 3,
+              "position": 23,
+              "new": "chatgpt-4o-latest-2025-03-27",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.061603659020842194,
+              "p": 0.0029988004798080768,
+              "level": 3.493150861707336e-05,
+              "certified": false
+            },
+            {
+              "test": 4,
+              "position": 27,
+              "new": "claude-3-5-sonnet-20241022",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.07926371388191722,
+              "p": 0.0012957241104355627,
+              "level": 2.5348104332553913e-05,
+              "certified": false
+            },
+            {
+              "test": 5,
+              "position": 36,
+              "new": "gemini-exp-1206",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.08268846310760947,
+              "p": 0.0012030075187969924,
+              "level": 1.4258308687061577e-05,
+              "certified": false
+            },
+            {
+              "test": 6,
+              "position": 53,
+              "new": "o1-2024-12-17-high",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.17230179099326015,
+              "p": 0.00010061374383740819,
+              "level": 6.578415115141262e-06,
+              "certified": false
+            },
+            {
+              "test": 7,
+              "position": 55,
+              "new": "o1-2024-12-17-low",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.0872346569732445,
+              "p": 0.003283908846651408,
+              "level": 6.1086836556799355e-06,
+              "certified": false
+            },
+            {
+              "test": 8,
+              "position": 56,
+              "new": "deepseek-v3",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.049687998265515065,
+              "p": 0.0255107125062282,
+              "level": 5.892464304346877e-06,
+              "certified": false
+            },
+            {
+              "test": 9,
+              "position": 57,
+              "new": "deepseek-r1",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.10354523809051319,
+              "p": 0.0003980495571698676,
+              "level": 5.687524794838967e-06,
+              "certified": false
+            },
+            {
+              "test": 10,
+              "position": 61,
+              "new": "gemini-2.0-flash-thinking-exp-01-21",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.007293385170612177,
+              "p": 0.7827726505904535,
+              "level": 4.966075801782265e-06,
+              "certified": false
+            },
+            {
+              "test": 11,
+              "position": 66,
+              "new": "o3-mini-2025-01-31-high",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.16665352929687383,
+              "p": 0.00010004001600640257,
+              "level": 4.242141427555511e-06,
+              "certified": false
+            },
+            {
+              "test": 12,
+              "position": 67,
+              "new": "o3-mini-2025-01-31-low",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.030992706248043067,
+              "p": 0.31201665675193335,
+              "level": 4.116455348280643e-06,
+              "certified": false
+            },
+            {
+              "test": 13,
+              "position": 69,
+              "new": "o3-mini-2025-01-31-medium",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.08866004287426821,
+              "p": 0.004106159238858287,
+              "level": 3.881278735230373e-06,
+              "certified": false
+            },
+            {
+              "test": 14,
+              "position": 70,
+              "new": "qwen2.5-max",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.1010721560910024,
+              "p": 0.0002006823198876179,
+              "level": 3.7711771547820006e-06,
+              "certified": false
+            },
+            {
+              "test": 15,
+              "position": 71,
+              "new": "gemini-2.0-pro-exp-02-05",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.049544399319573995,
+              "p": 0.04505044451103786,
+              "level": 3.6656949133965092e-06,
+              "certified": false
+            },
+            {
+              "test": 16,
+              "position": 72,
+              "new": "chatgpt-4o-latest-2025-01-29",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.03340770571578777,
+              "p": 0.10539948196851963,
+              "level": 3.5645771717653942e-06,
+              "certified": false
+            },
+            {
+              "test": 17,
+              "position": 73,
+              "new": "gemini-2.0-flash-001",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.002097996990029105,
+              "p": 0.9317423399737081,
+              "level": 3.467586424926216e-06,
+              "certified": false
+            },
+            {
+              "test": 18,
+              "position": 75,
+              "new": "deepseek-r1-local-2",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.11639872711163046,
+              "p": 0.00029889409186011756,
+              "level": 3.2851143214989874e-06,
+              "certified": false
+            },
+            {
+              "test": 19,
+              "position": 76,
+              "new": "claude-3-7-sonnet-20250219-thinking-64k",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.1719120470906751,
+              "p": 0.0001003814495081309,
+              "level": 3.199232697096919e-06,
+              "certified": false
+            },
+            {
+              "test": 20,
+              "position": 77,
+              "new": "claude-3-7-sonnet-20250219-thinking-25k",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.16391263312442694,
+              "p": 9.989012086704625e-05,
+              "level": 3.116675334530579e-06,
+              "certified": false
+            },
+            {
+              "test": 21,
+              "position": 78,
+              "new": "claude-3-7-sonnet-20250219-base",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.10946934440195888,
+              "p": 0.00010061374383740819,
+              "level": 3.037272856415484e-06,
+              "certified": false
+            },
+            {
+              "test": 22,
+              "position": 79,
+              "new": "gpt-4.5-preview-2025-02-27",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.16193305444863926,
+              "p": 9.971083856815236e-05,
+              "level": 2.9608665371626027e-06,
+              "certified": false
+            },
+            {
+              "test": 23,
+              "position": 82,
+              "new": "o1-2024-12-17-medium",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.1090166138244143,
+              "p": 0.0007008410092110533,
+              "level": 2.748180853425313e-06,
+              "certified": false
+            },
+            {
+              "test": 24,
+              "position": 84,
+              "new": "qwq-32b",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.13690016068338284,
+              "p": 0.00010139931048468871,
+              "level": 2.618873024154167e-06,
+              "certified": false
+            },
+            {
+              "test": 25,
+              "position": 85,
+              "new": "grok-3-beta",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.023735243701385356,
+              "p": 0.28091587653822875,
+              "level": 2.557614956184333e-06,
+              "certified": false
+            },
+            {
+              "test": 26,
+              "position": 89,
+              "new": "sonar-pro",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.1141762471003529,
+              "p": 0.00010154346060113728,
+              "level": 2.332883229192249e-06,
+              "certified": false
+            },
+            {
+              "test": 27,
+              "position": 91,
+              "new": "deepseek-v3-0324",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.1121663532332352,
+              "p": 9.912767644726408e-05,
+              "level": 2.231465772060356e-06,
+              "certified": false
+            },
+            {
+              "test": 28,
+              "position": 92,
+              "new": "gemini-2.5-pro-exp-03-25",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.24911819548859893,
+              "p": 0.0001008471157724889,
+              "level": 2.183219288567085e-06,
+              "certified": false
+            },
+            {
+              "test": 29,
+              "position": 93,
+              "new": "hunyuan-turbos-20250313",
+              "reference": "gpt-4o-2024-05-13",
+              "margin": 0.02524692667267414,
+              "p": 0.3184719829769987,
+              "level": 2.136520760600278e-06,
+              "certified": false
+            }
+          ]
         }
       }
     }
@@ -9183,6 +12660,14 @@
     "spending_exact_certified": {
       "tests": 145,
       "certified": 23
+    },
+    "fallback_exact_certified": {
+      "tests": 145,
+      "certified": 23
+    },
+    "tenure_exact_certified": {
+      "tests": 153,
+      "certified": 19
     }
   }
 }

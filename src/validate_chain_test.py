@@ -41,7 +41,8 @@ import validate_record_test as vrt  # noqa: E402
 RES = os.path.join(ROOT, "results")
 K = 40
 PROCS = [("unadjusted", "exact", "leader"), ("holm", "exact", "leader"), ("spending", "exact", "leader"), ("fallback", "exact", "leader"),
-         ("lord", "exact", "leader"), ("spending", "polyhedral", "leader"), ("lord", "polyhedral", "leader"), ("lord", "exact", "certified")]
+         ("lord", "exact", "leader"), ("spending", "polyhedral", "leader"), ("lord", "polyhedral", "leader"), ("lord", "exact", "certified"),
+         ("spending", "exact", "certified"), ("tenure", "exact", "certified")]
 
 
 def true_scores(offsets, Lpool):

@@ -14,7 +14,7 @@ BOARDS = [("SWE-bench Verified", "swebench_verified.json"), ("SWE-bench Lite", "
 NON_AGENT = {"LiveBench"}                  # reported separately; the totals cover the agent boards only
 PROCS = [("unadjusted", "exact", "leader"), ("holm", "exact", "leader"), ("spending", "exact", "leader"), ("fallback", "exact", "leader"),
          ("lord", "exact", "leader"), ("lord", "polyhedral", "leader"), ("spending", "polyhedral", "leader"), ("lord", "exact", "certified"),
-         ("spending", "exact", "certified")]
+         ("spending", "exact", "certified"), ("fallback", "exact", "certified"), ("tenure", "exact", "certified")]
 
 out = {"boards": []}
 for label, fname in BOARDS:

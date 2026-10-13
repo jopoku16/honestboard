@@ -79,13 +79,13 @@
     },
     "results/chain_audit.json": {
       "group": "results",
-      "bytes": 330628,
-      "sha256": "7ac722b850c90f6ec816c9182e718e4d32c367bb73ada43bff8c260a53e6e701"
+      "bytes": 457369,
+      "sha256": "e04960dc54cb5e7d03fe23b00cf0dad64ade0e36ebe4370b2df6d99a336c61d3"
     },
     "results/data_hashes.json": {
       "group": "results",
       "bytes": 11312,
-      "sha256": "12f203f0bd462b7fc8b8b7f30449d00f8a1ce99b4c08e7f30ae48c332439bdd4"
+      "sha256": "61920fc7091cb04546b3f5e586028bde3b562f7200bd8f1edd9796a9ff1fe8b0"
     },
     "results/livebench_build.json": {
       "group": "results",
@@ -124,8 +124,8 @@
     },
     "results/validation_chain.json": {
       "group": "results",
-      "bytes": 8260,
-      "sha256": "c482765b8cfdf39b3b340d46a2bad9a09ccbed6d62f66b87a279d633549a0d8d"
+      "bytes": 10286,
+      "sha256": "c3395989bd2b803ca1c48f6e647d72f9f415353920f55848acbd91747d76cf1e"
     },
     "results/validation_cluster.json": {
       "group": "results",
@@ -219,13 +219,13 @@
     },
     "paper/tab_chain_audit.tex": {
       "group": "tables",
-      "bytes": 615,
-      "sha256": "c3a0aebba8c4ea3156834a051723a88b1f8498c69b26405ee1023379d2e0e1e0"
+      "bytes": 693,
+      "sha256": "a2a7c1a165fa9253d4f96c680490010073c8d3908b919d0b9b5f94593333f704"
     },
     "paper/tab_chain_sim.tex": {
       "group": "tables",
-      "bytes": 1124,
-      "sha256": "59f9e848cfb266317c2924988d0bf6e6ad94b303ac8a2af49fee5259eca87bef"
+      "bytes": 1368,
+      "sha256": "2ec6ca1377af4fdbc337e470429c4b495eded9dc3290af5ce7b99d7f93728fec"
     },
     "paper/tab_cluster_sim.tex": {
       "group": "tables",
@@ -309,8 +309,8 @@
     },
     "paper/numbers.tex": {
       "group": "numbers",
-      "bytes": 75684,
-      "sha256": "c1c0439b97745dbcf059d8053f8d849a5bdf1b1a468deded2db51b891bbc0bd5"
+      "bytes": 78850,
+      "sha256": "87a3771f6b704da83c00b2eeb5bc979366856af81efc07479c56206f803e6908"
     }
   },
   "numpy": "2.4.6",
