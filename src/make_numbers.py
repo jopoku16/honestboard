@@ -270,11 +270,12 @@ if chain_sim:
     for scen, procs in chain_sim["scenarios"].items():
         for key, v in procs.items():
             tg = SC[scen] + proc_tag(key)
-            put(f"Chain{tg}Fwer", pct(v["fwer"])); put(f"Chain{tg}Fdr", pct(v["fdr"]))
+            put(f"Chain{tg}Fwer", pct(v["fwer"], 1)); put(f"Chain{tg}Fdr", pct(v["fdr"], 1))
             put(f"Chain{tg}Power", pct(v["power"]) if v["power"] is not None else "--")
             put(f"Chain{tg}Tests", f"{v['mean_tests']:.1f}"); put(f"Chain{tg}Cert", f"{v['mean_certified']:.2f}")
     dz = chain_sim["design"]
     put("ChainR", dz["R"]); put("ChainT", dz["T"]); put("ChainK", dz["K"]); put("ChainStep", dz["step_points"]); put("ChainPeriod", dz["period"])
+    put("ChainBase", pct(dz["base"]) if "base" in dz else "--")
 if chain_audit:
     for key, v in chain_audit["totals"].items():
         put(f"CertTotal{proc_tag(key)}", v["certified"]); put(f"CertTests{proc_tag(key)}", v["tests"])
@@ -428,7 +429,7 @@ def nonagent_table():
         ("Per-task score", " & ".join(("credit in $[0,1]$" if lab == "LiveBench" else ("mean of 1 to 10 trials" if lab == "Terminal-Bench 2" else "pass or fail")) for lab, _ in cols)),
         ("Systems", cell(lambda b: str(b["systems"]))), ("Tasks", cell(lambda b: f"{b['tasks']:,}")),
         ("Record steps", cell(lambda b: rec(b, "steps"))),
-        ("Distinguishable (two-sided exact)", cell(lambda b: rec(b, "significant"))),
+        ("Distinguishable (selective exact test)", cell(lambda b: rec(b, "significant"))),
         ("After Holm", cell(lambda b: rec(b, "holm"))),
         ("Certified, LORD++", " & ".join(str(ca[lab]["lord_exact_leader"]["n_certified"]) if lab in ca else "--" for lab, _ in cols)),
         ("Certified, alpha-spending", " & ".join(str(ca[lab]["spending_exact_leader"]["n_certified"]) if lab in ca else "--" for lab, _ in cols)),
@@ -567,6 +568,12 @@ if split:
                     f"{pct(r['nonsig1']['n'] / tot) if tot else '--'}\\% & {fmt(r['nonsig1']['rep'])} & {fmt(nl['nonsig1']['rep'])} \\\\\n")
         f.write("\\bottomrule\n\\end{tabular}\n")
 if chain_audit:
+    lb_ = next((x for x in chain_audit["boards"] if x["board"] == "LiveBench"), None)
+    if lb_ and "fallback_exact_leader" in lb_["procedures"]:
+        cert_ = [st for st in lb_["procedures"]["fallback_exact_leader"]["steps"] if st["certified"]]
+        if cert_:                                     # the certified LiveBench step closest to its level (Monte Carlo p-values)
+            tight = min(cert_, key=lambda st: st["level"] - st["p"])
+            put("LBMarginP", f"{tight['p']:.4f}"); put("LBMarginLevel", f"{tight['level']:.4f}"); put("LBMarginGap", f"{tight['level'] - tight['p']:.4f}")
     cols = ["unadjusted_exact_leader", "holm_exact_leader", "spending_exact_leader", "fallback_exact_leader", "lord_exact_leader", "lord_polyhedral_leader",
             "spending_exact_certified", "tenure_exact_certified"]
     cols = [c for c in cols if c in chain_audit["totals"]]
@@ -595,7 +602,9 @@ if chain_audit and claims:
     put("ClaimsFallbackCert", sum(1 for st in fb.values() if st["certified"]))
     put("ClaimsReportNotSig", claims["n_with_report"] - claims["n_with_report_significant"])
     put("ClaimsSigNotCert", claims["n_significant"] - sum(1 for st in fb.values() if st["certified"]))
-    put("ClaimsFirstLevel", f"{100 * min((st['level'] for st in fb.values()), default=float('nan')):.1f}" if fb else "--")
+    first = min(fb.values(), key=lambda st: st["test"]) if fb else None
+    put("ClaimsFirstLevel", f"{100 * first['level']:.1f}" if first else "--")
+    put("ClaimsPaper", claims.get("n_report_paper", "--")); put("ClaimsPost", claims.get("n_report_post", "--"))
 
     def short(name, n=44):
         name = (name or "").replace("&", "\\&").replace("_", "\\_").replace("%", "\\%").replace("#", "\\#")
@@ -613,7 +622,7 @@ if chain_audit and claims:
             else:
                 lvl = "--"
             cert = "yes" if st.get("certified") else "no"
-            wu = "report" if e["report"] else ("site" if e["site"] else "--")
+            wu = e.get("report_kind") or ("site" if e["site"] else "--")
             d = e["date"]
             f.write(f"{i} & {d[:4]}-{d[4:6]}-{d[6:]} & {short(e['name'] or e['new'])} & {100 * e['score']:.1f} & {100 * e['margin']:+.1f} & {e['date_group']} & "
                     f"{pfmt(e['p'])} & {lvl} & {cert} & {wu} \\\\\n")
@@ -633,6 +642,9 @@ if runsplit:
     put("RunSplitNullSigRep", fmt2(p["null"]["sig1"]["rep"])); put("RunSplitNullNonRep", fmt2(p["null"]["nonsig1"]["rep"]))
     put("RunSplitFullSigRep", fmt2(p["full_sig"]["rep_any_half"])); put("RunSplitFullNonRep", fmt2(p["full_nonsig"]["rep_any_half"]))
     put("RunSplitFullSigSteps", p["full_sig"]["steps"]); put("RunSplitFullNonSteps", p["full_nonsig"]["steps"])
+    non = [e for e in runsplit["steps"] if not e["sig_full"]]
+    above = sum(1 for e in non if e["n_nonsig1"] and (e["rep_nonsig1"] / e["n_nonsig1"]) > (e["null"]["rep_given_nonsig1"] or 0) + 0.05)
+    put("RunSplitNonSteps", len(non)); put("RunSplitAboveRef", above)
 
 if rtest:
     # one table for the record-test calibration: the model fitted to Verified (all three tests) and to the other boards

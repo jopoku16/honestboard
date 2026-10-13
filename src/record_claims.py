@@ -32,6 +32,16 @@ def text(x):
     return str(x)
 
 
+def report_kind(url):
+    """What the submitter's `report` link points to: a paper or technical report, or a blog or news post."""
+    if not url:
+        return None
+    u = url.lower()
+    if any(k in u for k in ("arxiv.org", "openreview.net", "aclanthology.org", "doi.org", "proceedings.")) or u.endswith(".pdf"):
+        return "paper"
+    return "post"
+
+
 steps = []
 for s in audit["steps"]:
     md = yaml.safe_load(raw[s["new"]]["metadata"]) if s["new"] in raw and raw[s["new"]].get("metadata") else {}
@@ -40,6 +50,7 @@ for s in audit["steps"]:
     steps.append({
         "new": s["new"], "previous": s["previous"], "date": s["date"],
         "name": text(info.get("name")), "org": text(tags.get("org")), "site": text(info.get("site")), "report": text(info.get("report")),
+        "report_kind": report_kind(text(info.get("report"))),
         "checked": bool(tags.get("checked")) if tags.get("checked") is not None else None,
         "score": scores[s["new"]], "previous_score": scores[s["previous"]], "margin": s["margin"],
         "date_group": s.get("date_group", 1), "p": s["p"], "p_uncorrected": s.get("p_uncorrected", s["p"]),
@@ -50,6 +61,8 @@ out = {
     "board": "SWE-bench Verified", "n_steps": len(steps),
     "n_with_report": sum(1 for e in steps if e["report"]),
     "n_with_report_significant": sum(1 for e in steps if e["report"] and e["significant"]),
+    "n_report_paper": sum(1 for e in steps if e["report_kind"] == "paper"),
+    "n_report_post": sum(1 for e in steps if e["report_kind"] == "post"),
     "n_with_site": sum(1 for e in steps if e["site"]),
     "n_checked": sum(1 for e in steps if e["checked"]),
     "n_checked_significant": sum(1 for e in steps if e["checked"] and e["significant"]),
@@ -58,7 +71,7 @@ out = {
 }
 with open(os.path.join(ROOT, "results", "record_claims_verified.json"), "w", encoding="utf-8") as f:
     json.dump(out, f, indent=2)
-print(f"{out['n_steps']} record steps; {out['n_with_report']} link a report ({out['n_with_report_significant']} significant); "
+print(f"{out['n_steps']} record steps; {out['n_with_report']} link a report ({out['n_report_paper']} papers, {out['n_report_post']} posts; {out['n_with_report_significant']} significant); "
       f"{out['n_with_site']} link a site; {out['n_checked']} checked by the maintainers ({out['n_checked_significant']} significant); "
       f"{out['n_significant']} significant in all")
 for e in steps:

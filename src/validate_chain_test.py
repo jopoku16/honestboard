@@ -14,9 +14,11 @@ Scenarios
               the population-score null holds, so the copula simulation cannot produce it
 
 Procedures (per-step p-value x level rule), all with the leaderboard holder as baseline unless noted:
-  unadjusted (two-sided exact at alpha), holm (retrospective, realised chain), spending (alpha 6/(pi^2 i^2)),
-  lord (LORD++), each with the exact selective p-value; lord and spending also with the polyhedral p-value;
-  lord with the certified baseline.
+  unadjusted (the selective p-value at alpha, every step), holm (retrospective, realised chain), spending
+  (alpha 6/(pi^2 i^2)), fallback (online fallback), lord (LORD++), each with the exact selective p-value; lord and
+  spending also with the polyhedral p-value; lord, spending and tenure with the certified baseline.
+  The true score is started at base = 0.60 rather than the fitted base (about 0.77), to leave room for the
+  staircase; the copula correlation is the one calibrated at the fitted base.
 
 Metrics: FWER (any false certification on a board), FDR, power (share of genuine record steps certified), mean
 number of tests and certifications. A step is genuine if the true score of the new system exceeds the true score

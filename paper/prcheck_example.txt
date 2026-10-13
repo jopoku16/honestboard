@@ -5,3 +5,4 @@ Inside the 95% confidence set of the best: True (set size 14)
 Paired test, 20251215_livesweagent_claude-opus-4-5 vs
     20251205_sonar-foundation-agent_claude-opus-4-5: difference +0.0 pts, one-sided exact
     p=0.566
+Selection-adjusted score: 78.1%, 95% interval [74.9%, 81.5%] (reported 79.2%)

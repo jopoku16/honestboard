@@ -14,7 +14,7 @@ import numpy as np
 from scipy import stats
 
 from . import selective
-from .chain import selective_sign_pvalue
+from .chain import selective_sign_pvalue, signflip_pvalues
 
 
 def _cluster_labels(tasks, cluster_fn):
@@ -194,14 +194,8 @@ class Board:
         else:
             d = (yb - ya).astype(float)
             n_b_only, n_a_only = int((d > 0).sum()), int((d < 0).sum())
-            rng_p = np.random.default_rng(seed + 17)
-            signs = rng_p.choice([-1.0, 1.0], size=(20000, d.size))
-            null = (signs * d).mean(axis=1)
-            obs = d.mean()
-            p1 = float((1 + (null >= obs - 1e-15).sum()) / (1 + null.shape[0]))
-            p2 = float((1 + (np.abs(null) >= abs(obs) - 1e-15).sum()) / (1 + null.shape[0]))
-            pos = int((null > 1e-15).sum())
-            ps = 1.0 if (obs <= 1e-15 or pos == 0) else float(min(1.0, (1 + int((null >= obs - 1e-15).sum())) / (1 + pos)))
+            # the same sign patterns as certify_chain uses for this pair, so the audit and the certification agree
+            p1, p2, ps = signflip_pvalues(d, np.random.default_rng(seed + 7 * j + i))
         S = self._boot_scores(B, seed, cluster)
         dd = S[j] - S[i]
         return {
@@ -528,6 +522,6 @@ class Board:
             "confidence_set_size": cs["size"],
             "vs_best_other": self.compare(runner, k, cluster=cluster) if sc[k] >= sc[runner] else self.compare(k, runner, cluster=cluster),
         }
-        if k == int(np.argmax(sc)):
-            out["winner_adjusted"] = self.winner_adjusted(alpha=alpha, cluster=cluster)
+        if sc[k] >= sc.max() - 1e-12:                       # the leader, or a system tied with it at the top
+            out["winner_adjusted"] = self.winner_adjusted(alpha=alpha, cluster=cluster, w=k)
         return out

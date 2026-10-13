@@ -37,18 +37,37 @@ def selective_sign_pvalue(n_b: int, n_a: int) -> float:
     return float(min(1.0, tail / cond))
 
 
-def selective_signflip_pvalue(d, rng=None, draws=20000) -> float:
-    """Rates version: P(S >= s_obs | S > 0) under random sign flips of the per-task differences d."""
+SIGNFLIP_DRAWS = 200000
+
+
+def signflip_pvalues(d, rng=None, draws=SIGNFLIP_DRAWS, chunk=20000):
+    """Rates version of the paired tests: one-sided, two-sided and selective p-values for the sum S of randomly
+    signed per-task differences d, by Monte Carlo with `draws` sign patterns (generated in chunks to bound memory).
+    The selective p-value is P(S >= s_obs | S > 0). With 2e5 patterns about 1e5 fall in {S > 0}, so a p-value near
+    0.001 has a Monte Carlo standard error of about 1e-4. `compare` and `certify_chain` draw the patterns from
+    the same seed convention (seed + 7*b + a for the indices of holder a and challenger b), so the audit and the
+    certification agree to the last digit. Returns (p_one_sided, p_two_sided, p_selective)."""
     d = np.asarray(d, dtype=float)
     obs = d.sum()
-    if obs <= 1e-12:
-        return 1.0
     rng = np.random.default_rng(0) if rng is None else rng
-    null = rng.choice([-1.0, 1.0], size=(draws, d.size)) @ d
-    pos = int((null > 1e-12).sum())
-    if pos == 0:
-        return 1.0
-    return float(min(1.0, (1 + int((null >= obs - 1e-12).sum())) / (1 + pos)))
+    pos = hit = hit2 = 0
+    done = 0
+    while done < draws:
+        m = min(chunk, draws - done)
+        null = rng.choice([-1.0, 1.0], size=(m, d.size)) @ d
+        hit += int((null >= obs - 1e-12).sum())
+        hit2 += int((np.abs(null) >= abs(obs) - 1e-12).sum())
+        pos += int((null > 1e-12).sum())
+        done += m
+    p1 = (1 + hit) / (1 + draws)
+    p2 = (1 + hit2) / (1 + draws)
+    ps = 1.0 if (obs <= 1e-12 or pos == 0) else min(1.0, (1 + hit) / (1 + pos))
+    return float(p1), float(p2), float(ps)
+
+
+def selective_signflip_pvalue(d, rng=None, draws=SIGNFLIP_DRAWS) -> float:
+    """Rates version of the record test: P(S >= s_obs | S > 0) under random sign flips of the per-task differences d."""
+    return signflip_pvalues(d, rng, draws)[2]
 
 
 def polyhedral_step_pvalue(p_hat, sigma, b, a, earlier, lattice=0.0) -> float:

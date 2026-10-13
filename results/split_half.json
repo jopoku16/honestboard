@@ -2020,15 +2020,15 @@
           "new": "Ante__Gemini-3-Pro-Preview",
           "previous": "MAYA__Claude-4.5-sonnet",
           "margin": 0.22022471910112357,
-          "p_full": 0.0005202372281760483,
+          "p_full": 0.0009275386216776082,
           "sig_full": true,
           "n_discordant": 57,
-          "n_sig1": 131,
-          "rep_sig1": 131,
-          "repsig_sig1": 78,
-          "n_nonsig1": 69,
-          "rep_nonsig1": 69,
-          "repsig_nonsig1": 69,
+          "n_sig1": 129,
+          "rep_sig1": 129,
+          "repsig_sig1": 75,
+          "n_nonsig1": 71,
+          "rep_nonsig1": 71,
+          "repsig_nonsig1": 71,
           "null": {
             "p_sig1": 0.02925,
             "rep_given_sig1": 0.39316239316239315,
@@ -2078,7 +2078,7 @@
           "new": "Droid__Claude-Opus-4.6",
           "previous": "OpenSage__Gemini-3-Pro-Preview",
           "margin": 0.04719101123595504,
-          "p_full": 0.30133572567783096,
+          "p_full": 0.3052749494909084,
           "sig_full": false,
           "n_discordant": 38,
           "n_sig1": 7,
@@ -2107,7 +2107,7 @@
           "new": "Simple-Codex__GPT-5.3-Codex",
           "previous": "Droid__Claude-Opus-4.6",
           "margin": 0.04719101123595493,
-          "p_full": 0.36212361331220283,
+          "p_full": 0.38157157717852286,
           "sig_full": false,
           "n_discordant": 36,
           "n_sig1": 9,
@@ -2136,7 +2136,7 @@
           "new": "Droid__GPT-5.3-Codex",
           "previous": "Simple-Codex__GPT-5.3-Codex",
           "margin": 0.026966292134831593,
-          "p_full": 0.4213709677419355,
+          "p_full": 0.4217216035397854,
           "sig_full": false,
           "n_discordant": 32,
           "n_sig1": 12,
@@ -2165,7 +2165,7 @@
           "new": "Forge__Gemini-3.1-Pro-Preview",
           "previous": "Droid__GPT-5.3-Codex",
           "margin": 0.011235955056179914,
-          "p_full": 0.8184993015366194,
+          "p_full": 0.8191665999839962,
           "sig_full": false,
           "n_discordant": 35,
           "n_sig1": 1,
@@ -2194,15 +2194,15 @@
           "new": "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
           "previous": "Forge__Gemini-3.1-Pro-Preview",
           "margin": 0.04044943820224711,
-          "p_full": 0.5706946376966713,
+          "p_full": 0.5619175277317487,
           "sig_full": false,
           "n_discordant": 25,
-          "n_sig1": 5,
+          "n_sig1": 4,
           "rep_sig1": 0,
           "repsig_sig1": 0,
-          "n_nonsig1": 195,
+          "n_nonsig1": 196,
           "rep_nonsig1": 162,
-          "repsig_nonsig1": 2,
+          "repsig_nonsig1": 3,
           "null": {
             "p_sig1": 0.02025,
             "rep_given_sig1": 0.41975308641975306,
@@ -2223,7 +2223,7 @@
           "new": "LemonHarness_GPT-5.3-CodeX",
           "previous": "OB-1_GPT-5.4-GPT-5.3-Codex-Claude-Opus-4.5-Claude-Opus-4.6",
           "margin": 0.020224719101123556,
-          "p_full": 0.5867997233474953,
+          "p_full": 0.5830469070976922,
           "sig_full": false,
           "n_discordant": 35,
           "n_sig1": 1,
@@ -2252,7 +2252,7 @@
           "new": "vix__claude-opus-4-7",
           "previous": "LemonHarness_GPT-5.3-CodeX",
           "margin": 0.05393258426966285,
-          "p_full": 0.11259338313767342,
+          "p_full": 0.11159937162994099,
           "sig_full": false,
           "n_discordant": 41,
           "n_sig1": 26,
@@ -2260,7 +2260,7 @@
           "repsig_sig1": 0,
           "n_nonsig1": 174,
           "rep_nonsig1": 174,
-          "repsig_nonsig1": 21,
+          "repsig_nonsig1": 18,
           "null": {
             "p_sig1": 0.0255,
             "rep_given_sig1": 0.45098039215686275,
@@ -2280,14 +2280,14 @@
       ],
       "real": {
         "sig1": {
-          "n": 192,
-          "rep": 0.78125,
-          "repsig": 0.40625
+          "n": 189,
+          "rep": 0.783068783068783,
+          "repsig": 0.3968253968253968
         },
         "nonsig1": {
-          "n": 1608,
-          "rep": 0.8022388059701493,
-          "repsig": 0.0740049751243781
+          "n": 1611,
+          "rep": 0.8019863438857853,
+          "repsig": 0.07386716325263812
         }
       },
       "null": {
@@ -2307,14 +2307,14 @@
   "pooled": {
     "real": {
       "sig1": {
-        "n": 2873,
-        "rep": 0.9230769230769231,
-        "repsig": 0.667942916811695
+        "n": 2870,
+        "rep": 0.9233449477351916,
+        "repsig": 0.667595818815331
       },
       "nonsig1": {
-        "n": 11927,
-        "rep": 0.7866185964618093,
-        "repsig": 0.076297476314245
+        "n": 11930,
+        "rep": 0.7865884325230511,
+        "repsig": 0.07627829002514669
       }
     },
     "null": {
