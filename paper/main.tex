@@ -92,6 +92,7 @@ This is an audit paper with a validated tool, and one methodological piece.
 (i) The audit: every record step on six public agent leaderboards, tested with the selective exact test (the sign test conditional on the record event) and a repository-level test against each benchmark's resolution limit, with a split-half replication on the real data, a language-model leaderboard run through the same pipeline, and a bound on best-of-runs selection from the one board with repeated runs.
 (ii) The methodological piece: a sequential certification procedure for record chains, a $p$-value valid under the record selection that we prove stays valid when the holder is itself a running maximum (Proposition~1), with two level rules, alpha-spending and online fallback, whose family-wise error control over the adaptively growing chain is proved without any independence assumption (Corollaries~1 and 2), the same guarantee for the procedure in which the leader moves only on certification (Corollary~3, through a monotonicity property of the $p$-value), and an online false-discovery-rate variant calibrated by simulation (Section~\ref{sec:methods}); to our knowledge this is the first certification procedure for leaderboard records with such a guarantee.
 (iii) Rank intervals and a confidence set of the best system with a coverage study, and a selection-corrected score for the published winner, validated by simulation and by held-out tasks with Monte Carlo errors, against the hybrid of \citet{andrews2024winners} and the zoom interval of \citet{zrnic2025flexible}.
+What is proved: the per-step test is exact under its null and stays valid for any holder chosen by an event increasing in its outcomes; the chain-wise error of three level rules is controlled for any dependence; everything else, including LORD++, the winner correction and the confidence set, rests on simulation and held-out data, and Table~\ref{tab:guarantees} in Section~\ref{sec:methods} says which is which.
 (iv) \texttt{honestboard}, a dependency-light package with a command line and a check for new submissions,\footnote{Version 0.1.0, MIT licence: \url{https://github.com/jopoku16/honestboard}, with the built boards, every result file, the scripts behind each table and figure, and the manuscript source.} and reporting recommendations for benchmark maintainers.
 
 \section{Setting}
@@ -231,6 +232,30 @@ Each certification earns back budget, so late records remain testable; LORD++ st
 Its guarantee is proved for independent $p$-values, and ours share tasks: alpha-spending and online fallback are the rules with the guarantee, and LORD++ is an alternative calibrated by simulation; \citet{javanmard2018online} give a more conservative variant for dependent $p$-values, which we have not implemented.
 Two baselines are possible: test each leaderboard record against the record it replaced, or test every submission that beats the last \emph{certified} record against that record, so that the certified leader moves only when a record is certified, as in the Ladder~\citep{blum2015ladder}; Corollary~3 covers the second.
 A normal-theory alternative that conditions on both selections at once (the polyhedral lemma applied to the event that $b$ is a record and $a$ was the holder) is described in Appendix~\ref{app:poly}; it needs a continuity correction on discrete scores and has no finite-sample guarantee, so it is reported only as a comparison.
+Table~\ref{tab:guarantees} lists, for every procedure in the paper, what is proved and what rests on simulation.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{p{3.6cm}p{2.2cm}p{6.6cm}p{2.2cm}}
+\toprule
+Procedure & Baseline & Guarantee & Where \\
+\midrule
+Selective record test & either & exact size given the record event under the conditional task-wise dominance null; conservative when the holder is a running maximum or a certified holder & Prop.~1, Lemma~1 \\
+Alpha-spending & leaderboard & family-wise error $\le\alpha$ over the chain, any dependence & Cor.~1 \\
+Online fallback & leaderboard & the same, with a level never below spending's & Cor.~2 \\
+Tenure-indexed spending & certified & family-wise error $\le\alpha$ over the chain, any dependence & Cor.~3 \\
+Spending, fallback & certified & per-step validity proved; chain-wise rate by simulation & Prop.~1; Sec.~\ref{sec:valid} \\
+LORD++ & either & false-discovery rate proved for independent $p$-values; dependent here, by simulation & Sec.~\ref{sec:valid} \\
+Holm over the realised chain & leaderboard & retrospective, adaptive family; by simulation & Sec.~\ref{sec:valid} \\
+Polyhedral $p$-value & leaderboard & none; continuity-corrected, by simulation & App.~\ref{app:poly} \\
+Hybrid and zoom intervals & -- & coverage under normality with known covariance & Sec.~\ref{sec:methods} \\
+Iterated bootstrap & -- & none; by simulation and held-out tasks & Sec.~\ref{sec:valid} \\
+Confidence set of the best & -- & retains a truly best system at about the nominal rate; by simulation & Sec.~\ref{sec:valid} \\
+\bottomrule
+\end{tabular}
+\caption{What is proved and what is simulated, for every procedure in the paper.}
+\label{tab:guarantees}
+\end{table}
 
 \paragraph{Lag.}
 For each record we find how many records back one must go before the record is significantly better than that earlier record (same test, no correction).
@@ -370,20 +395,6 @@ This is why the reporting checklist asks for the number of variants tried: witho
 \label{tab:recordtest}
 \end{table}
 
-\begin{table}[t]
-\centering\small
-\resizebox{\textwidth}{!}{\input{tab_position.tex}}
-\caption{Global null: rejection rate by the step's position in the record chain. The first step compares against the first submission, which is not inflated; later steps compare against a running maximum.}
-\label{tab:position}
-\end{table}
-
-\begin{table}[t]
-\centering\small
-\resizebox{\textwidth}{!}{\input{tab_power.tex}}
-\caption{Simulated power of the selective paired test for a true difference of 1, 2, 3 and 5 points, and at the minimum detectable difference given by the formula in Section~\ref{sec:methods}. Fitted Verified model, baseline score \NumSimBase\%.}
-\label{tab:power}
-\end{table}
-
 \subsection{Does the sequential certification hold its error rate?}
 We simulate boards of \NumChainK{} submissions on \NumChainT{} tasks from the fitted model (\NumChainR{} boards per scenario; Table~\ref{tab:chainsim}).
 Under the global null every record is luck.
@@ -457,12 +468,6 @@ Table~\ref{tab:lottery} shows how often the observed winner is a truly best syst
 \label{tab:rankcov}
 \end{table}
 
-\begin{table}[t]
-\centering\small
-\resizebox{0.9\textwidth}{!}{\input{tab_lottery.tex}}
-\caption{Known-truth simulation of ranking on SWE-bench Verified.}
-\label{tab:lottery}
-\end{table}
 
 \section{Audit of six agent leaderboards, with a non-agent comparison}\label{sec:audit}
 \begin{table}[t]
@@ -485,7 +490,7 @@ Run in time order, the sequential rules certify fewer records than the retrospec
 On these chains no two consecutive records are both genuine and resolvable, so the fallback rule certifies the same \NumCertTotalFall{} records as spending; on LiveBench, where they are, it certifies all \NumLBSteps{} against \NumLBCertSpend{} for spending (Table~\ref{tab:nonagent}).
 With 95\% confidence every record certified by either rule is genuine, so the six boards hold at least \NumCertTotalFall{} records that beat their predecessor task-wise.
 With the certified baseline (Corollary~3), every submission that beats the last certified record is tested: the tenure-indexed rule, which carries the chain-wise guarantee, certifies \NumCertTotalTenCert{} of \NumCertTestsTenCert{} tested submissions across the boards, test-indexed alpha-spending \NumCertTotalSpendCert{} of \NumCertTestsSpendCert{}, and LORD++ \NumCertTotalLordCert{} of \NumCertTestsLordCert{}.
-Figure~\ref{fig:certified} shows the leaderboard record line and the certified record line on Verified and Lite: on Verified the certified leader moves \NumVerifiedCertSpendCert{} times in \NumVerifiedK{} submissions, against \NumVerifiedSteps{} leaderboard records.
+Figure~\ref{fig:certified} shows the leaderboard record line and the certified record line under the tenure-indexed rule on Verified and Lite: on Verified the certified leader moves \NumVerifiedCertTenCert{} times in \NumVerifiedK{} submissions, against \NumVerifiedSteps{} leaderboard records.
 
 \begin{table}[t]
 \centering\small
@@ -497,7 +502,7 @@ Figure~\ref{fig:certified} shows the leaderboard record line and the certified r
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{../figures/fig6_certified.pdf}
-\caption{Leaderboard records and certified records in submission order. Gray dots: all submissions. Gray step: the leaderboard record. Blue step and dots: the certified record under test-indexed alpha-spending with the certified baseline (Corollary~3), which moves only when a submission is certified against the last certified record.}
+\caption{Leaderboard records and certified records in submission order. Gray dots: all submissions. Gray step: the leaderboard record. Blue step and dots: the certified record under the tenure-indexed rule of Corollary~3, which moves only when a submission is certified against the last certified record.}
 \label{fig:certified}
 \end{figure}
 
@@ -679,6 +684,27 @@ We have no finite-sample guarantee for the corrected version and report it only 
 \end{figure}
 
 \section{Full validation tables}
+\begin{table}[H]
+\centering\small
+\resizebox{\textwidth}{!}{\input{tab_position.tex}}
+\caption{Global null: rejection rate by the step's position in the record chain. The first step compares against the first submission, conditioned only on no earlier record; later steps compare against a running maximum.}
+\label{tab:position}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\resizebox{\textwidth}{!}{\input{tab_power.tex}}
+\caption{Simulated power of the selective paired test for a true difference of 1, 2, 3 and 5 points, and at the minimum detectable difference given by the formula in Section~\ref{sec:methods}. Fitted Verified model, baseline score \NumSimBase\%.}
+\label{tab:power}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\resizebox{0.9\textwidth}{!}{\input{tab_lottery.tex}}
+\caption{Known-truth simulation of ranking on SWE-bench Verified: how often the observed winner is a truly best system, and whether the confidence set covers a truly best system when it is not.}
+\label{tab:lottery}
+\end{table}
+
 \begin{table}[H]
 \centering\scriptsize
 \resizebox{\textwidth}{!}{\input{tab_validation_full.tex}}

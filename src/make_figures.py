@@ -298,7 +298,7 @@ def fig_certified():
         sc = 100 * b.scores()[order]
         x = np.arange(1, len(order) + 1)
         record_line = np.maximum.accumulate(sc)
-        proc = ca[label]["procedures"]["spending_exact_certified"]
+        proc = ca[label]["procedures"].get("tenure_exact_certified") or ca[label]["procedures"]["spending_exact_certified"]
         cert_names = set(proc["certified"])
         cert_line, cur = [], sc[0]
         for i, k in enumerate(order):
@@ -307,7 +307,7 @@ def fig_certified():
             cert_line.append(cur)
         ax.plot(x, sc, "o", ms=2.6, mfc=MUTED, mec=MUTED, alpha=0.55, zorder=1)
         ax.step(x, record_line, where="post", color=AXIS, lw=1.6, zorder=2, label="leaderboard record")
-        ax.step(x, cert_line, where="post", color=BLUE, lw=2.2, zorder=3, label="certified record (alpha-spending)")
+        ax.step(x, cert_line, where="post", color=BLUE, lw=2.2, zorder=3, label="certified record (tenure rule, Corollary 3)")
         cx = [i + 1 for i, k in enumerate(order) if b.names[k] in cert_names]
         cy = [sc[i] for i, k in enumerate(order) if b.names[k] in cert_names]
         ax.plot(cx, cy, "o", ms=6.5, mfc=BLUE, mec=SURFACE, mew=1.4, zorder=4)

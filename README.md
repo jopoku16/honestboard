@@ -3,7 +3,7 @@
 **Statistical Inference for AI-Agent Leaderboards: Record Claims, Rank Uncertainty and the Winner's Curse**
 Jeffery Opoku (UTRGV) and David Banahene (FIU). Software: `honestboard`.
 
-Status (2026-10-12): manuscript draft (`paper/main.pdf`, 33 pages), analysis, validation, package and figures; everything compiles and the 57 package tests pass. Preprint in preparation. This repository holds the code, the built boards, every result file, the figures and the manuscript source; raw downloads are not redistributed (see `DATA_SOURCES.md`). Live page: https://jopoku16.github.io/honestboard/.
+Status (2026-10-12): manuscript draft (`paper/main.pdf`, 34 pages), analysis, validation, package and figures; everything compiles and the 57 package tests pass. Preprint in preparation. This repository holds the code, the built boards, every result file, the figures and the manuscript source; raw downloads are not redistributed (see `DATA_SOURCES.md`). Live page: https://jopoku16.github.io/honestboard/.
 
 ## Headline results
 All numbers are generated into `paper/numbers.tex` from `results/*.json`.

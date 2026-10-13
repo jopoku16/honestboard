@@ -84,8 +84,8 @@
     },
     "results/data_hashes.json": {
       "group": "results",
-      "bytes": 11312,
-      "sha256": "61920fc7091cb04546b3f5e586028bde3b562f7200bd8f1edd9796a9ff1fe8b0"
+      "bytes": 11313,
+      "sha256": "326e453ed6b995dda174999e539620bd7a87035d99f11a494f90a3a88a012546"
     },
     "results/livebench_build.json": {
       "group": "results",
