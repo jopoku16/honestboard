@@ -32,7 +32,3 @@ paper/*.fdb_latexmk
 paper/*.synctex.gz
 paper/*.blg
 paper/*.toc
-
-# CI workflow files: pushing them needs the gh 'workflow' scope (gh auth refresh -s workflow); re-add afterwards
-.github/workflows/
-honestboard/.github/workflows/

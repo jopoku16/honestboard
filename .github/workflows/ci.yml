@@ -1,0 +1,21 @@
+name: honestboard CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: pip install ./honestboard pytest
+      - run: python -m pytest honestboard/tests
+      - run: python -m honestboard report data/boards/swebench_lite.json
