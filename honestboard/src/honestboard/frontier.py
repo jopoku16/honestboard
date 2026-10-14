@@ -97,8 +97,11 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         tie_robust: with per-task costs, a system may be excluded only on the evidence of rivals that are SURELY no
             costlier (a rival's cost interval lies at or below the system's), a deterministic subset of its true rivals
             on the event that every mean cost lies in its interval (probability at least 1 - alpha / 2); the margin is
-            taken at alpha / 2. The set then holds whether or not true mean costs tie, at the price of a larger set; it
-            always contains the observed frontier.
+            the (1 - alpha / 2) quantile of the largest studentised deviation over EVERY ordered pair of systems, so it
+            does not depend on which pairs the data make rivals. The joint set then contains the true frontier with
+            probability at least 1 - alpha - o(1) whether or not true mean costs tie, at the price of a larger set; it
+            always contains the observed frontier. Only the joint set carries that guarantee: the boardwide and
+            per-system variants returned beside it are descriptive in this mode.
     """
     names = [n for n in (names or board.names) if n in costs]
     if len(names) < 2:
@@ -144,8 +147,8 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         alpha_set = alpha / 2
 
     dev = ((S[None, :, :] - S[:, None, :]) - (acc[None, :] - acc[:, None])[:, :, None]) / se[:, :, None]   # [i, j, b]
-    if cheaper_fixed is not None:                                 # tie-robust: one deterministic, enlarged rival set
-        masked = np.where(cheaper_fixed[:, :, None], dev, -np.inf)
+    if cheaper_fixed is not None:                                 # tie-robust: the margin covers EVERY ordered pair (a deterministic
+        masked = np.where(~eye[:, :, None], dev, -np.inf)         # index set), whichever pairs end up as rivals of each other
     elif per_task:                                                # the rival set varies with the resample
         cheaper_b = (SC[None, :, :] <= SC[:, None, :]) & ~eye[:, :, None]
         masked = np.where(cheaper_b, dev, -np.inf)
