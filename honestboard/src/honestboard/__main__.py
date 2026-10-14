@@ -1,4 +1,4 @@
-"""Command line: python -m honestboard report BOARD.json | check BOARD.json SYSTEM"""
+"""Command line: python -m honestboard report BOARD.json | check BOARD.json SYSTEM | frontier BOARD.json COSTS.json"""
 import argparse
 import sys
 
@@ -101,6 +101,45 @@ def cmd_pr_check(args):
     print("\n".join(lines))
 
 
+def cmd_frontier(args):
+    """Who is really on the cost-accuracy frontier? Confidence set for the frontier, undominated frequencies, the
+    cheapest plausible best, and (with --curse) selection-adjusted accuracy for every system on the observed frontier."""
+    import json
+    import numpy as np
+    from .frontier import frontier_curse, pareto_frontier
+    b = _load(args.board)
+    with open(args.costs, encoding="utf-8") as f:
+        raw = json.load(f)
+    costs = {}
+    for name, v in raw.items():
+        if isinstance(v, dict):                                   # {task: cost}: per-task costs, resampled with the outcomes
+            costs[name] = np.array([float(v.get(t, 0.0)) for t in b.task_ids])
+        else:
+            costs[name] = float(v)                                # one number per system: total cost of the run (or per task with --per-task)
+            if not args.per_task:
+                costs[name] = costs[name] / b.T
+    r = pareto_frontier(b, costs, alpha=args.alpha, B=args.B, seed=0)
+    kind = "per-task costs, resampled with the outcomes" if r["per_task_costs"] else "one cost per system, treated as fixed"
+    print(f"{r['systems']} systems with costs, {r['tasks']} tasks ({kind}); costs below are per task")
+    print(f"Observed frontier: {len(r['observed_frontier'])} systems. Cannot be excluded from the frontier at the {100 * (1 - args.alpha):.0f}% level: "
+          f"{len(r['frontier_set'])} systems (margin {r['margin_se']:.2f} se).")
+    print(f"Cannot be excluded as the most accurate: {len(r['best_set'])} systems. Cheapest plausible best: {r['cheapest_plausible_best']['system']} "
+          f"({_pct(r['cheapest_plausible_best']['accuracy'])} at {r['cheapest_plausible_best']['cost']:.4g} per task).")
+    print()
+    print("  frontier  set   undom.   accuracy   cost/task  system")
+    for row in r["table"]:
+        print(f"  {'yes' if row['on_observed_frontier'] else '-':8s}  {'yes' if row['in_frontier_set'] else '-':4s}  {row['undominated_frequency']:5.2f}   "
+              f"{_pct(row['accuracy']):>7s}   {row['cost']:9.4g}  {row['system'][:60]}")
+    if args.curse:
+        print()
+        print("Selection-adjusted accuracy of the systems on the observed frontier (iterated bootstrap within the pool of cheaper-or-equal systems):")
+        for m in frontier_curse(b, costs, alpha=args.alpha, B=args.B, seed=0, iterate=True):
+            bs, c = m["bootstrap"], m["conditional"]
+            cond = f"{_pct(c['estimate'])}" if np.isfinite(c["estimate"]) else "undefined (tie)"
+            print(f"  {m['system'][:50]:50s} reported {_pct(m['observed']):>6s}  adjusted {_pct(bs['estimate']):>6s} "
+                  f"[{_pct(bs['ci'][0])}, {_pct(bs['ci'][1])}]  conditional {cond}  pool {m['pool_size']}")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="honestboard")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -109,6 +148,14 @@ def main(argv=None):
     p.add_argument("new_dir", help="the new submission folder")
     p.add_argument("--tasks", help="JSON file with the benchmark's full task id list (recommended)")
     p.set_defaults(fn=cmd_pr_check)
+    p = sub.add_parser("frontier", help="confidence set for the cost-accuracy frontier of a board, given a costs file")
+    p.add_argument("board")
+    p.add_argument("costs", help="JSON: {system: total cost of the run} or {system: {task: cost}} (per-task costs)")
+    p.add_argument("--per-task", action="store_true", help="the one number per system is already a cost per task")
+    p.add_argument("--alpha", type=float, default=0.05)
+    p.add_argument("--B", type=int, default=4000)
+    p.add_argument("--curse", action="store_true", help="also give selection-adjusted accuracy for the systems on the observed frontier")
+    p.set_defaults(fn=cmd_frontier)
     for name, fn in (("report", cmd_report), ("check", cmd_check)):
         p = sub.add_parser(name)
         p.add_argument("board")
