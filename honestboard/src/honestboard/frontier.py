@@ -385,6 +385,7 @@ def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 
         C = np.array([np.asarray(costs[n], float) if np.ndim(costs[n]) > 0 else np.full(T, float(costs[n]) / T) for n in names])
         g = C.mean(axis=1)
         sg = C.std(axis=1, ddof=1) / np.sqrt(T)
+        sg = np.where(sg <= 1e-9 * np.maximum(np.abs(g), 1e-300), 0.0, sg)    # a constant cost has no uncertainty, not floating-point noise
     else:
         C = None
         g = np.array([float(costs[n]) for n in names])

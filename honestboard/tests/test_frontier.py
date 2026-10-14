@@ -238,3 +238,14 @@ def test_frontier_band_with_per_task_costs_covers_the_true_curve_despite_near_ti
             ok = ok and (bx[0] - 1e-12 <= a0 <= bx[1] + 1e-12)
         covered += ok
     assert covered / R >= 0.90
+
+
+def test_frontier_band_with_constant_per_task_costs_is_not_inflated_by_rounding_noise():
+    """A per-task cost array that is constant (a fixed cost written per task) has zero cost uncertainty; the band must
+    equal the fixed-cost band and stay narrow."""
+    board, costs, _ = _known_truth_board(K=10, T=120, seed=5)
+    fixed = frontier_band(board, costs, B=400, seed=0)
+    T = board.T
+    per_task = {n: np.full(T, 0.7340123 * c / 0.7340123) for n, c in costs.items()}   # constant arrays with awkward values
+    arr = frontier_band(board, per_task, B=400, seed=0)
+    assert arr["width_points_median"] < 60 and abs(arr["width_points_median"] - fixed["width_points_median"]) < 5
