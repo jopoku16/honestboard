@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from honestboard import Board
-from honestboard.frontier import entrant_pvalues, entrant_pvalues_exact, exact_frontier_set, frontier_band, frontier_curse, frontier_winner, observed_frontier, pareto_frontier
+from honestboard.frontier import band_at, entrant_pvalues, entrant_pvalues_exact, exact_frontier_set, frontier_band, frontier_curse, frontier_winner, observed_frontier, pareto_frontier
 
 
 def make_board(P, T, seed=0, names=None):
@@ -210,3 +210,31 @@ def test_exact_entrant_certificate_holds_level_with_a_near_copy_rival():
         p_iu, _, _ = entrant_pvalues_exact_arrays(Y, 0, [1, 2], draws=1000, seed=sel)
         cert += p_iu <= 0.05
     assert sel > 50 and cert / sel <= 0.09
+
+
+def test_frontier_band_with_per_task_costs_covers_the_true_curve_despite_near_ties_in_cost():
+    """With per-task costs and closely spaced true mean costs the sample cost order is often wrong; the band, which
+    lets a system into the lower edge only when its cost is surely within budget, still covers the true curve."""
+    rng = np.random.default_rng(21)
+    covered, R, K, T = 0, 60, 10, 80
+    for r in range(R):
+        gamma = np.sort(np.exp(rng.normal(0, 0.15, K)))                    # nearly tied true mean costs
+        theta = np.clip(0.3 + 0.4 * np.arange(K) / (K - 1) + rng.normal(0, 0.05, K), 0.05, 0.95)
+        diff = rng.normal(0, 1, T)
+        P = 1 / (1 + np.exp(-(np.log(theta / (1 - theta))[:, None] + diff[None, :])))
+        Y = (rng.random(P.shape) < P).astype(float)
+        C = gamma[:, None] * np.exp(0.8 * rng.standard_normal(P.shape) - 0.32)
+        tasks = [f"t{t}" for t in range(T)]
+        board = Board.from_rates(tasks, [{"name": f"s{k}", "rates": {t: float(Y[k, i]) for i, t in enumerate(tasks)}} for k in range(K)])
+        truth_acc = np.array([(1 / (1 + np.exp(-(np.log(th / (1 - th)) + diff))))[:].mean() for th in theta])
+        band = frontier_band(board, {f"s{k}": C[k] for k in range(K)}, B=400, seed=r)
+        ok = True
+        for x in sorted(set(band["grid"]) | set(gamma.tolist())):
+            bx = band_at(band, x)
+            inside = [j for j in range(K) if gamma[j] <= x + 1e-12]
+            if bx is None or not inside:
+                continue
+            a0 = max(truth_acc[j] for j in inside)
+            ok = ok and (bx[0] - 1e-12 <= a0 <= bx[1] + 1e-12)
+        covered += ok
+    assert covered / R >= 0.90

@@ -363,36 +363,74 @@ def exact_frontier_set(board, costs, alpha=0.05, draws=50000, seed=0):
 
 # ---- a simultaneous confidence band for the frontier curve ------------------------------------------------------------
 def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0) -> dict:
-    """Simultaneous confidence band for the frontier curve A(c) = the best true accuracy among the systems that cost at
-    most c. With c_band the (1 - alpha) bootstrap quantile of max_j |acc*_j - acc_j| / se_j (a max-t band for all K
-    accuracies at once), L(c) = max over systems with cost <= c of (acc_j - c_band se_j) and U(c) likewise with a plus.
-    On the event that every |acc_j - mu_j| <= c_band se_j, which has probability about 1 - alpha, L(c) <= A(c) <= U(c)
-    for every c at once (fixed costs). The band is evaluated at every system's cost; between those costs the curves
-    are flat (the frontier is a staircase)."""
+    """Simultaneous confidence band for the frontier curve A(x) = the best true accuracy among the systems whose true
+    mean cost is at most x, valid whether costs are fixed numbers or measured per task.
+
+    With c the (1 - alpha) bootstrap quantile of the largest studentised deviation over ALL accuracies and ALL mean
+    costs (tasks resampled jointly), let each system have an accuracy interval [a_j -/+ c se_j] and a cost interval
+    [g_j -/+ c sg_j]. On the event that every true accuracy and true mean cost lies in its interval (probability about
+    1 - alpha),
+        L(x) = max of (a_j - c se_j) over the systems whose cost interval lies at or below x     <= A(x),
+        U(x) = max of (a_j + c se_j) over the systems whose cost interval reaches x or below     >= A(x),
+    for every x at once: a system enters the lower edge only when its cost is surely within budget and the upper edge
+    when it possibly is. With fixed costs sg_j = 0 and the cost intervals are points. Both edges are step functions
+    with jumps at the interval ends; the grid returned contains every jump. The lower edge is 0 where no system is
+    surely within budget."""
     names = [n for n in board.names if n in costs]
     idx = np.array([board.index(n) for n in names])
     Y = board.Y[idx].astype(float)
     K, T = Y.shape
-    cost = np.array([float(np.mean(costs[n])) if np.ndim(costs[n]) > 0 else float(costs[n]) for n in names])
+    per_task = any(np.ndim(costs[n]) > 0 for n in names)
+    if per_task:
+        C = np.array([np.asarray(costs[n], float) if np.ndim(costs[n]) > 0 else np.full(T, float(costs[n]) / T) for n in names])
+        g = C.mean(axis=1)
+        sg = C.std(axis=1, ddof=1) / np.sqrt(T)
+    else:
+        C = None
+        g = np.array([float(costs[n]) for n in names])
+        sg = np.zeros(K)
     acc = Y.mean(axis=1)
     se = np.sqrt(np.maximum(Y.var(axis=1, ddof=1), 0.0) / T)
-    se_safe = np.where(se > 0, se, 1e-12)
     rng = np.random.default_rng(seed)
-    S = _bootstrap_means(Y, B, rng)
-    dev = (np.abs(S - acc[:, None]) / se_safe[:, None])[se > 0]
-    c_band = float(np.quantile(dev.max(axis=0), 1 - alpha)) if dev.size else 0.0
-    lo_j, hi_j = acc - c_band * se, acc + c_band * se
-    order = np.argsort(cost, kind="stable")
-    grid, lower, upper, observed = [], [], [], []
-    run_lo = run_hi = run_obs = -np.inf
-    for k in order:
-        run_lo, run_hi, run_obs = max(run_lo, lo_j[k]), max(run_hi, hi_j[k]), max(run_obs, acc[k])
-        grid.append(float(cost[k])); lower.append(float(run_lo)); upper.append(float(min(run_hi, 1.0))); observed.append(float(run_obs))
-    width = np.array(upper) - np.array(lower)
-    return {"alpha": alpha, "B": B, "c_band": c_band, "grid": grid, "lower": lower, "upper": upper, "observed": observed,
+    if per_task:
+        S, SC = _bootstrap_pairs(Y, C, B, rng)
+    else:
+        S, SC = _bootstrap_means(Y, B, rng), None
+    dev = [(np.abs(S - acc[:, None]) / np.where(se > 0, se, 1e-12)[:, None])[se > 0]]
+    if per_task:
+        dev.append((np.abs(SC - g[:, None]) / np.where(sg > 0, sg, 1e-12)[:, None])[sg > 0])
+    dev = np.vstack([d for d in dev if d.size]) if any(d.size for d in dev) else np.zeros((1, B))
+    c_band = float(np.quantile(dev.max(axis=0), 1 - alpha))
+    a_lo, a_hi = acc - c_band * se, np.minimum(acc + c_band * se, 1.0)
+    g_lo, g_hi = g - c_band * sg, g + c_band * sg
+    grid = np.unique(np.concatenate([g_lo, g_hi, g]))
+    lower, upper, observed = [], [], []
+    for x in grid:
+        sure = a_lo[g_hi <= x + 1e-12]
+        poss = a_hi[g_lo <= x + 1e-12]
+        obs = acc[g <= x + 1e-12]
+        lower.append(float(max(sure.max(), 0.0)) if sure.size else 0.0)
+        upper.append(float(poss.max()) if poss.size else float("nan"))
+        observed.append(float(obs.max()) if obs.size else float("nan"))
+    lower, upper, observed = np.array(lower), np.array(upper), np.array(observed)
+    ok = np.isfinite(upper)
+    width = (upper - lower)[ok]
+    return {"alpha": alpha, "B": B, "c_band": c_band, "per_task_costs": bool(per_task),
+            "grid": [float(x) for x in grid[ok]], "lower": [float(v) for v in lower[ok]], "upper": [float(v) for v in upper[ok]],
+            "observed": [float(v) if np.isfinite(v) else None for v in observed[ok]],
             "width_points_median": float(100 * np.median(width)), "width_points_at_top": float(100 * width[-1]),
-            "per_system": {names[k]: {"cost": float(cost[k]), "accuracy": float(acc[k]), "se": float(se[k]),
-                                      "lower": float(lo_j[k]), "upper": float(hi_j[k])} for k in range(K)}}
+            "per_system": {names[k]: {"cost": float(g[k]), "cost_se": float(sg[k]), "accuracy": float(acc[k]), "se": float(se[k]),
+                                      "lower": float(a_lo[k]), "upper": float(a_hi[k])} for k in range(K)}}
+
+
+def band_at(band, x):
+    """(lower, upper) of a band returned by frontier_band at cost x: the step functions' values at the largest grid
+    point at or below x (None when x lies below the first grid point, where no system can be within budget)."""
+    grid = np.asarray(band["grid"])
+    i = int(np.searchsorted(grid, x + 1e-12, side="right")) - 1
+    if i < 0:
+        return None
+    return band["lower"][i], band["upper"][i]
 
 
 # ---- an exact randomization certificate against the whole cheaper pool -----------------------------------------------
