@@ -84,7 +84,7 @@ def observed_frontier(acc, cost):
     return ~dom.any(axis=1)
 
 
-def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0, names=None, clusters=None) -> dict:
+def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0, names=None, clusters=None, tie_robust: bool = False) -> dict:
     """Confidence set for the Pareto frontier of a board.
 
     Args:
@@ -93,6 +93,12 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         alpha: one minus the confidence level.
         B: bootstrap resamples over tasks.
         names: restrict to these systems (default: every system that has a cost).
+        clusters: one label per task; resample task groups instead of tasks.
+        tie_robust: with per-task costs, a system may be excluded only on the evidence of rivals that are SURELY no
+            costlier (a rival's cost interval lies at or below the system's), a deterministic subset of its true rivals
+            on the event that every mean cost lies in its interval (probability at least 1 - alpha / 2); the margin is
+            taken at alpha / 2. The set then holds whether or not true mean costs tie, at the price of a larger set; it
+            always contains the observed frontier.
     """
     names = [n for n in (names or board.names) if n in costs]
     if len(names) < 2:
@@ -125,20 +131,33 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
     se[se == 0] = 1e-12
     eye = np.eye(K, dtype=bool)
     cheaper = (cost[None, :] <= cost[:, None]) & ~eye            # cheaper[i, j]: j is a cheaper-or-equal rival of i
+    alpha_set, c_cost, cheaper_fixed = alpha, 0.0, None
+    if tie_robust and per_task:
+        sg = C.std(axis=1, ddof=1) / np.sqrt(T)
+        sg = np.where(sg <= 1e-9 * np.maximum(np.abs(cost), 1e-300), 0.0, sg)
+        if (sg > 0).any():
+            dc = np.abs(SC[sg > 0] - cost[sg > 0, None]) / sg[sg > 0, None]
+            c_cost = float(np.quantile(dc.max(axis=0), 1 - alpha / 2))
+        lo_c, hi_c = cost - c_cost * sg, cost + c_cost * sg
+        cheaper_fixed = (hi_c[None, :] <= lo_c[:, None]) & ~eye   # j is surely no costlier than i
+        cheaper = cheaper_fixed
+        alpha_set = alpha / 2
 
     dev = ((S[None, :, :] - S[:, None, :]) - (acc[None, :] - acc[:, None])[:, :, None]) / se[:, :, None]   # [i, j, b]
-    if per_task:                                                  # the rival set varies with the resample
+    if cheaper_fixed is not None:                                 # tie-robust: one deterministic, enlarged rival set
+        masked = np.where(cheaper_fixed[:, :, None], dev, -np.inf)
+    elif per_task:                                                # the rival set varies with the resample
         cheaper_b = (SC[None, :, :] <= SC[:, None, :]) & ~eye[:, :, None]
         masked = np.where(cheaper_b, dev, -np.inf)
     else:
         masked = np.where(cheaper[:, :, None], dev, -np.inf)
     M = masked.max(axis=1)                                        # K x B
     has_rival = np.isfinite(M).any(axis=1)
-    q = np.array([np.quantile(M[i][np.isfinite(M[i])], 1 - alpha) if has_rival[i] else -np.inf for i in range(K)])
+    q = np.array([np.quantile(M[i][np.isfinite(M[i])], 1 - alpha_set) if has_rival[i] else -np.inf for i in range(K)])
     c_board = float(max(0.0, q[has_rival].max())) if has_rival.any() else 0.0     # the largest per-system margin
     M_all = np.where(has_rival[:, None], M, -np.inf).max(axis=0)                 # B: the largest deviation on the board
     fin = np.isfinite(M_all)
-    c = float(max(0.0, np.quantile(M_all[fin], 1 - alpha))) if fin.any() else 0.0   # joint margin: all truly undominated kept together
+    c = float(max(0.0, np.quantile(M_all[fin], 1 - alpha_set))) if fin.any() else 0.0   # joint margin: all truly undominated kept together
 
     gap = (acc[None, :] - acc[:, None]) / se                      # [i, j]: how far j sits above i, in se units
     beaten_by = np.where(cheaper, gap, -np.inf)
@@ -148,6 +167,8 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
     q_eff = np.where(has_rival, np.maximum(np.where(np.isfinite(q), q, 0.0), 0.0), 0.0)
     in_set_ps = ~(worst > q_eff)                                  # per-system margins: valid per system, smaller sets
     observed = observed_frontier(acc, cost)
+    if cheaper_fixed is not None:                                 # the observed frontier is always kept
+        in_set, in_set_board, in_set_ps = in_set | observed, in_set_board | observed, in_set_ps | observed
     if per_task:
         freq = np.array([observed_frontier(S[:, b], SC[:, b]) for b in range(B)]).mean(axis=0)
     else:
@@ -165,13 +186,13 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         systems.append({
             "system": names[k], "cost": float(cost[k]), "accuracy": float(acc[k]),
             "on_observed_frontier": bool(observed[k]), "in_frontier_set": bool(in_set[k]),
-            "undominated_frequency": float(freq[k]), "in_best_set": bool(best_set[k]),
+            "undominated_frequency": float(freq[k]), "frontier_stability": float(freq[k]), "in_best_set": bool(best_set[k]),
             "strongest_cheaper_rival": names[rival] if rival is not None else None,
             "rival_lead": float(acc[rival] - acc[k]) if rival is not None else None,
             "rival_lead_se": float(worst[k]) if rival is not None else None,
         })
     return {
-        "alpha": alpha, "systems": K, "tasks": T, "B": B, "per_task_costs": per_task, "clustered": clusters is not None,
+        "alpha": alpha, "systems": K, "tasks": T, "B": B, "per_task_costs": per_task, "clustered": clusters is not None, "tie_robust": bool(cheaper_fixed is not None), "cost_interval_c": c_cost,
         "margin_se": c, "margin_se_boardwide": c_board, "margin_se_best": c_all,
         "observed_frontier": [names[k] for k in range(K) if observed[k]],
         "frontier_set": [names[k] for k in range(K) if in_set[k]],
@@ -181,6 +202,7 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         "best_set": [names[k] for k in range(K) if best_set[k]],
         "top": {"system": names[top], "accuracy": float(acc[top]), "cost": float(cost[top])},
         "cheapest_plausible_best": {"system": names[cheapest_best], "accuracy": float(acc[cheapest_best]), "cost": float(cost[cheapest_best])},
+        "cheapest_unresolved_competitor": {"system": names[cheapest_best], "accuracy": float(acc[cheapest_best]), "cost": float(cost[cheapest_best])},
         "table": systems,
     }
 

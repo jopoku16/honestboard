@@ -287,3 +287,34 @@ def test_band_with_a_near_zero_accuracy_cheap_system_keeps_its_coverage():
             ok = ok and bx is not None and (bx[0] - 1e-12 <= a0 <= bx[1] + 1e-12)
         cov += ok
     assert cov / R >= 0.93
+
+
+
+def test_tie_robust_set_contains_the_observed_frontier_and_the_standard_set_and_keeps_tied_systems():
+    """With nearly tied true mean costs the standard set can drop a truly undominated system whose sample cost order is
+    wrong; the tie-robust set (rivals only when surely no costlier, alpha split) keeps it, and always contains the
+    observed frontier."""
+    rng = np.random.default_rng(41)
+    kept_std = kept_rob = total = 0
+    for r in range(40):
+        K, T = 8, 120
+        gamma = np.exp(rng.normal(0, 0.02, K))                              # true mean costs nearly tied
+        theta = np.clip(0.3 + 0.4 * rng.random(K), 0.05, 0.95)
+        diff = rng.normal(0, 1, T)
+        P = 1 / (1 + np.exp(-(np.log(theta / (1 - theta))[:, None] + diff[None, :])))
+        Y = (rng.random(P.shape) < P).astype(float)
+        C = gamma[:, None] * np.exp(0.5 * rng.standard_normal(P.shape) - 0.125)
+        tasks = [f"t{t}" for t in range(T)]
+        board = Board.from_rates(tasks, [{"name": f"s{k}", "rates": {t: float(Y[k, i]) for i, t in enumerate(tasks)}} for k in range(K)])
+        costs = {f"s{k}": C[k] for k in range(K)}
+        std = pareto_frontier(board, costs, B=300, seed=r)
+        rob = pareto_frontier(board, costs, B=300, seed=r, tie_robust=True)
+        assert set(std["observed_frontier"]) <= set(rob["frontier_set"])
+        assert rob["tie_robust"] and rob["cost_interval_c"] > 0
+        true_acc = np.array([(1 / (1 + np.exp(-(np.log(th / (1 - th)) + diff)))).mean() for th in theta])
+        on_true = observed_frontier(true_acc, gamma)
+        for k in np.where(on_true)[0]:
+            total += 1
+            kept_std += f"s{k}" in std["frontier_set"]
+            kept_rob += f"s{k}" in rob["frontier_set"]
+    assert kept_rob >= kept_std and kept_rob / total >= 0.93
