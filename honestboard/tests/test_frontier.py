@@ -187,7 +187,7 @@ def test_exact_entrant_pvalues_are_valid_probabilities_and_agree_with_pool_rule(
     res = entrant_pvalues_exact(board, costs, top, draws=2000)
     assert res["pool"] and abs(res["p_iu"] - max(res["pairs"].values())) < 1e-12
     assert all(0.0 < v <= 1.0 for v in res["pairs"].values())
-    assert all(v >= 1 for v in res["kept_swaps"].values())                 # the observed configuration is always kept
+    assert all(v > 0 for v in res["kept_mass"].values())                   # the observed configuration is always kept
     assert entrant_pvalues_exact(board, costs, min(costs, key=costs.get), draws=100)["pool"] == []
 
 
@@ -249,3 +249,41 @@ def test_frontier_band_with_constant_per_task_costs_is_not_inflated_by_rounding_
     per_task = {n: np.full(T, 0.7340123 * c / 0.7340123) for n, c in costs.items()}   # constant arrays with awkward values
     arr = frontier_band(board, per_task, B=400, seed=0)
     assert arr["width_points_median"] < 60 and abs(arr["width_points_median"] - fixed["width_points_median"]) < 5
+
+
+
+def test_exact_certificate_closed_form_matches_randomization_on_pass_fail_outcomes():
+    """The truncated-binomial closed form equals the randomization p-value (swap draws) up to Monte Carlo error."""
+    from honestboard.frontier import entrant_pvalues_exact_arrays
+    rng = np.random.default_rng(3)
+    T = 60
+    for _ in range(6):
+        Y = (rng.random((4, T)) < np.array([[0.6], [0.5], [0.45], [0.4]])).astype(float)
+        if Y[0].mean() <= Y[1:].mean(axis=1).max():
+            continue
+        p_closed, pairs, _ = entrant_pvalues_exact_arrays(Y, 0, [1, 2, 3])
+        # the same p-values by explicit swap draws, on real-valued copies (the graded path)
+        Yg = 0.5 * Y                                                       # values {0, 0.5}: not pass/fail, so the swap-draw path runs, with exact ties
+        p_mc, pairs_mc, _ = entrant_pvalues_exact_arrays(Yg, 0, [1, 2, 3], draws=60000, seed=1)
+        assert abs(p_closed - p_mc) < 0.03
+
+
+def test_band_with_a_near_zero_accuracy_cheap_system_keeps_its_coverage():
+    """A cheap system with true accuracy 0.02 is all-fail in a 50-task sample about a third of the time; a bootstrap-t
+    interval collapses to a point there. The Clopper-Pearson step keeps coverage at the nominal level."""
+    rng = np.random.default_rng(31)
+    mu = np.array([0.02, 0.1, 0.2, 0.3])
+    costs = {f"s{k}": float(c) for k, c in enumerate([0.1, 0.2, 0.3, 0.4])}
+    T, R, cov = 50, 160, 0
+    for r in range(R):
+        Y = (rng.random((4, T)) < mu[:, None]).astype(float)
+        tasks = [f"t{t}" for t in range(T)]
+        board = Board.from_rates(tasks, [{"name": f"s{k}", "rates": {t: float(Y[k, i]) for i, t in enumerate(tasks)}} for k in range(4)])
+        band = frontier_band(board, costs, B=300, seed=r)
+        ok = True
+        for x, c in zip([0.1, 0.2, 0.3, 0.4], [0.1, 0.2, 0.3, 0.4]):
+            bx = band_at(band, x)
+            a0 = mu[:int(round(x * 10))].max()
+            ok = ok and bx is not None and (bx[0] - 1e-12 <= a0 <= bx[1] + 1e-12)
+        cov += ok
+    assert cov / R >= 0.93

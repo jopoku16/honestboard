@@ -362,20 +362,25 @@ def exact_frontier_set(board, costs, alpha=0.05, draws=50000, seed=0):
 
 
 # ---- a simultaneous confidence band for the frontier curve ------------------------------------------------------------
-def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0) -> dict:
+def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0, small: int = 10) -> dict:
     """Simultaneous confidence band for the frontier curve A(x) = the best true accuracy among the systems whose true
-    mean cost is at most x, valid whether costs are fixed numbers or measured per task.
+    mean cost is at most x (defined for x at or above the cheapest true cost), valid whether costs are fixed numbers or
+    measured per task.
 
-    With c the (1 - alpha) bootstrap quantile of the largest studentised deviation over ALL accuracies and ALL mean
-    costs (tasks resampled jointly), let each system have an accuracy interval [a_j -/+ c se_j] and a cost interval
-    [g_j -/+ c sg_j]. On the event that every true accuracy and true mean cost lies in its interval (probability about
-    1 - alpha),
-        L(x) = max of (a_j - c se_j) over the systems whose cost interval lies at or below x     <= A(x),
-        U(x) = max of (a_j + c se_j) over the systems whose cost interval reaches x or below     >= A(x),
+    With c the quantile of the largest studentised deviation over the regular accuracies and ALL mean costs (tasks
+    resampled jointly), each system has an accuracy interval and a cost interval [g_j -/+ c sg_j]. On the event that
+    every true accuracy and true mean cost lies in its interval (probability at least 1 - alpha, asymptotically),
+        L(x) = max of (lower accuracy end) over the systems whose cost interval lies at or below x     <= A(x),
+        U(x) = max of (upper accuracy end) over the systems whose cost interval reaches x or below      >= A(x),
     for every x at once: a system enters the lower edge only when its cost is surely within budget and the upper edge
-    when it possibly is. With fixed costs sg_j = 0 and the cost intervals are points. Both edges are step functions
-    with jumps at the interval ends; the grid returned contains every jump. The lower edge is 0 where no system is
-    surely within budget."""
+    when it possibly is, so the cost order need not be right. With fixed costs the cost intervals are points.
+
+    A bootstrap-t accuracy interval undercovers, and collapses to a point when a system passes or fails every task,
+    for systems with few passes or few failures. For pass/fail outcomes a system with fewer than `small` passes or
+    fewer than `small` failures therefore gets a Clopper-Pearson interval at level alpha / (2K) (alpha / K when no
+    max-t part remains), and the max-t quantile for everything else is taken at alpha / 2; the union bound gives the
+    total. The lower edge is 0 where no system is surely within budget."""
+    from scipy import stats as _st
     names = [n for n in board.names if n in costs]
     idx = np.array([board.index(n) for n in names])
     Y = board.Y[idx].astype(float)
@@ -392,17 +397,35 @@ def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 
         sg = np.zeros(K)
     acc = Y.mean(axis=1)
     se = np.sqrt(np.maximum(Y.var(axis=1, ddof=1), 0.0) / T)
+    binary = bool(np.all((Y == 0) | (Y == 1)))
+    passes = Y.sum(axis=1)
+    small_mask = (np.minimum(passes, T - passes) < small) if binary else np.zeros(K, bool)
+    regular = ~small_mask & (se > 0)
+    has_maxt = bool(regular.any() or (sg > 0).any())
+    if small_mask.any() and has_maxt:
+        alpha_t, delta = alpha / 2, alpha / (2 * K)
+    elif small_mask.any():
+        alpha_t, delta = alpha, alpha / K
+    else:
+        alpha_t, delta = alpha, 0.0
     rng = np.random.default_rng(seed)
     if per_task:
         S, SC = _bootstrap_pairs(Y, C, B, rng)
     else:
         S, SC = _bootstrap_means(Y, B, rng), None
-    dev = [(np.abs(S - acc[:, None]) / np.where(se > 0, se, 1e-12)[:, None])[se > 0]]
-    if per_task:
-        dev.append((np.abs(SC - g[:, None]) / np.where(sg > 0, sg, 1e-12)[:, None])[sg > 0])
-    dev = np.vstack([d for d in dev if d.size]) if any(d.size for d in dev) else np.zeros((1, B))
-    c_band = float(np.quantile(dev.max(axis=0), 1 - alpha))
-    a_lo, a_hi = acc - c_band * se, np.minimum(acc + c_band * se, 1.0)
+    dev = []
+    if regular.any():
+        dev.append(np.abs(S[regular] - acc[regular, None]) / se[regular, None])
+    if per_task and (sg > 0).any():
+        dev.append(np.abs(SC[sg > 0] - g[sg > 0, None]) / sg[sg > 0, None])
+    c_band = float(np.quantile(np.vstack(dev).max(axis=0), 1 - alpha_t)) if dev else 0.0
+    a_lo, a_hi = acc.copy(), acc.copy()
+    a_lo[regular] = acc[regular] - c_band * se[regular]
+    a_hi[regular] = np.minimum(acc[regular] + c_band * se[regular], 1.0)
+    for j in np.where(small_mask)[0]:                                          # exact interval where the bootstrap-t is unreliable
+        x = int(round(passes[j]))
+        a_lo[j] = 0.0 if x == 0 else float(_st.beta.ppf(delta / 2, x, T - x + 1))
+        a_hi[j] = 1.0 if x == T else float(_st.beta.ppf(1 - delta / 2, x + 1, T - x))
     g_lo, g_hi = g - c_band * sg, g + c_band * sg
     grid = np.unique(np.concatenate([g_lo, g_hi, g]))
     lower, upper, observed = [], [], []
@@ -416,12 +439,12 @@ def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 
     lower, upper, observed = np.array(lower), np.array(upper), np.array(observed)
     ok = np.isfinite(upper)
     width = (upper - lower)[ok]
-    return {"alpha": alpha, "B": B, "c_band": c_band, "per_task_costs": bool(per_task),
+    return {"alpha": alpha, "B": B, "c_band": c_band, "per_task_costs": bool(per_task), "n_small": int(small_mask.sum()),
             "grid": [float(x) for x in grid[ok]], "lower": [float(v) for v in lower[ok]], "upper": [float(v) for v in upper[ok]],
             "observed": [float(v) if np.isfinite(v) else None for v in observed[ok]],
             "width_points_median": float(100 * np.median(width)), "width_points_at_top": float(100 * width[-1]),
             "per_system": {names[k]: {"cost": float(g[k]), "cost_se": float(sg[k]), "accuracy": float(acc[k]), "se": float(se[k]),
-                                      "lower": float(a_lo[k]), "upper": float(a_hi[k])} for k in range(K)}}
+                                      "small": bool(small_mask[k]), "lower": float(a_lo[k]), "upper": float(a_hi[k])} for k in range(K)}}
 
 
 def band_at(band, x):
@@ -437,31 +460,56 @@ def band_at(band, x):
 # ---- an exact randomization certificate against the whole cheaper pool -----------------------------------------------
 def entrant_pvalues_exact_arrays(Y, b, pool, draws=20000, seed=0):
     """Exact selective p-values for H_k: k is at least as good as b, one per cheaper-or-equal k in `pool`, conditional
-    on the WHOLE frontier event, by randomization. Under the sharp task-wise null for the pair (b, k) the two systems'
-    outcomes on each task are exchangeable, so swapping them on a random subset of tasks leaves the law unchanged;
-    conditioning on the frontier event keeps only the swaps under which b still beats every system in the pool. The
-    p-value is the share of kept swaps on which b's lead over k is at least the observed one (with the observed
-    configuration counted once). The intersection-union maximum over k is valid under the composite null that some
-    system in the pool truly dominates b, for any number of tasks. Returns (p_iu, {k: p_k}, {k: kept swaps})."""
+    on the whole frontier event E = {ybar_b >= ybar_j for every j in pool}.
+
+    Pass/fail outcomes (closed form, no Monte Carlo): write D for the number of tasks on which b and k differ, N for the
+    number b wins, n11 for the number both pass, and T for the number of tasks. Swapping b's and k's outcomes on a
+    random subset of the discordant tasks turns N into N' ~ Bin(D, 1/2) under the sharp null, and the swaps that keep
+    E are those with N' >= n0 = max(ceil(D / 2), ceil(T * max_{j in pool, j != k} ybar_j - n11)). Hence
+        p_k = P(X >= N) / P(X >= n0),  X ~ Bin(D, 1/2):
+    the companion paper's selective sign test with a higher truncation point. Under H_k (on every discordant task b
+    wins with probability at most 1/2 given the pairs and the other systems' outcomes) the p-value is super-uniform
+    given E, for any number of tasks. The intersection-union maximum over k is then valid under the composite null
+    that H_k holds for SOME k in the pool. Graded outcomes in [0, 1] (no closed form) fall back to `draws` random
+    swaps with the +1 correction, valid under the sharp null only and floored at 1 / (1 + kept swaps).
+    Returns (p_iu, {k: p_k}, {k: kept mass P(X >= n0) (closed form) or kept swaps (Monte Carlo)})."""
+    from scipy import stats as _st
     Y = np.asarray(Y, float)
     T = Y.shape[1]
     ybar = Y.mean(axis=1)
-    rng = np.random.default_rng(seed)
+    binary = bool(np.all((Y == 0) | (Y == 1)))
     out, kept_n = {}, {}
-    for k in pool:
-        d = Y[b] - Y[k]
-        others = [j for j in pool if j != k]
-        thr = max(ybar[j] for j in others) if others else -np.inf
-        neg = rng.random((draws, T)) < 0.5                                   # True: outcomes of b and k swapped on that task
-        shift = (neg * d[None, :]).sum(axis=1) / T
-        yb_s, yk_s = ybar[b] - shift, ybar[k] + shift
-        keep = (yb_s >= thr - 1e-12) & (yb_s >= yk_s - 1e-12)                # the frontier event still holds under the swap
-        stat_obs = ybar[b] - ybar[k]
-        stat_s = yb_s - yk_s
-        n_keep = int(keep.sum())
-        p = 1.0 if n_keep == 0 else float((1 + int((stat_s[keep] >= stat_obs - 1e-12).sum())) / (1 + n_keep))
-        out[int(k)] = min(1.0, p)
-        kept_n[int(k)] = n_keep
+    if binary:
+        for k in pool:
+            yb, yk = Y[b], Y[k]
+            N = int(((yb == 1) & (yk == 0)).sum())
+            D = N + int(((yk == 1) & (yb == 0)).sum())
+            n11 = int(((yb == 1) & (yk == 1)).sum())
+            others = [j for j in pool if j != k]
+            need = T * max(ybar[j] for j in others) - n11 if others else -np.inf
+            n0 = max(int(np.ceil(D / 2 - 1e-12)), int(np.ceil(need - 1e-9)) if np.isfinite(need) else 0, 0)
+            if D == 0 or N < n0:                                              # nothing to swap, or the observed event fails
+                out[int(k)], kept_n[int(k)] = 1.0, 1.0
+                continue
+            denom = float(_st.binom.sf(n0 - 1, D, 0.5))                       # P(X >= n0)
+            out[int(k)] = float(min(1.0, _st.binom.sf(N - 1, D, 0.5) / denom))
+            kept_n[int(k)] = denom
+    else:
+        rng = np.random.default_rng(seed)
+        for k in pool:
+            d = Y[b] - Y[k]
+            others = [j for j in pool if j != k]
+            thr = max(ybar[j] for j in others) if others else -np.inf
+            neg = rng.random((draws, T)) < 0.5                                   # True: outcomes of b and k swapped on that task
+            shift = (neg * d[None, :]).sum(axis=1) / T
+            yb_s, yk_s = ybar[b] - shift, ybar[k] + shift
+            keep = (yb_s >= thr - 1e-12) & (yb_s >= yk_s - 1e-12)                # the frontier event still holds under the swap
+            stat_obs = ybar[b] - ybar[k]
+            stat_s = yb_s - yk_s
+            n_keep = int(keep.sum())
+            p = 1.0 if n_keep == 0 else float((1 + int((stat_s[keep] >= stat_obs - 1e-12).sum())) / (1 + n_keep))
+            out[int(k)] = min(1.0, p)
+            kept_n[int(k)] = n_keep
     p_iu = max(out.values()) if out else float("nan")
     return float(p_iu), out, kept_n
 
@@ -483,4 +531,4 @@ def entrant_pvalues_exact(board, costs, system, earlier=None, draws=20000, seed=
         raise ValueError(f"{names[b]} is not on the observed frontier of its pool")
     p_iu, pairs, kept = entrant_pvalues_exact_arrays(Y, b, pool, draws=draws, seed=seed)
     return {"system": names[b], "p_iu": p_iu, "pairs": {names[k]: v for k, v in pairs.items()},
-            "kept_swaps": {names[k]: v for k, v in kept.items()}, "pool": [names[k] for k in pool]}
+            "kept_mass": {names[k]: v for k, v in kept.items()}, "pool": [names[k] for k in pool]}
