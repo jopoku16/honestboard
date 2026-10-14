@@ -8,10 +8,13 @@ per-task outcomes and a cost per system (or per task) this module gives:
    at least one of the two strict.
 2. A confidence set for the frontier at level 1 - alpha: system i stays in unless some cheaper-or-equal system beats it
    by more than a simultaneous paired margin c * se_ij, where se_ij is the standard error of the paired accuracy
-   difference and c is a bootstrap quantile of the largest studentised deviation of any cheaper rival from i, taken over
-   all systems. This is the multiple-comparisons-with-the-best construction behind `Board.confidence_set_best`, with the
-   rival set restricted to cheaper systems: a truly undominated system is kept with probability about 1 - alpha. The
-   set always contains the observed frontier.
+   difference and c is the (1 - alpha) bootstrap quantile of the largest studentised deviation of any cheaper rival
+   from any system on the board. This is the multiple-comparisons-with-the-best construction behind
+   `Board.confidence_set_best`, with the rival set restricted to cheaper systems and the margin taken jointly over
+   systems: every truly undominated system is kept at once with probability about 1 - alpha, so the set contains the
+   whole true frontier. Two smaller sets with weaker guarantees are returned beside it: `frontier_set_boardwide` (the
+   largest per-system margin) and `frontier_set_persystem` (each system's own margin), each keeping a given truly
+   undominated system with probability about 1 - alpha. The set always contains the observed frontier.
 3. The undominated frequency: the share of task resamples in which system i is on the observed frontier. A resampling
    frequency, not a probability of being Pareto-optimal.
 4. The cheapest plausible best: the cheapest member of the confidence set of the best (no cost), what a buyer who wants
@@ -37,6 +40,21 @@ def _bootstrap_means(Y, B, rng, chunk=200):
         out[:, done:done + m] = Y[:, ix].mean(axis=2)
         done += m
     return out
+
+
+def _bootstrap_clusters(Y, C, B, rng, clusters):
+    """Bootstrap accuracies (and per-task-cost means) by resampling task CLUSTERS with replacement: (K x B, K x B or None)."""
+    labels = np.asarray(clusters)
+    groups = [np.where(labels == g)[0] for g in np.unique(labels)]
+    G = len(groups)
+    acc = np.empty((Y.shape[0], B))
+    cost = np.empty((Y.shape[0], B)) if C is not None else None
+    for b in range(B):
+        ix = np.concatenate([groups[g] for g in rng.integers(0, G, size=G)])
+        acc[:, b] = Y[:, ix].mean(axis=1)
+        if C is not None:
+            cost[:, b] = C[:, ix].mean(axis=1)
+    return acc, cost
 
 
 def _bootstrap_pairs(Y, C, B, rng, chunk=200):
@@ -66,7 +84,7 @@ def observed_frontier(acc, cost):
     return ~dom.any(axis=1)
 
 
-def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0, names=None) -> dict:
+def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0, names=None, clusters=None) -> dict:
     """Confidence set for the Pareto frontier of a board.
 
     Args:
@@ -93,7 +111,9 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         cost = np.array([float(costs[n]) for n in names])
     acc = Y.mean(axis=1)
     rng = np.random.default_rng(seed)
-    if per_task:
+    if clusters is not None:                                      # resample task groups (repositories, capsules) instead of tasks
+        S, SC = _bootstrap_clusters(Y, C if per_task else None, B, rng, clusters)
+    elif per_task:
         S, SC = _bootstrap_pairs(Y, C, B, rng)
     else:
         S = _bootstrap_means(Y, B, rng)
@@ -115,14 +135,18 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
     M = masked.max(axis=1)                                        # K x B
     has_rival = np.isfinite(M).any(axis=1)
     q = np.array([np.quantile(M[i][np.isfinite(M[i])], 1 - alpha) if has_rival[i] else -np.inf for i in range(K)])
-    c = float(max(0.0, q[has_rival].max())) if has_rival.any() else 0.0
+    c_board = float(max(0.0, q[has_rival].max())) if has_rival.any() else 0.0     # the largest per-system margin
+    M_all = np.where(has_rival[:, None], M, -np.inf).max(axis=0)                 # B: the largest deviation on the board
+    fin = np.isfinite(M_all)
+    c = float(max(0.0, np.quantile(M_all[fin], 1 - alpha))) if fin.any() else 0.0   # joint margin: all truly undominated kept together
 
     gap = (acc[None, :] - acc[:, None]) / se                      # [i, j]: how far j sits above i, in se units
     beaten_by = np.where(cheaper, gap, -np.inf)
     worst = beaten_by.max(axis=1)
-    in_set = ~(worst > c)
+    in_set = ~(worst > c)                                         # the confidence set for the frontier (joint)
+    in_set_board = ~(worst > c_board)
     q_eff = np.where(has_rival, np.maximum(np.where(np.isfinite(q), q, 0.0), 0.0), 0.0)
-    in_set_ps = ~(worst > q_eff)                                  # per-system margins: valid per system, slightly smaller sets
+    in_set_ps = ~(worst > q_eff)                                  # per-system margins: valid per system, smaller sets
     observed = observed_frontier(acc, cost)
     if per_task:
         freq = np.array([observed_frontier(S[:, b], SC[:, b]) for b in range(B)]).mean(axis=0)
@@ -147,10 +171,11 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
             "rival_lead_se": float(worst[k]) if rival is not None else None,
         })
     return {
-        "alpha": alpha, "systems": K, "tasks": T, "B": B, "per_task_costs": per_task,
-        "margin_se": c, "margin_se_best": c_all,
+        "alpha": alpha, "systems": K, "tasks": T, "B": B, "per_task_costs": per_task, "clustered": clusters is not None,
+        "margin_se": c, "margin_se_boardwide": c_board, "margin_se_best": c_all,
         "observed_frontier": [names[k] for k in range(K) if observed[k]],
         "frontier_set": [names[k] for k in range(K) if in_set[k]],
+        "frontier_set_boardwide": [names[k] for k in range(K) if in_set_board[k]],
         "frontier_set_persystem": [names[k] for k in range(K) if in_set_ps[k]],
         "margins_persystem": {names[k]: float(q_eff[k]) for k in range(K)},
         "best_set": [names[k] for k in range(K) if best_set[k]],
@@ -330,4 +355,7 @@ def exact_frontier_set(board, costs, alpha=0.05, draws=50000, seed=0):
         minp[names[i]] = float(pm); threshold[names[i]] = float(thr)
         if pm > thr:
             kept.append(names[i])
-    return {"alpha": alpha, "frontier_set_exact": kept, "min_rival_p": minp, "threshold": threshold}
+    n_pairs = sum(1 for i in range(K) for j in range(K) if j != i and cost[j] <= cost[i])
+    kept_joint = [n for n in names if minp[n] > alpha / max(1, n_pairs)]       # Bonferroni over every rival pair: joint
+    return {"alpha": alpha, "frontier_set_exact": kept, "frontier_set_exact_joint": kept_joint, "min_rival_p": minp,
+            "threshold": threshold, "n_rival_pairs": n_pairs}
