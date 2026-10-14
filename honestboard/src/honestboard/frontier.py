@@ -359,3 +359,89 @@ def exact_frontier_set(board, costs, alpha=0.05, draws=50000, seed=0):
     kept_joint = [n for n in names if minp[n] > alpha / max(1, n_pairs)]       # Bonferroni over every rival pair: joint
     return {"alpha": alpha, "frontier_set_exact": kept, "frontier_set_exact_joint": kept_joint, "min_rival_p": minp,
             "threshold": threshold, "n_rival_pairs": n_pairs}
+
+
+# ---- a simultaneous confidence band for the frontier curve ------------------------------------------------------------
+def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0) -> dict:
+    """Simultaneous confidence band for the frontier curve A(c) = the best true accuracy among the systems that cost at
+    most c. With c_band the (1 - alpha) bootstrap quantile of max_j |acc*_j - acc_j| / se_j (a max-t band for all K
+    accuracies at once), L(c) = max over systems with cost <= c of (acc_j - c_band se_j) and U(c) likewise with a plus.
+    On the event that every |acc_j - mu_j| <= c_band se_j, which has probability about 1 - alpha, L(c) <= A(c) <= U(c)
+    for every c at once (fixed costs). The band is evaluated at every system's cost; between those costs the curves
+    are flat (the frontier is a staircase)."""
+    names = [n for n in board.names if n in costs]
+    idx = np.array([board.index(n) for n in names])
+    Y = board.Y[idx].astype(float)
+    K, T = Y.shape
+    cost = np.array([float(np.mean(costs[n])) if np.ndim(costs[n]) > 0 else float(costs[n]) for n in names])
+    acc = Y.mean(axis=1)
+    se = np.sqrt(np.maximum(Y.var(axis=1, ddof=1), 0.0) / T)
+    se_safe = np.where(se > 0, se, 1e-12)
+    rng = np.random.default_rng(seed)
+    S = _bootstrap_means(Y, B, rng)
+    dev = (np.abs(S - acc[:, None]) / se_safe[:, None])[se > 0]
+    c_band = float(np.quantile(dev.max(axis=0), 1 - alpha)) if dev.size else 0.0
+    lo_j, hi_j = acc - c_band * se, acc + c_band * se
+    order = np.argsort(cost, kind="stable")
+    grid, lower, upper, observed = [], [], [], []
+    run_lo = run_hi = run_obs = -np.inf
+    for k in order:
+        run_lo, run_hi, run_obs = max(run_lo, lo_j[k]), max(run_hi, hi_j[k]), max(run_obs, acc[k])
+        grid.append(float(cost[k])); lower.append(float(run_lo)); upper.append(float(min(run_hi, 1.0))); observed.append(float(run_obs))
+    width = np.array(upper) - np.array(lower)
+    return {"alpha": alpha, "B": B, "c_band": c_band, "grid": grid, "lower": lower, "upper": upper, "observed": observed,
+            "width_points_median": float(100 * np.median(width)), "width_points_at_top": float(100 * width[-1]),
+            "per_system": {names[k]: {"cost": float(cost[k]), "accuracy": float(acc[k]), "se": float(se[k]),
+                                      "lower": float(lo_j[k]), "upper": float(hi_j[k])} for k in range(K)}}
+
+
+# ---- an exact randomization certificate against the whole cheaper pool -----------------------------------------------
+def entrant_pvalues_exact_arrays(Y, b, pool, draws=20000, seed=0):
+    """Exact selective p-values for H_k: k is at least as good as b, one per cheaper-or-equal k in `pool`, conditional
+    on the WHOLE frontier event, by randomization. Under the sharp task-wise null for the pair (b, k) the two systems'
+    outcomes on each task are exchangeable, so swapping them on a random subset of tasks leaves the law unchanged;
+    conditioning on the frontier event keeps only the swaps under which b still beats every system in the pool. The
+    p-value is the share of kept swaps on which b's lead over k is at least the observed one (with the observed
+    configuration counted once). The intersection-union maximum over k is valid under the composite null that some
+    system in the pool truly dominates b, for any number of tasks. Returns (p_iu, {k: p_k}, {k: kept swaps})."""
+    Y = np.asarray(Y, float)
+    T = Y.shape[1]
+    ybar = Y.mean(axis=1)
+    rng = np.random.default_rng(seed)
+    out, kept_n = {}, {}
+    for k in pool:
+        d = Y[b] - Y[k]
+        others = [j for j in pool if j != k]
+        thr = max(ybar[j] for j in others) if others else -np.inf
+        neg = rng.random((draws, T)) < 0.5                                   # True: outcomes of b and k swapped on that task
+        shift = (neg * d[None, :]).sum(axis=1) / T
+        yb_s, yk_s = ybar[b] - shift, ybar[k] + shift
+        keep = (yb_s >= thr - 1e-12) & (yb_s >= yk_s - 1e-12)                # the frontier event still holds under the swap
+        stat_obs = ybar[b] - ybar[k]
+        stat_s = yb_s - yk_s
+        n_keep = int(keep.sum())
+        p = 1.0 if n_keep == 0 else float((1 + int((stat_s[keep] >= stat_obs - 1e-12).sum())) / (1 + n_keep))
+        out[int(k)] = min(1.0, p)
+        kept_n[int(k)] = n_keep
+    p_iu = max(out.values()) if out else float("nan")
+    return float(p_iu), out, kept_n
+
+
+def entrant_pvalues_exact(board, costs, system, earlier=None, draws=20000, seed=0):
+    """Board-level wrapper of entrant_pvalues_exact_arrays (same pool rule as entrant_pvalues)."""
+    names = [n for n in board.names if n in costs]
+    idx = np.array([board.index(n) for n in names])
+    Y = board.Y[idx].astype(float)
+    K, T = Y.shape
+    cost = np.array([float(np.mean(costs[n])) if np.ndim(costs[n]) > 0 else float(costs[n]) for n in names])
+    b = names.index(system) if isinstance(system, str) else int(system)
+    cand = range(K) if earlier is None else [names.index(n) for n in earlier if n in names]
+    pool = [k for k in cand if k != b and cost[k] <= cost[b]]
+    acc = Y.mean(axis=1)
+    if not pool:
+        return {"system": names[b], "p_iu": float("nan"), "pairs": {}, "pool": []}
+    if acc[b] < acc[pool].max() - 1e-12:
+        raise ValueError(f"{names[b]} is not on the observed frontier of its pool")
+    p_iu, pairs, kept = entrant_pvalues_exact_arrays(Y, b, pool, draws=draws, seed=seed)
+    return {"system": names[b], "p_iu": p_iu, "pairs": {names[k]: v for k, v in pairs.items()},
+            "kept_swaps": {names[k]: v for k, v in kept.items()}, "pool": [names[k] for k in pool]}

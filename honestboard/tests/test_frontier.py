@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from honestboard import Board
-from honestboard.frontier import entrant_pvalues, exact_frontier_set, frontier_curse, frontier_winner, observed_frontier, pareto_frontier
+from honestboard.frontier import entrant_pvalues, entrant_pvalues_exact, exact_frontier_set, frontier_band, frontier_curse, frontier_winner, observed_frontier, pareto_frontier
 
 
 def make_board(P, T, seed=0, names=None):
@@ -161,3 +161,52 @@ def test_entrant_pvalues_composite_is_max_of_pairs_and_valid_for_a_cheapest_syst
     dominated = [k for k in range(board.K) if any(cost[j] <= cost[k] and acc[j] > acc[k] for j in range(board.K))]
     with pytest.raises(ValueError):
         entrant_pvalues(board, costs, board.names[dominated[0]])
+
+
+def test_frontier_band_brackets_the_observed_staircase_and_covers_known_truth():
+    """The band contains the observed staircase everywhere, and over many boards with fixed costs it contains the true
+    staircase on every grid point at least 95% of the time."""
+    covered = 0
+    for seed in range(60):
+        board, costs, truth = _known_truth_board(K=10, T=80, seed=seed)
+        band = frontier_band(board, costs, B=400, seed=seed)
+        assert all(lo - 1e-12 <= ob <= hi + 1e-12 for lo, ob, hi in zip(band["lower"], band["observed"], band["upper"]))
+        cost = np.array([costs[n] for n in board.names])
+        ok = True
+        for c, lo, hi in zip(band["grid"], band["lower"], band["upper"]):
+            a0 = max(truth[j] for j in range(board.K) if cost[j] <= c + 1e-12)
+            ok = ok and (lo - 1e-12 <= a0 <= hi + 1e-12)
+        covered += ok
+    assert covered / 60 >= 0.93
+
+
+def test_exact_entrant_pvalues_are_valid_probabilities_and_agree_with_pool_rule():
+    board, costs, _ = _known_truth_board(K=12, T=120, seed=4)
+    r = pareto_frontier(board, costs, B=200, seed=0)
+    top = r["observed_frontier"][-1]
+    res = entrant_pvalues_exact(board, costs, top, draws=2000)
+    assert res["pool"] and abs(res["p_iu"] - max(res["pairs"].values())) < 1e-12
+    assert all(0.0 < v <= 1.0 for v in res["pairs"].values())
+    assert all(v >= 1 for v in res["kept_swaps"].values())                 # the observed configuration is always kept
+    assert entrant_pvalues_exact(board, costs, min(costs, key=costs.get), draws=100)["pool"] == []
+
+
+def test_exact_entrant_certificate_holds_level_with_a_near_copy_rival():
+    """A truly dominated entrant with a near-copy rival in the pool is certified at most about 5% of the time."""
+    from honestboard.frontier import entrant_pvalues_exact_arrays
+    rng = np.random.default_rng(11)
+    T, cert, sel = 150, 0, 0
+    for _ in range(300):
+        diff = rng.normal(0, 1, T)
+        p = 1 / (1 + np.exp(-(0.4 + diff)))
+        yb = (rng.random(T) < p).astype(float)
+        yk = (rng.random(T) < p).astype(float)                              # same true accuracy, independent: dominates b
+        yc = yb.copy()
+        yc[(yc == 1) & (rng.random(T) < 0.1)] = 0                           # a near-copy of b
+        Y = np.vstack([yb, yk, yc])
+        if Y[0].mean() <= max(Y[1].mean(), Y[2].mean()) + 1e-12:
+            continue
+        sel += 1
+        p_iu, _, _ = entrant_pvalues_exact_arrays(Y, 0, [1, 2], draws=1000, seed=sel)
+        cert += p_iu <= 0.05
+    assert sel > 50 and cert / sel <= 0.09
