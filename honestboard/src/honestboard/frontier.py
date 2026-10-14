@@ -121,6 +121,8 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
     beaten_by = np.where(cheaper, gap, -np.inf)
     worst = beaten_by.max(axis=1)
     in_set = ~(worst > c)
+    q_eff = np.where(has_rival, np.maximum(np.where(np.isfinite(q), q, 0.0), 0.0), 0.0)
+    in_set_ps = ~(worst > q_eff)                                  # per-system margins: valid per system, slightly smaller sets
     observed = observed_frontier(acc, cost)
     if per_task:
         freq = np.array([observed_frontier(S[:, b], SC[:, b]) for b in range(B)]).mean(axis=0)
@@ -149,6 +151,8 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         "margin_se": c, "margin_se_best": c_all,
         "observed_frontier": [names[k] for k in range(K) if observed[k]],
         "frontier_set": [names[k] for k in range(K) if in_set[k]],
+        "frontier_set_persystem": [names[k] for k in range(K) if in_set_ps[k]],
+        "margins_persystem": {names[k]: float(q_eff[k]) for k in range(K)},
         "best_set": [names[k] for k in range(K) if best_set[k]],
         "top": {"system": names[top], "accuracy": float(acc[top]), "cost": float(cost[top])},
         "cheapest_plausible_best": {"system": names[cheapest_best], "accuracy": float(acc[cheapest_best]), "cost": float(cost[cheapest_best])},
@@ -246,3 +250,84 @@ def frontier_curse(board, costs, alpha: float = 0.05, B: int = 4000, seed: int =
     members = [k for k in np.argsort(cost, kind="stable") if observed_frontier(acc, cost)[k]]
     return [frontier_winner(board, costs, names[k], alpha=alpha, B=B, seed=seed + k, iterate=iterate, B_outer=B_outer, B_inner=B_inner)
             for k in members]
+
+
+# ---- certifying a frontier entrant against the whole cheaper pool ----------------------------------------------------
+def entrant_pvalues_arrays(acc, Sigma, b, pool, T):
+    """Polyhedral selective p-values (Lee et al., 2016) for H_k: theta_b <= theta_k, one per cheaper-or-equal system k
+    in `pool`, each conditional on the WHOLE frontier event {acc_b >= acc_k for every k in pool}, under the normal
+    approximation acc ~ N(theta, Sigma) with a lattice correction of 1/T. The intersection-union p-value is their
+    maximum: it is super-uniform under the composite null 'some system in the pool truly dominates b', because under
+    H_k the k-th p-value alone is super-uniform. Returns (p_iu, {k: p_k})."""
+    from . import selective
+    K = len(acc)
+    rows, rhs = [], []
+    for k in pool:
+        r = np.zeros(K); r[k] = 1.0; r[b] = -1.0
+        rows.append(r); rhs.append(0.0)                           # acc_k - acc_b <= 0
+    A, rhs = np.array(rows), np.array(rhs)
+    out = {}
+    for k in pool:
+        eta = np.zeros(K); eta[b] = 1.0; eta[k] = -1.0
+        pk = selective.polyhedral_pvalue(np.asarray(acc, float), Sigma, eta, A, rhs, lattice=1.0 / T)
+        out[int(k)] = 1.0 if not np.isfinite(pk) else float(pk)   # no variance in the contrast: nothing can be shown
+    p_iu = max(out.values()) if out else float("nan")
+    return float(p_iu), out
+
+
+def entrant_pvalues(board, costs, system, earlier=None):
+    """Board-level wrapper of entrant_pvalues_arrays: the pool is every system in `earlier` (names; default all other
+    systems with a cost) whose mean cost per task is at most the entrant's. Returns a dict with p_iu, the per-rival
+    p-values by name, and the pool."""
+    names = [n for n in board.names if n in costs]
+    idx = np.array([board.index(n) for n in names])
+    Y = board.Y[idx].astype(float)
+    K, T = Y.shape
+    cost = np.array([float(np.mean(costs[n])) if np.ndim(costs[n]) > 0 else float(costs[n]) for n in names])
+    b = names.index(system) if isinstance(system, str) else int(system)
+    cand = range(K) if earlier is None else [names.index(n) for n in earlier if n in names]
+    pool = [k for k in cand if k != b and cost[k] <= cost[b]]
+    acc = Y.mean(axis=1)
+    Sigma = np.cov(Y) / T if K > 1 else np.zeros((1, 1))
+    if not pool:
+        return {"system": names[b], "p_iu": float("nan"), "pairs": {}, "pool": []}
+    if acc[b] < acc[pool].max() - 1e-12:
+        raise ValueError(f"{names[b]} is not on the observed frontier of its pool")
+    p_iu, pairs = entrant_pvalues_arrays(acc, Sigma, b, pool, T)
+    return {"system": names[b], "p_iu": p_iu, "pairs": {names[k]: v for k, v in pairs.items()}, "pool": [names[k] for k in pool]}
+
+
+# ---- an exact finite-sample frontier set -----------------------------------------------------------------------------
+def exact_frontier_set(board, costs, alpha=0.05, draws=50000, seed=0):
+    """Keep system i unless some cheaper-or-equal system j beats it in a one-sided exact paired test at level
+    alpha / (number of i's rivals): the sign test on discordant tasks for pass/fail outcomes, a sign-flip test for
+    rates. A truly undominated system has no rival that is truly better, so each rival's test rejects with
+    probability at most alpha/m under the task-wise null and the system is kept with probability at least 1 - alpha,
+    for any number of tasks (Bonferroni over its rivals). Costs are fixed at their means. Conservative but exact."""
+    from scipy import stats
+    from .chain import signflip_pvalues
+    names = [n for n in board.names if n in costs]
+    idx = np.array([board.index(n) for n in names])
+    Y = board.Y[idx].astype(float)
+    K, T = Y.shape
+    cost = np.array([float(np.mean(costs[n])) if np.ndim(costs[n]) > 0 else float(costs[n]) for n in names])
+    binary = bool(np.all((Y == 0) | (Y == 1)))
+    rng = np.random.default_rng(seed)
+    kept, minp, threshold = [], {}, {}
+    for i in range(K):
+        rivals = [j for j in range(K) if j != i and cost[j] <= cost[i]]
+        if not rivals:
+            kept.append(names[i]); minp[names[i]] = 1.0; threshold[names[i]] = float(alpha); continue
+        pm = 1.0
+        for j in rivals:
+            if binary:
+                n_j = int(((Y[j] == 1) & (Y[i] == 0)).sum()); n_i = int(((Y[i] == 1) & (Y[j] == 0)).sum())
+                p = 1.0 if n_j + n_i == 0 else float(stats.binom.sf(n_j - 1, n_j + n_i, 0.5))   # P(X >= n_j)
+            else:
+                p = signflip_pvalues(Y[j] - Y[i], rng, draws=draws)[0]
+            pm = min(pm, p)
+        thr = alpha / len(rivals)
+        minp[names[i]] = float(pm); threshold[names[i]] = float(thr)
+        if pm > thr:
+            kept.append(names[i])
+    return {"alpha": alpha, "frontier_set_exact": kept, "min_rival_p": minp, "threshold": threshold}

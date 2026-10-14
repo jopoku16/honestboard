@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from honestboard import Board
-from honestboard.frontier import frontier_curse, frontier_winner, observed_frontier, pareto_frontier
+from honestboard.frontier import entrant_pvalues, exact_frontier_set, frontier_curse, frontier_winner, observed_frontier, pareto_frontier
 
 
 def make_board(P, T, seed=0, names=None):
@@ -120,3 +120,44 @@ def test_frontier_curse_reduces_bias_on_known_truth():
     assert naive > 0.0
     assert abs(boot) < naive - naive / 3
     assert len(cond) > 0 and abs(np.mean(cond)) < naive
+
+
+def test_exact_set_contains_observed_frontier_and_is_valid_on_known_truth():
+    """The exact set always contains the observed frontier, and over many boards it keeps a truly undominated
+    system at least 95% of the time."""
+    kept = total = 0
+    for seed in range(60):
+        board, costs, truth = _known_truth_board(K=10, T=80, seed=seed)
+        cost = np.array([costs[n] for n in board.names])
+        res = exact_frontier_set(board, costs, alpha=0.05)
+        r = pareto_frontier(board, costs, B=300, seed=seed)
+        for n in r["observed_frontier"]:
+            assert n in res["frontier_set_exact"]
+        truly = observed_frontier(truth, cost)
+        for k in np.where(truly)[0]:
+            total += 1
+            kept += board.names[k] in res["frontier_set_exact"]
+    assert kept / total >= 0.95
+
+
+def test_per_system_set_is_inside_board_wide_set():
+    board, costs, _ = _known_truth_board(K=12, T=100, seed=2)
+    r = pareto_frontier(board, costs, B=400, seed=0)
+    assert set(r["frontier_set_persystem"]) <= set(r["frontier_set"])
+    assert set(r["observed_frontier"]) <= set(r["frontier_set_persystem"])
+
+
+def test_entrant_pvalues_composite_is_max_of_pairs_and_valid_for_a_cheapest_system():
+    board, costs, _ = _known_truth_board(K=12, T=120, seed=4)
+    r = pareto_frontier(board, costs, B=200, seed=0)
+    top = r["observed_frontier"][-1]                           # the most expensive frontier member has the largest pool
+    res = entrant_pvalues(board, costs, top)
+    assert res["pool"] and abs(res["p_iu"] - max(res["pairs"].values())) < 1e-12
+    assert all(0.0 <= v <= 1.0 for v in res["pairs"].values())
+    cheapest = min(costs, key=costs.get)
+    assert entrant_pvalues(board, costs, cheapest)["pool"] == []
+    acc = board.scores()
+    cost = np.array([costs[n] for n in board.names])
+    dominated = [k for k in range(board.K) if any(cost[j] <= cost[k] and acc[j] > acc[k] for j in range(board.K))]
+    with pytest.raises(ValueError):
+        entrant_pvalues(board, costs, board.names[dominated[0]])
