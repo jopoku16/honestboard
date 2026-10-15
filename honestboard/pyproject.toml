@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "honestboard"
-version = "0.5.1"
+version = "0.6.0"
 description = "Statistical checks for AI leaderboards: a selective record test with online certification, rank intervals, a confidence set of the best system and a winner's-curse correction, from per-task results."
 readme = "README.md"
 requires-python = ">=3.9"

@@ -72,6 +72,64 @@ def _bootstrap_pairs(Y, C, B, rng, chunk=200):
     return acc, cost
 
 
+def _gated_tie_robust(Y, C, S, SC, alpha, gate=True):
+    """Gated step-down (Romano-Wolf) frontier set that stays valid when true mean costs tie.
+
+    Two families of one-sided hypotheses, one pair for every ordered pair of systems (i, j):
+      C_ij  "j is not strictly cheaper than i", rejected when (cbar_i - cbar_j) / se_c > c, with se_c the PAIRED standard error
+            of the mean cost difference (costs move together across tasks, so it is much smaller than the sum of the two);
+      A_ij  "j is not strictly more accurate than i", tested only once C_ij has been rejected, rejected when G_ij > c.
+    c is the (1 - alpha) bootstrap quantile of the largest centred deviation over the hypotheses still standing, and the
+    rejection sets grow, and c shrinks, until nothing changes. System i is excluded when some j has both C_ij and A_ij
+    rejected, that is, when j is shown to be strictly cheaper and strictly more accurate than i. With probability at least
+    1 - alpha - o(1) no true hypothesis is rejected, so every system with no strictly better cheaper-or-equal rival is kept.
+    With gate=False every A_ij stands from the start (the plain Romano-Wolf step-down over both families, proved without
+    any condition on how the cost and accuracy estimation errors depend on each other); gate=True shrinks the family
+    further and is supported by the proof when those errors are asymptotically independent and by simulation otherwise.
+    Returns (in_set, info).
+    """
+    K, T = Y.shape
+    B = S.shape[1]
+    acc, cost = Y.mean(axis=1), C.mean(axis=1)
+    eye = np.eye(K, dtype=bool)
+
+    def paired_se(M):
+        Sig = np.cov(M) / T
+        v = np.diag(Sig)[:, None] + np.diag(Sig)[None, :] - 2 * Sig
+        return np.sqrt(np.maximum(v, 0.0))
+
+    se_a = paired_se(Y)
+    se_a[se_a == 0] = 1e-12
+    se_c = paired_se(C)
+    scale = np.abs(cost[:, None]) + np.abs(cost[None, :]) + 1e-300
+    se_c = np.where(se_c <= 1e-9 * scale, 1e-12, se_c)
+    dev_a = ((S[None, :, :] - S[:, None, :]) - (acc[None, :] - acc[:, None])[:, :, None]) / se_a[:, :, None]       # [i, j, b]: j above i
+    dev_c = ((SC[:, None, :] - SC[None, :, :]) - (cost[:, None] - cost[None, :])[:, :, None]) / se_c[:, :, None]   # [i, j, b]: j cheaper than i
+    stat_a = (acc[None, :] - acc[:, None]) / se_a
+    stat_c = (cost[:, None] - cost[None, :]) / se_c
+    rc = np.zeros((K, K), dtype=bool)
+    ra = np.zeros((K, K), dtype=bool)
+    steps, c = 0, 0.0
+    while True:
+        steps += 1
+        remc = ~eye & ~rc
+        rema = (rc if gate else ~eye) & ~ra
+        m = np.full(B, -np.inf)
+        if remc.any():
+            m = np.maximum(m, np.where(remc[:, :, None], dev_c, -np.inf).max(axis=(0, 1)))
+        if rema.any():
+            m = np.maximum(m, np.where(rema[:, :, None], dev_a, -np.inf).max(axis=(0, 1)))
+        c = float(max(0.0, np.quantile(m, 1 - alpha))) if np.isfinite(m).any() else 0.0
+        new_c = rc | (remc & (stat_c > c))
+        new_a = ra | (rema & (stat_a > c))                       # only hypotheses that stood when c was computed are tested
+        if (new_c == rc).all() and (new_a == ra).all():
+            break
+        rc, ra = new_c, new_a
+    in_set = ~(rc & ra).any(axis=1)
+    iu = np.triu_indices(K, 1)
+    return in_set, {"c": c, "steps": steps, "cost_ordered_share": float((rc[iu] | rc.T[iu]).mean()) if K > 1 else 1.0}
+
+
 def observed_frontier(acc, cost):
     """Boolean mask: system i is undominated (no cheaper-or-equal system with at least its accuracy, one strict)."""
     acc = np.asarray(acc, float)
@@ -94,14 +152,18 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         B: bootstrap resamples over tasks.
         names: restrict to these systems (default: every system that has a cost).
         clusters: one label per task; resample task groups instead of tasks.
-        tie_robust: with per-task costs, a system may be excluded only on the evidence of rivals that are SURELY no
-            costlier (a rival's cost interval lies at or below the system's), a deterministic subset of its true rivals
-            on the event that every mean cost lies in its interval (probability at least 1 - alpha / 2); the margin is
-            the (1 - alpha / 2) quantile of the largest studentised deviation over EVERY ordered pair of systems, so it
-            does not depend on which pairs the data make rivals. The joint set then contains the true frontier with
-            probability at least 1 - alpha - o(1) whether or not true mean costs tie, at the price of a larger set; it
-            always contains the observed frontier. Only the joint set carries that guarantee: the boardwide and
-            per-system variants returned beside it are descriptive in this mode.
+        tie_robust: with per-task costs, a set that stays valid when true mean costs tie. True (the default method,
+            "gated") uses a gated Romano-Wolf step-down: a system is excluded only when some other system is shown to be
+            strictly cheaper (a one-sided test on the PAIRED mean cost difference) and strictly more accurate, with one
+            critical value shared by the cost and the accuracy tests and shrunk step by step as hypotheses are rejected.
+            "stepdown" is the same procedure without the gate (every accuracy hypothesis stands from the start), the version
+            whose coverage is proved with no condition on how cost and accuracy errors depend on each other.
+            "intervals" is the more conservative 0.5.1 construction: a rival counts only when its cost interval lies at or
+            below the system's, with the margin taken over every ordered pair at level alpha / 2. Either way the joint set
+            contains every system that has no strictly better cheaper-or-equal rival with probability at least
+            1 - alpha - o(1) whether or not true mean costs tie, at the price of a larger set, and always contains the
+            observed frontier. Only the joint set carries that guarantee: the boardwide and per-system variants returned
+            beside it equal it in this mode.
     """
     names = [n for n in (names or board.names) if n in costs]
     if len(names) < 2:
@@ -134,8 +196,10 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
     se[se == 0] = 1e-12
     eye = np.eye(K, dtype=bool)
     cheaper = (cost[None, :] <= cost[:, None]) & ~eye            # cheaper[i, j]: j is a cheaper-or-equal rival of i
-    alpha_set, c_cost, cheaper_fixed = alpha, 0.0, None
-    if tie_robust and per_task:
+    alpha_set, c_cost, cheaper_fixed, gated = alpha, 0.0, None, None
+    if tie_robust and per_task and tie_robust not in ("intervals",):
+        gated = _gated_tie_robust(Y, C, S, SC, alpha, gate=(tie_robust != "stepdown"))
+    elif tie_robust and per_task:
         sg = C.std(axis=1, ddof=1) / np.sqrt(T)
         sg = np.where(sg <= 1e-9 * np.maximum(np.abs(cost), 1e-300), 0.0, sg)
         if (sg > 0).any():
@@ -172,6 +236,10 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
     observed = observed_frontier(acc, cost)
     if cheaper_fixed is not None:                                 # the observed frontier is always kept
         in_set, in_set_board, in_set_ps = in_set | observed, in_set_board | observed, in_set_ps | observed
+    if gated is not None:                                         # gated step-down: one joint set, shared by the three variants
+        in_set = in_set_board = in_set_ps = gated[0] | observed
+        c = c_board = gated[1]["c"]
+        c_cost = gated[1]["c"]
     if per_task:
         freq = np.array([observed_frontier(S[:, b], SC[:, b]) for b in range(B)]).mean(axis=0)
     else:
@@ -195,7 +263,9 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
             "rival_lead_se": float(worst[k]) if rival is not None else None,
         })
     return {
-        "alpha": alpha, "systems": K, "tasks": T, "B": B, "per_task_costs": per_task, "clustered": clusters is not None, "tie_robust": bool(cheaper_fixed is not None), "cost_interval_c": c_cost,
+        "alpha": alpha, "systems": K, "tasks": T, "B": B, "per_task_costs": per_task, "clustered": clusters is not None, "tie_robust": bool(cheaper_fixed is not None or gated is not None),
+        "tie_robust_method": (("stepdown" if tie_robust == "stepdown" else "gated") if gated is not None else ("intervals" if cheaper_fixed is not None else None)),
+        "cost_ordered_share": (gated[1]["cost_ordered_share"] if gated is not None else None), "cost_interval_c": c_cost,
         "margin_se": c, "margin_se_boardwide": c_board, "margin_se_best": c_all,
         "observed_frontier": [names[k] for k in range(K) if observed[k]],
         "frontier_set": [names[k] for k in range(K) if in_set[k]],

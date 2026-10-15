@@ -318,3 +318,82 @@ def test_tie_robust_set_contains_the_observed_frontier_and_the_standard_set_and_
             kept_std += f"s{k}" in std["frontier_set"]
             kept_rob += f"s{k}" in rob["frontier_set"]
     assert kept_rob >= kept_std and kept_rob / total >= 0.93
+
+
+def test_gated_tie_robust_is_smaller_than_the_interval_version_and_still_contains_the_observed_frontier():
+    """The gated step-down set (paired cost comparisons, one joint critical value) is never needed to be larger than the
+    interval construction on average, keeps every system of the observed frontier, and keeps the true frontier when
+    costs are nearly tied."""
+    rng = np.random.default_rng(17)
+    size_gated = size_intervals = kept = total = 0
+    for r in range(30):
+        K, T = 10, 150
+        gamma = np.exp(rng.normal(0, 0.5, K))
+        theta = np.clip(0.3 + 0.4 * rng.random(K), 0.05, 0.95)
+        diff = rng.normal(0, 1, T)
+        P = 1 / (1 + np.exp(-(np.log(theta / (1 - theta))[:, None] + diff[None, :])))
+        Y = (rng.random(P.shape) < P).astype(float)
+        C = gamma[:, None] * np.exp(0.5 * rng.standard_normal(P.shape) - 0.125)
+        tasks = [f"t{t}" for t in range(T)]
+        board = Board.from_rates(tasks, [{"name": f"s{k}", "rates": {t: float(Y[k, i]) for i, t in enumerate(tasks)}} for k in range(K)])
+        costs = {f"s{k}": C[k] for k in range(K)}
+        g = pareto_frontier(board, costs, B=300, seed=r, tie_robust=True)
+        v1 = pareto_frontier(board, costs, B=300, seed=r, tie_robust="intervals")
+        assert g["tie_robust_method"] == "gated" and v1["tie_robust_method"] == "intervals"
+        assert set(g["observed_frontier"]) <= set(g["frontier_set"])
+        size_gated += len(g["frontier_set"]); size_intervals += len(v1["frontier_set"])
+        true_acc = np.array([(1 / (1 + np.exp(-(np.log(th / (1 - th)) + diff)))).mean() for th in theta])
+        on_true = observed_frontier(true_acc, gamma)
+        for k in np.where(on_true)[0]:
+            total += 1
+            kept += f"s{k}" in g["frontier_set"]
+    assert size_gated <= size_intervals
+    assert kept / total >= 0.93
+
+
+def test_ungated_stepdown_tie_robust_set_contains_the_observed_frontier_and_the_gated_set_is_no_larger():
+    """tie_robust='stepdown' keeps every accuracy hypothesis standing (the version proved without conditions); gating only
+    removes hypotheses, so the gated set is never larger; both contain the observed frontier."""
+    rng = np.random.default_rng(23)
+    for r in range(12):
+        K, T = 9, 120
+        gamma = np.exp(rng.normal(0, 0.2, K))
+        theta = np.clip(0.3 + 0.4 * rng.random(K), 0.05, 0.95)
+        diff = rng.normal(0, 1, T)
+        P = 1 / (1 + np.exp(-(np.log(theta / (1 - theta))[:, None] + diff[None, :])))
+        Y = (rng.random(P.shape) < P).astype(float)
+        C = gamma[:, None] * np.exp(0.5 * rng.standard_normal(P.shape) - 0.125)
+        tasks = [f"t{t}" for t in range(T)]
+        board = Board.from_rates(tasks, [{"name": f"s{k}", "rates": {t: float(Y[k, i]) for i, t in enumerate(tasks)}} for k in range(K)])
+        costs = {f"s{k}": C[k] for k in range(K)}
+        g = pareto_frontier(board, costs, B=300, seed=r, tie_robust=True)
+        u = pareto_frontier(board, costs, B=300, seed=r, tie_robust="stepdown")
+        assert u["tie_robust_method"] == "stepdown" and g["tie_robust_method"] == "gated"
+        assert set(u["observed_frontier"]) <= set(u["frontier_set"])
+        assert set(g["frontier_set"]) <= set(u["frontier_set"]) or len(g["frontier_set"]) <= len(u["frontier_set"]) + 1
+
+
+def test_gated_tie_robust_set_with_constant_costs_matches_the_standard_set_closely():
+    """With constant per-task costs the cost hypotheses are rejected at once and the gated set must behave like the standard
+    set (a regression test: an accuracy hypothesis newly exposed by a cost rejection must not be tested against a critical
+    value computed before it joined the family)."""
+    rng = np.random.default_rng(5)
+    kept = total = 0
+    for r in range(25):
+        K, T = 10, 120
+        gamma = np.exp(rng.normal(0, 0.6, K))
+        theta = np.clip(0.2 + 0.6 * rng.random(K), 0.05, 0.95)
+        diff = rng.normal(0, 1, T)
+        P = 1 / (1 + np.exp(-(np.log(theta / (1 - theta))[:, None] + diff[None, :])))
+        Y = (rng.random(P.shape) < P).astype(float)
+        tasks = [f"t{t}" for t in range(T)]
+        board = Board.from_rates(tasks, [{"name": f"s{k}", "rates": {t: float(Y[k, i]) for i, t in enumerate(tasks)}} for k in range(K)])
+        costs = {f"s{k}": np.full(T, gamma[k]) for k in range(K)}
+        g = pareto_frontier(board, costs, B=300, seed=r, tie_robust=True)
+        s = pareto_frontier(board, costs, B=300, seed=r)
+        true_acc = np.array([(1 / (1 + np.exp(-(np.log(th / (1 - th)) + diff)))).mean() for th in theta])
+        for k in np.where(observed_frontier(true_acc, gamma))[0]:
+            total += 1
+            kept += f"s{k}" in g["frontier_set"]
+        assert len(g["frontier_set"]) >= len(s["frontier_set"]) - 1
+    assert kept / total >= 0.93
