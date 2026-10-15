@@ -397,3 +397,22 @@ def test_gated_tie_robust_set_with_constant_costs_matches_the_standard_set_close
             kept += f"s{k}" in g["frontier_set"]
         assert len(g["frontier_set"]) >= len(s["frontier_set"]) - 1
     assert kept / total >= 0.93
+
+
+def test_band_with_clusters_is_wider_when_tasks_share_group_effects_and_matches_when_every_task_is_its_own_group():
+    """Resampling groups widens the band when outcomes depend on the group, and equals the ordinary band (up to resampling noise)
+    when every task is a group of its own."""
+    rng = np.random.default_rng(3)
+    K, G, m = 6, 12, 8
+    T = G * m
+    groups = np.repeat(np.arange(G), m)
+    group_effect = rng.normal(0, 1.5, (K, G))[:, groups]                        # each system has its own effect in each group
+    base = rng.normal(0, 0.5, K)[:, None]
+    Y = (rng.random((K, T)) < 1 / (1 + np.exp(-(base + group_effect)))).astype(float)
+    board = Board.from_rates([f"t{t}" for t in range(T)], [{"name": f"s{k}", "date": "20250101", "rates": {f"t{t}": float(Y[k, t]) for t in range(T)}} for k in range(K)])
+    costs = {f"s{k}": float(k + 1) for k in range(K)}
+    plain = frontier_band(board, costs, B=1500, seed=1)
+    clustered = frontier_band(board, costs, B=1500, seed=1, clusters=groups.tolist())
+    singles = frontier_band(board, costs, B=1500, seed=1, clusters=list(range(T)))
+    assert clustered["c_band"] > 1.15 * plain["c_band"]
+    assert abs(singles["c_band"] - plain["c_band"]) < 0.15 * plain["c_band"]

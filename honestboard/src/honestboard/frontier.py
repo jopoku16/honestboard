@@ -457,7 +457,7 @@ def exact_frontier_set(board, costs, alpha=0.05, draws=50000, seed=0):
 
 
 # ---- a simultaneous confidence band for the frontier curve ------------------------------------------------------------
-def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0, small: int = 10) -> dict:
+def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 0, small: int = 10, clusters=None) -> dict:
     """Simultaneous confidence band for the frontier curve A(x) = the best true accuracy among the systems whose true
     mean cost is at most x (defined for x at or above the cheapest true cost), valid whether costs are fixed numbers or
     measured per task.
@@ -474,7 +474,11 @@ def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 
     for systems with few passes or few failures. For pass/fail outcomes a system with fewer than `small` passes or
     fewer than `small` failures therefore gets a Clopper-Pearson interval at level alpha / (2K) (alpha / K when no
     max-t part remains), and the max-t quantile for everything else is taken at alpha / 2; the union bound gives the
-    total. The lower edge is 0 where no system is surely within budget."""
+    total. The lower edge is 0 where no system is surely within budget.
+
+    clusters: one label per task; resample task groups instead of tasks. The accuracy and cost standard errors stay the
+    task-level ones, so the quantile of the maximal deviation grows with the dependence inside groups and the intervals widen
+    with it. The Clopper-Pearson intervals of small systems assume independent tasks and are not changed."""
     from scipy import stats as _st
     names = [n for n in board.names if n in costs]
     idx = np.array([board.index(n) for n in names])
@@ -504,7 +508,9 @@ def frontier_band(board, costs, alpha: float = 0.05, B: int = 4000, seed: int = 
     else:
         alpha_t, delta = alpha, 0.0
     rng = np.random.default_rng(seed)
-    if per_task:
+    if clusters is not None:
+        S, SC = _bootstrap_clusters(Y, C if per_task else None, B, rng, clusters)
+    elif per_task:
         S, SC = _bootstrap_pairs(Y, C, B, rng)
     else:
         S, SC = _bootstrap_means(Y, B, rng), None

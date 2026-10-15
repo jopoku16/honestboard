@@ -8,4 +8,4 @@ from .selective import simultaneous_quantile, truncation_limits, winner_adjusted
 __all__ = ["Board", "board_with_submission", "certify_chain", "fallback_level", "entrant_pvalues", "entrant_pvalues_exact", "exact_frontier_set", "band_at", "frontier_band", "from_swebench_experiments", "frontier_curse", "frontier_winner",
            "observed_frontier", "pareto_frontier", "selective_sign_pvalue",
            "simultaneous_quantile", "truncation_limits", "winner_adjusted", "winner_hybrid", "winner_zoom"]
-__version__ = "0.6.0"
+__version__ = "0.6.1"
