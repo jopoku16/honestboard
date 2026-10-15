@@ -79,13 +79,14 @@ def _gated_tie_robust(Y, C, S, SC, alpha, gate=True):
       C_ij  "j is not strictly cheaper than i", rejected when (cbar_i - cbar_j) / se_c > c, with se_c the PAIRED standard error
             of the mean cost difference (costs move together across tasks, so it is much smaller than the sum of the two);
       A_ij  "j is not strictly more accurate than i", tested only once C_ij has been rejected, rejected when G_ij > c.
-    c is the (1 - alpha) bootstrap quantile of the largest centred deviation over the hypotheses still standing, and the
-    rejection sets grow, and c shrinks, until nothing changes. System i is excluded when some j has both C_ij and A_ij
+    c is the (1 - alpha) bootstrap quantile of the largest centred deviation over the hypotheses still standing; it is
+    recomputed after every step, and the rejection sets grow until nothing changes. (With the gate the standing family
+    also grows as accuracy hypotheses are exposed, so c is not monotone in the steps.) System i is excluded when some j has both C_ij and A_ij
     rejected, that is, when j is shown to be strictly cheaper and strictly more accurate than i. With probability at least
     1 - alpha - o(1) no true hypothesis is rejected, so every system with no strictly better cheaper-or-equal rival is kept.
-    With gate=False every A_ij stands from the start (the plain Romano-Wolf step-down over both families, proved without
-    any condition on how the cost and accuracy estimation errors depend on each other); gate=True shrinks the family
-    further and is supported by the proof when those errors are asymptotically independent and by simulation otherwise.
+    With gate=False every A_ij stands from the start: the plain Romano-Wolf step-down over both families, whose coverage is
+    proved without any condition on how the cost and accuracy estimation errors depend on each other. gate=True shrinks the
+    family further and gives slightly smaller sets, but its coverage is supported by simulation only.
     Returns (in_set, info).
     """
     K, T = Y.shape
@@ -152,18 +153,17 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         B: bootstrap resamples over tasks.
         names: restrict to these systems (default: every system that has a cost).
         clusters: one label per task; resample task groups instead of tasks.
-        tie_robust: with per-task costs, a set that stays valid when true mean costs tie. True (the default method,
-            "gated") uses a gated Romano-Wolf step-down: a system is excluded only when some other system is shown to be
-            strictly cheaper (a one-sided test on the PAIRED mean cost difference) and strictly more accurate, with one
-            critical value shared by the cost and the accuracy tests and shrunk step by step as hypotheses are rejected.
-            "stepdown" is the same procedure without the gate (every accuracy hypothesis stands from the start), the version
-            whose coverage is proved with no condition on how cost and accuracy errors depend on each other.
-            "intervals" is the more conservative 0.5.1 construction: a rival counts only when its cost interval lies at or
-            below the system's, with the margin taken over every ordered pair at level alpha / 2. Either way the joint set
-            contains every system that has no strictly better cheaper-or-equal rival with probability at least
-            1 - alpha - o(1) whether or not true mean costs tie, at the price of a larger set, and always contains the
-            observed frontier. Only the joint set carries that guarantee: the boardwide and per-system variants returned
-            beside it equal it in this mode.
+        tie_robust: with per-task costs, a set that stays valid when true mean costs tie. True (or "stepdown") runs a
+            Romano-Wolf step-down on two one-sided families: a system is excluded only when some other system is shown to be
+            strictly cheaper (a test on the PAIRED mean cost difference) and strictly more accurate, with one critical value
+            shared by both kinds of test and recomputed as hypotheses are rejected. Its coverage is proved with no condition
+            on ties or on how cost and accuracy errors depend on each other: the joint set contains every system that has no
+            strictly better cheaper-or-equal rival with probability at least 1 - alpha - o(1). "gated" tests an accuracy
+            hypothesis only once its cost hypothesis has been rejected, which gives slightly smaller sets but whose coverage
+            is supported by simulation only. "intervals" is the more conservative 0.5.1 construction: a rival counts only
+            when its cost interval lies at or below the system's, with the margin taken over every ordered pair at level
+            alpha / 2. All three contain the observed frontier, and only the joint set carries the guarantee: the boardwide
+            and per-system variants returned beside it equal it in this mode.
     """
     names = [n for n in (names or board.names) if n in costs]
     if len(names) < 2:
@@ -198,7 +198,7 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
     cheaper = (cost[None, :] <= cost[:, None]) & ~eye            # cheaper[i, j]: j is a cheaper-or-equal rival of i
     alpha_set, c_cost, cheaper_fixed, gated = alpha, 0.0, None, None
     if tie_robust and per_task and tie_robust not in ("intervals",):
-        gated = _gated_tie_robust(Y, C, S, SC, alpha, gate=(tie_robust != "stepdown"))
+        gated = _gated_tie_robust(Y, C, S, SC, alpha, gate=(tie_robust == "gated"))
     elif tie_robust and per_task:
         sg = C.std(axis=1, ddof=1) / np.sqrt(T)
         sg = np.where(sg <= 1e-9 * np.maximum(np.abs(cost), 1e-300), 0.0, sg)
@@ -264,7 +264,7 @@ def pareto_frontier(board, costs, alpha: float = 0.05, B: int = 4000, seed: int 
         })
     return {
         "alpha": alpha, "systems": K, "tasks": T, "B": B, "per_task_costs": per_task, "clustered": clusters is not None, "tie_robust": bool(cheaper_fixed is not None or gated is not None),
-        "tie_robust_method": (("stepdown" if tie_robust == "stepdown" else "gated") if gated is not None else ("intervals" if cheaper_fixed is not None else None)),
+        "tie_robust_method": (("gated" if tie_robust == "gated" else "stepdown") if gated is not None else ("intervals" if cheaper_fixed is not None else None)),
         "cost_ordered_share": (gated[1]["cost_ordered_share"] if gated is not None else None), "cost_interval_c": c_cost,
         "margin_se": c, "margin_se_boardwide": c_board, "margin_se_best": c_all,
         "observed_frontier": [names[k] for k in range(K) if observed[k]],

@@ -337,7 +337,7 @@ def test_gated_tie_robust_is_smaller_than_the_interval_version_and_still_contain
         tasks = [f"t{t}" for t in range(T)]
         board = Board.from_rates(tasks, [{"name": f"s{k}", "rates": {t: float(Y[k, i]) for i, t in enumerate(tasks)}} for k in range(K)])
         costs = {f"s{k}": C[k] for k in range(K)}
-        g = pareto_frontier(board, costs, B=300, seed=r, tie_robust=True)
+        g = pareto_frontier(board, costs, B=300, seed=r, tie_robust="gated")
         v1 = pareto_frontier(board, costs, B=300, seed=r, tie_robust="intervals")
         assert g["tie_robust_method"] == "gated" and v1["tie_robust_method"] == "intervals"
         assert set(g["observed_frontier"]) <= set(g["frontier_set"])
@@ -366,8 +366,8 @@ def test_ungated_stepdown_tie_robust_set_contains_the_observed_frontier_and_the_
         tasks = [f"t{t}" for t in range(T)]
         board = Board.from_rates(tasks, [{"name": f"s{k}", "rates": {t: float(Y[k, i]) for i, t in enumerate(tasks)}} for k in range(K)])
         costs = {f"s{k}": C[k] for k in range(K)}
-        g = pareto_frontier(board, costs, B=300, seed=r, tie_robust=True)
-        u = pareto_frontier(board, costs, B=300, seed=r, tie_robust="stepdown")
+        g = pareto_frontier(board, costs, B=300, seed=r, tie_robust="gated")
+        u = pareto_frontier(board, costs, B=300, seed=r, tie_robust=True)
         assert u["tie_robust_method"] == "stepdown" and g["tie_robust_method"] == "gated"
         assert set(u["observed_frontier"]) <= set(u["frontier_set"])
         assert set(g["frontier_set"]) <= set(u["frontier_set"]) or len(g["frontier_set"]) <= len(u["frontier_set"]) + 1
